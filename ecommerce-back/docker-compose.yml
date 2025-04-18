@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ecommerce-db
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+  springboot-app:
+    build: .
+    container_name: ecommerce-back
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ecommerce-db
+      DB_USER: user
+      DB_PASSWORD: userpass
+    ports:
+      - "8080:8080"
+volumes:
+  mysql-data:
