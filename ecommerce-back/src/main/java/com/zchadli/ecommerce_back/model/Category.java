@@ -13,5 +13,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String imagePath;
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private UploadedFile file;
 }

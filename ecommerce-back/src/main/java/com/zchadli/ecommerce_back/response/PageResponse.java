@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ApiResponse<T> {
-    private Integer status;
-    private String message;
-    private T data;
+public class PageResponse<T> {
+    private List<T> data;
+    private long totalElements;
+    private int size;
+    private int number;
 }
