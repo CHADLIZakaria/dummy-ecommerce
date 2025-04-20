@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table
 @Getter
@@ -16,4 +18,6 @@ public class Category {
     @OneToOne
     @JoinColumn(name = "file_id")
     private UploadedFile file;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

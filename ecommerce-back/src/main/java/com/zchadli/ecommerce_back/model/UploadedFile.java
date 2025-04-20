@@ -19,4 +19,7 @@ public class UploadedFile {
     private String contentType;
     private Long size;
     private LocalDateTime uploadTime;
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
 }
