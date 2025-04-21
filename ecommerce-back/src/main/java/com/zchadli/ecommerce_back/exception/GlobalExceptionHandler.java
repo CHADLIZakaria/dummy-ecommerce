@@ -4,6 +4,9 @@ import com.zchadli.ecommerce_back.exception.base.AlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.base.NotFoundException;
 import com.zchadli.ecommerce_back.exception.uploadedfile.FileUploadException;
 import com.zchadli.ecommerce_back.response.EcommerceResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,5 +37,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public EcommerceResponse<Object> handleAll(Exception ex) {
         return new EcommerceResponse<>(500, "Something went wrong", null);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<String> handleUnsupportedMediaType(HttpMediaTypeNotSupportedException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unsupported Media Type: " + e.getMessage());
     }
 }

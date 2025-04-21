@@ -45,6 +45,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDao.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
         return ecommerceMapper.toCategoryResponse(category);
     }
+
+    @Override
+    public CategoryResponse findByTitle(String title) {
+        Category category = categoryDao.findByTitle(title).orElseThrow(() -> new CategoryNotFoundException(title));
+        return ecommerceMapper.toCategoryResponse(category);
+    }
+
     @Override
     public PageResponse<CategoryResponse> findAll(CategorySearchRequest categorySearchRequest) {
         String[] sort = categorySearchRequest.getSort();

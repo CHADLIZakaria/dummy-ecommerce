@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CategoryService {
     CategoryResponse save(CategorySaveRequest categorySaveRequest, MultipartFile file);
     CategoryResponse findById(Long id);
+    CategoryResponse findByTitle(String title);
     PageResponse<CategoryResponse> findAll(CategorySearchRequest categorySearchRequest);
     void deleteById(Long id);
 }

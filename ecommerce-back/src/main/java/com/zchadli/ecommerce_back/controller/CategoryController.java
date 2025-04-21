@@ -51,6 +51,13 @@ public class CategoryController {
             @PathVariable("id") Long id) {
         return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findById(id));
     }
+    @Operation(summary = "Get category by Title")
+    @GetMapping("/title/{title}")
+    public EcommerceResponse<CategoryResponse> findById(
+            @Parameter(description = "Category Name")
+            @PathVariable("title") String title) {
+        return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findByTitle(title));
+    }
     @Operation(summary = "Search all categories with optional filters")
     @GetMapping()
     public EcommerceResponse<PageResponse<CategoryResponse>> find(CategorySearchRequest categorySearchRequest) {
