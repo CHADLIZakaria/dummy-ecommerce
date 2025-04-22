@@ -13,9 +13,6 @@ public class EcommerceController {
     @GetMapping(value = "/load")
     public void save() {
         syncEcommerce.saveCategories();
-    }
-    @GetMapping(value = "/products")
-    public void load() {
-        syncEcommerce.getProducts();
+        syncEcommerce.saveProducts();
     }
 }

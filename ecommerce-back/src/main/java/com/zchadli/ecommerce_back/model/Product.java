@@ -17,9 +17,12 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<UploadedFile> images;
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
+    @OneToOne
+    @JoinColumn(name = "id_cover_image")
+    private UploadedFile coverImage;
 }

@@ -2,6 +2,7 @@ package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.category.CategoryAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
+import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
 import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.Product;
@@ -36,13 +37,15 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryDao categoryDao;
     private static final String PATH = "uploads/products/";
     @Override
-    public ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files) {
+    public ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage) {
         if(productDao.existsByName(productSaveRequest.name())) {
-            throw new CategoryAlreadyExistsException(productSaveRequest.name());
+            throw new ProductAlreadyExistsException(productSaveRequest.name());
         }
         Category category = categoryDao.findById(productSaveRequest.idCategory()).orElseThrow(() -> new CategoryNotFoundException(productSaveRequest.idCategory()));
         Product product = ecommerceMapper.toProduct(productSaveRequest);
         product.setCategory(category);
+        product = productDao.save(product);
+        //Uploads Images
         List<UploadedFile> uploadedFiles = new ArrayList<>();
         for(MultipartFile currentFile: files) {
             UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, currentFile);
@@ -50,6 +53,10 @@ public class ProductServiceImpl implements ProductService {
             uploadedFiles.add(uploadedFile);
         }
         product.setImages(uploadedFiles);
+        //Upload Cover Image
+        UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, coverImage);
+        product.setCoverImage(uploadedFile);
+        uploadedFile.setProduct(product);
         return ecommerceMapper.toProductResponse(productDao.save(product));
     }
     @Override

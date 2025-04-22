@@ -28,8 +28,10 @@ public class ProductController {
             @RequestPart("product") @Valid @NotNull
             ProductSaveRequest product,
             @RequestPart("files") @NotNull
-            MultipartFile[] files) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new EcommerceResponse<>(201, "Product saved successfully", productService.save(product, files)));
+            MultipartFile[] files,
+            @RequestPart("coverImage") @NotNull
+            MultipartFile coverImage) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new EcommerceResponse<>(201, "Product saved successfully", productService.save(product, files, coverImage)));
     }
     @Operation(summary = "Search all products with optional filters")
     @GetMapping()

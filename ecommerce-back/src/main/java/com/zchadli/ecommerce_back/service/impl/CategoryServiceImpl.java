@@ -6,7 +6,6 @@ import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
 import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.UploadedFile;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
-import com.zchadli.ecommerce_back.repository.UploadedFileDao;
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySearchRequest;
 import com.zchadli.ecommerce_back.response.CategoryResponse;

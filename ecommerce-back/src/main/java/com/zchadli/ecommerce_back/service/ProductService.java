@@ -7,6 +7,6 @@ import com.zchadli.ecommerce_back.response.ProductResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
-    ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files);
+    ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage);
     PageResponse<ProductResponse> findAll(ProductSearchRequest productSearchRequest);
 }
