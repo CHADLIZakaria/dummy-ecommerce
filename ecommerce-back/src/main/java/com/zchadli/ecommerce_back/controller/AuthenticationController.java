@@ -8,6 +8,7 @@ import com.zchadli.ecommerce_back.response.LoginResponse;
 import com.zchadli.ecommerce_back.service.AuthentificationService;
 import com.zchadli.ecommerce_back.service.impl.JwtServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AuthenticationController {
     private final JwtServiceImpl jwtService;
     private final AuthentificationService authentificationService;
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes =  MediaType.MULTIPART_FORM_DATA_VALUE)
     public EcommerceResponse<User> register(
             @RequestPart("file") MultipartFile file,
             @RequestPart("user") RegisterUserRequest registerUserRequest) {
