@@ -4,26 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'main-color': "#f4a261",
+        'main-color': "#264653",
+        'second-color': '#F4A261'
       }
     },
     fontFamily: {
-      sans: [
-        '"Inter"',
-        '"Mouse Memoirs"',
-        'system-ui',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        '"Noto Sans"',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-        '"Noto Color Emoji"',
+      body: [
+        'Comic Relief'
       ],
       header: '"Mouse Memoirs"'
     }

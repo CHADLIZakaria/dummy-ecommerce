@@ -1,0 +1,119 @@
+<section class="mb-3 mx-auto max-w-screen-lg flex gap-3">
+  <!-- Filters -->
+  <div class="my-4 border-2 py-4 px-5 rounded-md bg-white">
+    <ecom-title 
+      title=""
+      subtitle="Filter"
+    />
+    <!-- Category -->
+    <div class="mt-5 mb-3">
+      <p>Category</p> 
+      <button class="my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-[#2A9D8F]">
+        <span class="flex-1 text-left">All</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="border rounded-sm px-2 border-[#2A9D8F]">
+        <div class="border rounded-sm my-2">
+          <input class="px-2" type="text" placeholder="Search..." />
+          <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
+        </div>
+        <ul>
+          <li class="flex items-center gap-1">
+            <input id="1" type="checkbox" />
+            <label for="1">All (1)</label>
+          </li>
+          <li class="flex items-center gap-1">
+            <input id="1" type="checkbox" />
+            <label for="1">All (1)</label>
+          </li>
+          <li class="flex items-center gap-1">
+            <input id="1" type="checkbox" />
+            <label for="1">All (1)</label>
+          </li>
+        </ul>
+        <span class="text-main-color">Show 10 more</span>
+      </div>
+    </div>
+    <!--Price-->
+    <div>
+      <p>Price</p>
+      <div class="relative h-4">
+        <input class="absolute z-10 w-full left-0 top-0 appearance-none" type="range" min="0" max="1000" value="0" />
+        <input class="absolute z-10 w-full left-0 top-0 appearance-none" type="range" min="0" max="1000" value="1000"/>
+        <div class="relative w-full h-full rounded-md bg-red-200 z-10">
+          <div class="absolute h-full left-0 top-0 bg-red-900"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Heading & List Products -->
+  <div class="flex-1 my-4 border-2 py-4 px-5 rounded-md bg-white">
+    <div class="flex justify-between">
+      <ecom-title 
+        title="Discover Our"
+        subtitle="Products" /> 
+      <div class="flex items-center space-x-4">
+        <button id="sortDropdownButton1" data-dropdown-toggle="dropdownSort1" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 sm:w-auto">
+          <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4" />
+          </svg>
+          Sort
+          <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+    </div>   
+    <div class="grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
+      <div class="rounded-lg border bg-slate-200 border-slate-200  shadow-sm">
+        <div class="h-56 w-full flex">
+          <a class="flex-1 p-2" href="#">
+            <img class="mx-auto h-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+          </a>
+          <ul>
+            <li>
+              <i class="fa-regular fa-heart"></i>
+            </li> 
+            <li>
+              <i class="fa-regular fa-heart"></i>
+            </li>
+            <li>
+              <i class="fa-regular fa-eye"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-6">
+          <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline">Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max</a>
+        </div>
+      </div>
+    </div>
+    <div class="w-full text-center">
+      <button type="button" class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">Show more</button>
+    </div>
+  </div>
+</section>
+
+<!--Drop down sort element
+<div id="dropdownSort1" class="z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow" data-popper-placement="bottom">
+  <ul class="p-2 text-left text-sm font-medium text-gray-500" aria-labelledby="sortDropdownButton">
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">The most popular </a>
+    </li>
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Newest </a>
+    </li>
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Increasing price </a>
+    </li>
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Decreasing price </a>
+    </li>
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">No. reviews </a>
+    </li>
+    <li>
+      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Discount % </a>
+    </li>
+  </ul>
+</div>
+-->
