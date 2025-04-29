@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { slideAnimation } from '../../../shared/animations/animations';
+import { dropDownAnimation, slideAnimation } from '../../../shared/animations/animations';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TitleComponent } from "../../../shared/components/title/title.component";
 

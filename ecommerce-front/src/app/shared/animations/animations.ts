@@ -1,4 +1,4 @@
-import { trigger, style, transition, animate } from '@angular/animations';
+import { trigger, style, transition, animate, state } from '@angular/animations';
 
 export const slideAnimation = trigger('slideAnimation', [
   transition(':enter', [
@@ -21,4 +21,24 @@ export const slideAnimation = trigger('slideAnimation', [
       transform: 'translateX(-100%)'
     }))
   ]),
+])
+
+export const dropDownAnimation = trigger('dropDownAnimation', [
+  state(
+    'open',
+    style({
+      opacity: '1',
+      'z-index': 20,
+      transform: 'translateY(0%)' 
+    })
+  ),
+  state(
+    'closed',
+    style({
+      opacity: '0',
+      'z-index': '-1',
+      transform: 'translateY(-10%)' 
+    })
+  ),
+  transition('open <=> closed', [animate('200ms')]),
 ])
