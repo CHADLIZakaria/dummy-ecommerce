@@ -8,8 +8,6 @@
         title="Discover Our"
         subtitle="Products" /> 
       <div class="relative">
-        
-        
         <button 
           (click)="dropDownProductSort.toggle()"
           type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 sm:w-auto">
@@ -21,7 +19,6 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
           </svg>
         </button>
-
         <div 
           [@dropDownAnimation]="dropDownProductSort.isOpen ? 'open':'closed'"
           ecomDropdown
@@ -49,32 +46,35 @@
             </li>
           </ul>
         </div>
-
-
-
-
       </div>
     </div>   
-    <div class="grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
-      <div class="rounded-lg border bg-blue-200 border-slate-200  shadow-sm">
-        <div class="h-56 w-full flex">
-          <a class="flex-1 p-2" href="#">
-            <img class="mx-auto h-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+    <div class="my-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
+      <div class="rounded-lg border bg-white border-slate-200  shadow-sm">
+        <div class="h-56 w-full bg-white relative py-2">
+          <a class="flex h-full" href="#">
+            <img class="mx-auto h-full object-top pr-10 pl-2" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
           </a>
-          <ul>
-            <li>
+          <div class="absolute right-0 top-0 w-8 mt-1 mr-1 flex flex-col gap-1 items-center">
+            <button 
+              type="button" 
+              class="text-border-color border border-border-color hover:bg-border-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
               <i class="fa-regular fa-heart"></i>
-            </li> 
-            <li>
-              <i class="fa-regular fa-heart"></i>
-            </li>
-            <li>
+            </button>
+            <button 
+              type="button" 
+              class="text-border-color border border-border-color hover:bg-border-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
+              <i class="fa-solid fa-code-compare"></i>
+            </button> 
+            <button 
+              type="button" 
+              class="text-border-color border border-border-color hover:bg-border-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
               <i class="fa-regular fa-eye"></i>
-            </li>
-          </ul>
+            </button>
+          </div>
         </div>
-        <div class="pt-6">
-          <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline">Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max</a>
+        <div class="flex flex-col px-2 py-3">
+          <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline">Essence Mascara Lash Princess</a>
+          <p>$66</p>
         </div>
       </div>
     </div>
@@ -83,28 +83,3 @@
     </div>
   </div>
 </section>
-
-<!--Drop down sort element
-<div id="dropdownSort1" class="z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow" data-popper-placement="bottom">
-  <ul class="p-2 text-left text-sm font-medium text-gray-500" aria-labelledby="sortDropdownButton">
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">The most popular </a>
-    </li>
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Newest </a>
-    </li>
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Increasing price </a>
-    </li>
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Decreasing price </a>
-    </li>
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">No. reviews </a>
-    </li>
-    <li>
-      <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Discount % </a>
-    </li>
-  </ul>
-</div>
--->

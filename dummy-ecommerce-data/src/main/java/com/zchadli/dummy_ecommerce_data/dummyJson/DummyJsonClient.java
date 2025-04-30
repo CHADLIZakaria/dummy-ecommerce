@@ -10,6 +10,6 @@ public interface DummyJsonClient {
     @GetMapping(value = "/products/category-list")
     List<String> getCategories();
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/products?limit=0")
     DummyResponseProduct getProducts();
 }
