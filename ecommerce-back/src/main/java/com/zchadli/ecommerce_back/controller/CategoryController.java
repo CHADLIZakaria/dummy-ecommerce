@@ -2,6 +2,7 @@ package com.zchadli.ecommerce_back.controller;
 
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySearchRequest;
+import com.zchadli.ecommerce_back.response.CategoryFilterResponse;
 import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.CategoryResponse;
 import com.zchadli.ecommerce_back.response.PageResponse;
@@ -59,8 +60,13 @@ public class CategoryController {
         return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findByTitle(title));
     }
     @Operation(summary = "Search all categories with optional filters")
+    @GetMapping("/search-with-products")
+    public EcommerceResponse<PageResponse<CategoryFilterResponse>> find(CategorySearchRequest categorySearchRequest) {
+        return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAllWithNumberProducts(categorySearchRequest));
+    }
+    @Operation(summary = "Search all categories with optional filters")
     @GetMapping()
-    public EcommerceResponse<PageResponse<CategoryResponse>> find(CategorySearchRequest categorySearchRequest) {
+    public EcommerceResponse<PageResponse<CategoryResponse>> findWithNumberProducts(CategorySearchRequest categorySearchRequest) {
         return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAll(categorySearchRequest));
     }
     @Operation(summary = "Delete category by Id")

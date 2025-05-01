@@ -34,12 +34,6 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
                 String destination = FileHelper.convertToImageName(product.title(), index.getAndIncrement());
                 imagesPath.add(destination);
                 FileHelper.downloadImage(image, PATH_PRODUCT + destination);
-                try {
-                    Thread.sleep(150);
-                }
-                catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
             });
             //Upload cover Image
             String coverImageDestination = FileHelper.convertToImageName(product.title(), 0);

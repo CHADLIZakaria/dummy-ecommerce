@@ -8,6 +8,7 @@ import com.zchadli.ecommerce_back.model.UploadedFile;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySearchRequest;
+import com.zchadli.ecommerce_back.response.CategoryFilterResponse;
 import com.zchadli.ecommerce_back.response.CategoryResponse;
 import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.service.CategoryService;
@@ -50,22 +51,19 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDao.findByTitle(title).orElseThrow(() -> new CategoryNotFoundException(title));
         return ecommerceMapper.toCategoryResponse(category);
     }
-
+    @Override
+    public PageResponse<CategoryFilterResponse> findAllWithNumberProducts(CategorySearchRequest categorySearchRequest) {
+        Page<Category> categoryPage = findPageCategory(categorySearchRequest);
+        return new PageResponse<>(
+                ecommerceMapper.toCategoriesFilterResponse(categoryPage.getContent()),
+                categoryPage.getTotalElements(),
+                categoryPage.getSize(),
+                categoryPage.getNumber()
+        );
+    }
     @Override
     public PageResponse<CategoryResponse> findAll(CategorySearchRequest categorySearchRequest) {
-        String[] sort = categorySearchRequest.getSort();
-        Sort.Direction direction = Sort.Direction.fromString(sort[1]);
-        Sort sortBy = Sort.by(direction, sort[0]);
-        Pageable pageable = PageRequest.of(
-            categorySearchRequest.getPage(),
-            categorySearchRequest.getSize(),
-            sortBy
-        );
-        Specification<Category> specification = Specification.where(null);
-        if(categorySearchRequest.getSearch() != null && !categorySearchRequest.getSearch().isBlank()) {
-            specification  = specification.and(CategorySpecification.titleContains(categorySearchRequest.getSearch()));
-        }
-        Page<Category> categoryPage = categoryDao.findAll(specification, pageable);
+        Page<Category> categoryPage = findPageCategory(categorySearchRequest);
         return new PageResponse<>(
             ecommerceMapper.toCategoriesResponse(categoryPage.getContent()),
             categoryPage.getTotalElements(),
@@ -73,6 +71,30 @@ public class CategoryServiceImpl implements CategoryService {
             categoryPage.getNumber()
         );
     }
+
+    private Page<Category> findPageCategory(CategorySearchRequest categorySearchRequest) {
+        String[] sort = categorySearchRequest.getSort();
+        Sort.Direction direction = Sort.Direction.fromString(sort[1]);
+        Sort sortBy = Sort.by(direction, sort[0]);
+        Specification<Category> specification = Specification.where(null);
+        if(categorySearchRequest.getKeyword() != null && !categorySearchRequest.getKeyword().isBlank()) {
+            specification  = specification.and(CategorySpecification.titleContains(categorySearchRequest.getKeyword()));
+        }
+        Pageable pageable = null;
+        if(categorySearchRequest.getSize()==0) {
+            pageable = Pageable.unpaged(sortBy);
+        }
+        else {
+            pageable = PageRequest.of(
+                    categorySearchRequest.getPage(),
+                    categorySearchRequest.getSize(),
+                    sortBy
+            );
+        }
+        return categoryDao.findAll(specification, pageable);
+    }
+
+
     @Override
     public void deleteById(Long id) {
         Category category = categoryDao.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
