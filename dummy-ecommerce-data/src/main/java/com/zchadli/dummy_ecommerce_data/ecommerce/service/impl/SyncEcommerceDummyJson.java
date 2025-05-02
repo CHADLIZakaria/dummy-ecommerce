@@ -4,8 +4,7 @@ import com.zchadli.dummy_ecommerce_data.dummyJson.DummyJsonClient;
 import com.zchadli.dummy_ecommerce_data.dummyJson.DummyJsonMapper;
 import com.zchadli.dummy_ecommerce_data.ecommerce.EcommerceClient;
 import com.zchadli.dummy_ecommerce_data.ecommerce.FileSystemMultipartFile;
-import com.zchadli.dummy_ecommerce_data.ecommerce.model.Category;
-import com.zchadli.dummy_ecommerce_data.ecommerce.model.Product;
+import com.zchadli.dummy_ecommerce_data.ecommerce.model.*;
 import com.zchadli.dummy_ecommerce_data.ecommerce.service.SyncEcommerce;
 import com.zchadli.dummy_ecommerce_data.utils.FileHelper;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +37,21 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
             //Upload cover Image
             String coverImageDestination = FileHelper.convertToImageName(product.title(), 0);
             FileHelper.downloadImage(product.thumbnail(), PATH_PRODUCT + coverImageDestination);
+            //Get category
             Category category = ecommerceClient.getCategoryByTitle(product.category()).data();
-            Product productToSave = dummyJsonMapper.toProduct(product, category.getId());
+            //Save Brand
+            EcommerceResponse<BrandResponse> brandResponse = ecommerceClient.saveBrand(new BrandRequest(product.brand()));
+            System.out.println("brand status "+brandResponse.status());
+            System.out.println("product "+product.title());
+
+
+            if(brandResponse.status()==409) {
+                brandResponse = ecommerceClient.getBrandByName(product.brand());
+            }
+            if(brandResponse.status()==400) {
+                brandResponse = ecommerceClient.saveBrand(new BrandRequest(product.title()));
+            }
+            Product productToSave = dummyJsonMapper.toProduct(product, category.getId(), brandResponse.data().id());
             saveProduct(productToSave, imagesPath, coverImageDestination);
         });
     }

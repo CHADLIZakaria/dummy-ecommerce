@@ -1,24 +1,23 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
-import { dropDownAnimation, slideAnimation } from '../../../shared/animations/animations';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, effect, inject } from '@angular/core';
+import { slideAnimation } from '../../../shared/animations/animations';
 import { TitleComponent } from "../../../shared/components/title/title.component";
-import { HomeServices } from '../services/home-services.service';
+import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { Category } from '../../../shared/model/ecom.model';
-import { JsonPipe } from '@angular/common';
+import { HomeServices } from '../services/home-services.service';
 
 @Component({
   selector: 'ecom-list-categories',
-  imports: [TitleComponent, JsonPipe],
+  imports: [TitleComponent],
   templateUrl: './list-categories.component.html',
   styleUrl: './list-categories.component.scss',
   animations: [slideAnimation]
 })
-export class ListCategoriesComponent implements OnInit {
-  //categories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+export class ListCategoriesComponent {
   currentCategory = 0;
   homeServices = inject(HomeServices)
   categories: Category[] = [];
   isLoading = false;
+  rangeLoading = EcomHelper.range(6)
 
   constructor() {
     effect(() => {
@@ -27,15 +26,10 @@ export class ListCategoriesComponent implements OnInit {
         (data) => {
           this.isLoading = false
           this.categories = data.data.data
-          console.log(this.categories)
         }
       )
     })
   }
-
-  ngOnInit(): void {
-  }
-
   updateCarouselCategory(value:'next' | 'prev') {
     if(value==='next') {
       if(this.currentCategory < this.categories.length - 6) {

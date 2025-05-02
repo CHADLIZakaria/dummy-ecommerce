@@ -14,3 +14,22 @@ export type Category = {
     title: string;
     imagePath: string;
 }
+export type CategoryWithProduct = {
+    id: number;
+    title: string;
+    imagePath: string;
+    productCounts: number;
+}
+export type BrandWithProduct = {
+    id: number;
+    name: string;
+    productCounts: number;
+}
+export type Product = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    imagePath: string;
+    coverImage: string;
+}

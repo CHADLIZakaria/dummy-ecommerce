@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TitleComponent } from "../../../shared/components/title/title.component";
 import { FiltersComponent } from "../filters/filters.component";
 import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { dropDownAnimation } from '../../../shared/animations/animations';
+import { HomeServices } from '../services/home-services.service';
 
 @Component({
   selector: 'ecom-list-products',
@@ -12,5 +13,7 @@ import { dropDownAnimation } from '../../../shared/animations/animations';
   animations: [dropDownAnimation]
 })
 export class ListProductsComponent {
-
+  homeService = inject(HomeServices)
+  productsResource = this.homeService.productsResource;
+  open = false;
 }

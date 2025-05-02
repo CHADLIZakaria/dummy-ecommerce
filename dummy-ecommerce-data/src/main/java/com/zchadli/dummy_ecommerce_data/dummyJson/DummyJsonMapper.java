@@ -15,5 +15,6 @@ public interface DummyJsonMapper {
 
     @Mapping(source = "product.title", target = "name")
     @Mapping(source = "idCategory", target = "idCategory")
-    Product toProduct(DummyProduct product, Long idCategory);
+    @Mapping(source = "idBrand", target = "idBrand")
+    Product toProduct(DummyProduct product, Long idCategory, Long idBrand);
 }

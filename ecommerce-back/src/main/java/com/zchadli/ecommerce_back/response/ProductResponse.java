@@ -8,5 +8,6 @@ public record ProductResponse(
         String description,
         Double price,
         String category,
-        List<String> images) {
+        List<String> images,
+        String coverImage) {
 }

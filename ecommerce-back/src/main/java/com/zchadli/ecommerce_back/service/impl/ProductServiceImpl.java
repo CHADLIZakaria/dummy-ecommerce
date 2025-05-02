@@ -1,12 +1,15 @@
 package com.zchadli.ecommerce_back.service.impl;
 
+import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
 import com.zchadli.ecommerce_back.exception.category.CategoryAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
+import com.zchadli.ecommerce_back.model.Brand;
 import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.Product;
 import com.zchadli.ecommerce_back.model.UploadedFile;
+import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
@@ -35,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     private final EcommerceMapper ecommerceMapper;
     private final UploadedFileService uploadedFileService;
     private final CategoryDao categoryDao;
+    private final BrandDao brandDao;
     private static final String PATH = "uploads/products/";
     @Override
     public ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage) {
@@ -42,8 +46,10 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductAlreadyExistsException(productSaveRequest.name());
         }
         Category category = categoryDao.findById(productSaveRequest.idCategory()).orElseThrow(() -> new CategoryNotFoundException(productSaveRequest.idCategory()));
+        Brand brand = brandDao.findById(productSaveRequest.idBrand()).orElseThrow(() -> new BrandNotFoundException(productSaveRequest.idBrand()));
         Product product = ecommerceMapper.toProduct(productSaveRequest);
         product.setCategory(category);
+        product.setBrand(brand);
         product = productDao.save(product);
         //Uploads Images
         List<UploadedFile> uploadedFiles = new ArrayList<>();
@@ -70,15 +76,15 @@ public class ProductServiceImpl implements ProductService {
             sortBy
         );
         Specification<Product> specification = Specification.where(null);
-        if(productSearchRequest.getSearch() != null && !productSearchRequest.getSearch().isBlank()) {
-            specification  = specification.and(ProductSpecification.nameContains(productSearchRequest.getSearch()));
+        if(productSearchRequest.getKeyword() != null && !productSearchRequest.getKeyword().isBlank()) {
+            specification  = specification.and(ProductSpecification.nameContains(productSearchRequest.getKeyword()));
         }
         Page<Product> productPage = productDao.findAll(specification, pageable);
         return new PageResponse<>(
-                ecommerceMapper.toProductsResponse(productPage.getContent()),
-                productPage.getTotalElements(),
-                productPage.getSize(),
-                productPage.getNumber()
+            ecommerceMapper.toProductsResponse(productPage.getContent()),
+            productPage.getTotalElements(),
+            productPage.getSize(),
+            productPage.getNumber()
         );
     }
 }

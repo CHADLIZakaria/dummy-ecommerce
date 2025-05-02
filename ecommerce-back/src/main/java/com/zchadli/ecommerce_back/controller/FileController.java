@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @RequestMapping("/file")
 public class FileController {
     @GetMapping("{table}/{filename}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String table, @PathVariable String filename) throws IOException {
+    public ResponseEntity<byte[]> getFile(@PathVariable("table") String table, @PathVariable("filename") String filename) throws IOException {
         Path imagePath = null;
         if("category".equals(table)) {
             imagePath = Paths.get("./uploads/categories/"+filename);

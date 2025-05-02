@@ -1,31 +1,30 @@
 <div class="mt-5 mb-3">
-    <p>Review</p> 
+    <p>Review</p>
     <button
-        (click)="dropDown.toggle()"
-        class="my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-[#2A9D8F]">
+        ecomDropdown
+        [open]="open"
+        (clickOutside)="open = false"
+        (click)="open = !open"
+        class="relative my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
       <span class="flex-1 text-left">All</span>
       <i class="fa-solid fa-chevron-down"></i>
+      <div 
+          class="dropdown-menu absolute left-0 top-[120%] bg-white h-32 w-full overflow-auto flex flex-col gap-3 border rounded-sm px-2 border-main-color">
+          @for(row of stars; track row; let idx=$index) {
+              <div class="flex gap-1">
+                  <div>
+                      @for(star of stars; track star) {
+                          @if(star>=row) {
+                              <i class="fa-solid fa-star text-yellow-300"></i>
+                          }
+                          @else {
+                              <i class="fa-solid fa-star text-gray-400"></i>
+                          }
+                      }
+                  </div>
+                  <span>{{idx+1}} stars</span>
+              </div>
+          }        
+      </div>
     </button>
-    <div 
-        [@dropDownAnimation]="dropDown.isOpen ? 'open':'closed'"
-        ecomDropdown
-        #dropDown="dropDownToggle"
-        id="dropdwnReviews"
-        class="absolute bg-white h-32 overflow-auto flex flex-col gap-3 border rounded-sm px-2 border-[#2A9D8F]">
-        @for(row of stars; track row; let idx=$index) {
-            <div class="flex gap-1">
-                <div>
-                    @for(star of stars; track star) {
-                        @if(star>=row) {
-                            <i class="fa-solid fa-star text-yellow-300"></i>
-                        }
-                        @else {
-                            <i class="fa-solid fa-star text-gray-400"></i>
-                        }
-                    }
-                </div>
-                <span>{{idx+1}} stars</span>
-            </div>
-        }        
-    </div>
 </div>

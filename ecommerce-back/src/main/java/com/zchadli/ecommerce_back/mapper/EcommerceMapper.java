@@ -1,13 +1,13 @@
 package com.zchadli.ecommerce_back.mapper;
 
+import com.zchadli.ecommerce_back.model.Brand;
 import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.Product;
 import com.zchadli.ecommerce_back.model.UploadedFile;
+import com.zchadli.ecommerce_back.request.BrandSaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
-import com.zchadli.ecommerce_back.response.CategoryFilterResponse;
-import com.zchadli.ecommerce_back.response.CategoryResponse;
-import com.zchadli.ecommerce_back.response.ProductResponse;
+import com.zchadli.ecommerce_back.response.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -30,6 +30,7 @@ public interface EcommerceMapper {
     List<CategoryResponse> toCategoriesResponse(List<Category> categories);
 
     @Mapping(source = "category.title", target = "category")
+    @Mapping(source = "coverImage.fileName", target = "coverImage")
     ProductResponse toProductResponse(Product product);
 
     @Mapping(source = "idCategory", target = "category.id")
@@ -39,4 +40,11 @@ public interface EcommerceMapper {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
     List<ProductResponse> toProductsResponse(List<Product> products);
+
+    Brand toBrand(BrandSaveRequest brandSaveRequest);
+    BrandResponse toBrandResponse(Brand brand);
+    @Mapping(source = "products", target = "productCounts", qualifiedByName = "mapProductCount")
+    BrandFilterResponse toBrandFilterResponse(Brand brand);
+    List<BrandFilterResponse> toBrandsFilterResponse(List<Brand> brand);
+
 }

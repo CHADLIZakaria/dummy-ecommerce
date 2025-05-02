@@ -7,5 +7,6 @@ public record ProductSaveRequest(
         String name,
         String description,
         Double price,
+        Long idBrand,
         Long idCategory) {
 }

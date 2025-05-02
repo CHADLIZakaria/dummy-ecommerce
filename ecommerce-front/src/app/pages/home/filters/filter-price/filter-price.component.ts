@@ -30,6 +30,5 @@ export class FilterPriceComponent {
   }
 
   onChange(value: any) {
-    console.log(value)
   }
 }

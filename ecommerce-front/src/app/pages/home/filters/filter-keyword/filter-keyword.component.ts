@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { HomeServices } from '../../services/home-services.service';
 
 @Component({
   selector: 'ecom-filter-keyword',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './filter-keyword.component.scss'
 })
 export class FilterKeywordComponent {
+  homeService = inject(HomeServices)
 
+  onChanageProduct(value: string) {
+    this.homeService.productKeyword.set(value)
+  }
 }

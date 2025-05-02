@@ -54,7 +54,7 @@ public class CategoryController {
     }
     @Operation(summary = "Get category by Title")
     @GetMapping("/title/{title}")
-    public EcommerceResponse<CategoryResponse> findById(
+    public EcommerceResponse<CategoryResponse> findByTitle(
             @Parameter(description = "Category Name")
             @PathVariable("title") String title) {
         return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findByTitle(title));

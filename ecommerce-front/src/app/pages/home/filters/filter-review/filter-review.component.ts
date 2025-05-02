@@ -13,4 +13,5 @@ import { dropDownAnimation } from '../../../../shared/animations/animations';
 })
 export class FilterReviewComponent {
   stars = Array.from(Array(5).keys()).reverse()
+  open = false;
 }

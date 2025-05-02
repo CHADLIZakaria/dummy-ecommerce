@@ -1,8 +1,6 @@
 package com.zchadli.dummy_ecommerce_data.ecommerce;
 
-import com.zchadli.dummy_ecommerce_data.ecommerce.model.Category;
-import com.zchadli.dummy_ecommerce_data.ecommerce.model.EcommerceResponse;
-import com.zchadli.dummy_ecommerce_data.ecommerce.model.Product;
+import com.zchadli.dummy_ecommerce_data.ecommerce.model.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +16,11 @@ public interface EcommerceClient {
     @GetMapping(value = "/categories/title/{title}")
     EcommerceResponse<Category> getCategoryByTitle(
             @PathVariable(name="title") String title);
+    @PostMapping("/brands")
+    EcommerceResponse<BrandResponse> saveBrand(@RequestBody() BrandRequest brand);
+    @GetMapping("/brands/name/{name}")
+    EcommerceResponse<BrandResponse> getBrandByName(@PathVariable("name") String name);
+
 
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     void saveProduct(

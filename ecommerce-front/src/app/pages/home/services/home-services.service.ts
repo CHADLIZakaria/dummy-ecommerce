@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
-import { Category, EcomPagination, EcomResponse } from '../../../shared/model/ecom.model';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { BrandWithProduct, Category, CategoryWithProduct, EcomPagination, EcomResponse, Product } from '../../../shared/model/ecom.model';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +12,23 @@ export class HomeServices {
   private http = inject(HttpClient);
 
   getCategories(): Observable<EcomResponse<EcomPagination<Category[]>>> {
-    return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${this.baseUrl}categories`)
+    return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${this.baseUrl}categories?size=0`)
   }
+
+  getCategoriesWithNumberProduct(): Observable<EcomResponse<EcomPagination<CategoryWithProduct[]>>> {
+    return this.http.get<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(`${this.baseUrl}categories/search-with-products?size=10`)
+  }
+  categoryKeyword = signal<string>('')
+  brandKeyword = signal<string>('')
+  productKeyword = signal<string>('')
+  categoriesWithNumberProductResource = httpResource<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(
+    () => `${this.baseUrl}categories/search-with-products?size=10&keyword=${this.categoryKeyword()}`
+  )
+  brandsWithNumberProductsResource = httpResource<EcomResponse<EcomPagination<BrandWithProduct[]>>>(
+    () => `${this.baseUrl}brands/search-with-products?size=10&keyword=${this.brandKeyword()}`
+  )
+  productsResource = httpResource<EcomResponse<EcomPagination<Product[]>>>(
+    () => `${this.baseUrl}products?size=10&keyword=${this.productKeyword()}`
+  )
+  
 }

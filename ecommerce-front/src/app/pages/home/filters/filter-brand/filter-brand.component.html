@@ -1,34 +1,38 @@
 <div class="mt-5 mb-3">
     <p>Brand</p> 
     <button
-      (click)="dropDownFilterBrand.toggle()"
-      class="my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-[#2A9D8F]">
+    ecomDropdown
+      [open]="open"
+      (clickOutside)="open = false"
+      (click)="open = !open"
+      class="relative my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
       <span class="flex-1 text-left">All</span>
       <i class="fa-solid fa-chevron-down"></i>
-    </button>
-    <div 
-      [@dropDownAnimation]="dropDownFilterBrand.isOpen ? 'open':'closed'"
-      ecomDropdown
-      #dropDownFilterBrand="dropDownToggle"
-      class="absolute bg-white z-30 border rounded-sm px-2 border-[#2A9D8F]">
-      <div class="border rounded-sm my-2">
-        <input class="px-2" type="text" placeholder="Search..." />
-        <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
+      <div 
+        class="dropdown-menu absolute left-0 top-[120%] bg-white z-30 border rounded-sm px-2 border-main-color">
+        <div class="border rounded-sm my-2 flex items-center">
+          <input 
+            #searchBrand
+            class="px-2" 
+            type="text" 
+            placeholder="Search..." 
+            (input)="onSearchBrand(searchBrand.value)" />
+          <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
+        </div>
+        <ul>
+          @if(brandsWithNumberProductsResource.isLoading()) {
+            <p>Is Loading</p>
+          }
+          @else {
+            @for(brand of brandsWithNumberProductsResource.value()?.data?.data; track brand.id) {
+              <li class="flex items-center gap-1">
+                <input id="1" type="checkbox" />
+                <label for="1">{{brand.name}} ({{brand.productCounts}})</label>
+              </li>
+            }
+          }
+        </ul>
+        <span class="text-main-color">Show more</span>
       </div>
-      <ul>
-        <li class="flex items-center gap-1">
-          <input id="1" type="checkbox" />
-          <label for="1">All (1)</label>
-        </li>
-        <li class="flex items-center gap-1">
-          <input id="1" type="checkbox" />
-          <label for="1">All (1)</label>
-        </li>
-        <li class="flex items-center gap-1">
-          <input id="1" type="checkbox" />
-          <label for="1">All (1)</label>
-        </li>
-      </ul>
-      <span class="text-main-color">Show 10 more</span>
-    </div>
+    </button>
 </div>

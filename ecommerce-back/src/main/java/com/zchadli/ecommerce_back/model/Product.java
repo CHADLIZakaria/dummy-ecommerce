@@ -25,4 +25,7 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "id_cover_image")
     private UploadedFile coverImage;
+    @ManyToOne
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
 }
