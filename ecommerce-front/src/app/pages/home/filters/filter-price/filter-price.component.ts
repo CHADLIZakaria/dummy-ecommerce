@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { tap } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'ecom-filter-price',
@@ -10,23 +9,23 @@ import { tap } from 'rxjs';
 })
 export class FilterPriceComponent {
   formPrice;
-  minPriceControl = new FormControl(0);
-  maxPriceControl = new FormControl(1000);
+  minPrice = 0;
+  maxPrice = 1000
+  isValidPrice = false;
   
-
   constructor(private formBuilder: FormBuilder) {
     this.formPrice = this.formBuilder.group({
-      minPrice: 0,
-      maxPrice: 1000
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice
     })
     
-    this.minPriceControl.valueChanges.pipe(tap(
-      value => console.log("min price "+value)
-    )).subscribe()
-    this.maxPriceControl.valueChanges.pipe(tap(
-      value => console.log("max price"+ value)
-    )).subscribe()
-    
+    this.formPrice.valueChanges.subscribe(value => {
+      if(value.minPrice! >= value.maxPrice!) {
+        this.formPrice.patchValue({
+          maxPrice: value.minPrice!+10         
+        })
+      }
+    })
   }
 
   onChange(value: any) {

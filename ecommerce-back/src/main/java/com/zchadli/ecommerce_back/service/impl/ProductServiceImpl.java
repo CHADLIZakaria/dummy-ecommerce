@@ -1,7 +1,6 @@
 package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
-import com.zchadli.ecommerce_back.exception.category.CategoryAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
@@ -78,6 +77,9 @@ public class ProductServiceImpl implements ProductService {
         Specification<Product> specification = Specification.where(null);
         if(productSearchRequest.getKeyword() != null && !productSearchRequest.getKeyword().isBlank()) {
             specification  = specification.and(ProductSpecification.nameContains(productSearchRequest.getKeyword()));
+        }
+        if(productSearchRequest.getIdsCategory() != null && !productSearchRequest.getIdsCategory().isEmpty()) {
+            specification = specification.and(ProductSpecification.inCategories(productSearchRequest.getIdsCategory()));
         }
         Page<Product> productPage = productDao.findAll(specification, pageable);
         return new PageResponse<>(

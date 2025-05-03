@@ -1,32 +1,40 @@
-import { Directive, ElementRef, HostBinding, HostListener, input, output, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Renderer2, Output, EventEmitter, output } from '@angular/core';
 
 @Directive({
-  selector: '[ecomDropdown]'
+  selector: '[ecomDropdown]',
+  exportAs: 'ecomDropdown'
 })
 export class DropdownDirective {
-  open = input<boolean>(false);
+  isOpen = false;
   clickOutside = output<MouseEvent>();
+  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private _elem: ElementRef) {
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+    this.setDropdownVisible(this.isOpen)
   }
-  ngOnChanges() {
-    const elem = this._elem.nativeElement.querySelector(".dropdown-menu");
-    if (this.open()) {
-      this.renderer.removeClass(elem, "hidden");
-    } else {
-      this.renderer.addClass(elem, "hidden");
+  closeDropdown() {
+    this.isOpen = false
+    this.setDropdownVisible(false);
+  }
+  setDropdownVisible(visible: boolean) {
+    const dropdownMenuElem = this.elementRef.nativeElement.querySelector('.dropdown-menu');
+    if(dropdownMenuElem) {
+      if (visible) {
+        this.renderer.removeClass(dropdownMenuElem, 'hidden');
+      } 
+      else {
+        this.renderer.addClass(dropdownMenuElem, 'hidden');
+      }
     }
   }
 
-  @HostListener("document:click", ["$event", "$event.target"])
-  public onClick(event: MouseEvent, targetElement: HTMLElement): void {
-    if (!targetElement) {
-      return;
-    }
-    const clickInside = this._elem.nativeElement.contains(targetElement);
-    if (!clickInside && this.open()) {
+  @HostListener('document:click', ['$event, $event.target'])
+  onDocumentClick(event: MouseEvent, target: HTMLElement) {
+    const clickInside = this.elementRef.nativeElement.contains(target)
+    if(!clickInside && this.isOpen) {
+      this.closeDropdown()
       this.clickOutside.emit(event);
     }
   }
-
 }

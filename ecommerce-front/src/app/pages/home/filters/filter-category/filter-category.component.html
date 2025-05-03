@@ -1,38 +1,54 @@
-<div class="mt-5 mb-3">
+<div class="relative mt-5 mb-3" 
+  ecomDropdown
+  #dropdown="ecomDropdown">
   <p>Category</p> 
   <button
-    ecomDropdown
-    [open]="open"
-    (clickOutside)="open = false"
-    (click)="open = !open"
-    class="relative my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
-    <span class="flex-1 text-left">All</span>
+    (click)="dropdown.toggleDropdown()"
+    class="my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
+    @if(categoriesSelected.length===0) {
+      <span class="flex-1 text-left">All</span>
+    }
+    @else {
+      <span class="text-xs">
+        {{ getCategorySelected() }}
+      </span>
+    }
     <i class="fa-solid fa-chevron-down"></i>
-    <div 
-      class="dropdown-menu absolute left-0 top-[120%] bg-white z-30 border rounded-sm px-2 border-main-color">
-      <div class="border rounded-sm my-2 flex items-center">
-        <input 
-          #searchCategory
-          class="px-2" 
-          type="text" 
-          placeholder="Search..." 
-          (input)="onSearchCategory(searchCategory.value)" />
-        <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
-      </div>
-      <ul>
-        @if(categories.isLoading()) {
-          <p>Loading</p>
-        }
-        @else {
-          @for(category of categories.value()?.data?.data; track category.id) {
-            <li class="flex items-center gap-1">
-              <input [id]="category.id" type="checkbox" />
-              <label [for]="category.id">{{category.title}} ({{category.productCounts}})</label>
-            </li>
-          }
-        }
-      </ul>
-      <span class="text-main-color">Show more</span>
-    </div>
   </button>
+  <div
+    [@dropDownAnimation]="dropdown.isOpen ? 'open': 'closed'" 
+    class="hidden dropdown-menu absolute left-0 top-[110%] bg-white z-30 border rounded-sm px-2 border-main-color">
+    <div class="border rounded-sm my-2 flex items-center">
+      <input 
+        #searchCategory
+        class="px-2" 
+        type="text" 
+        placeholder="Search..." 
+        (input)="onSearchCategory(searchCategory.value)" />
+      <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
+    </div>
+    <ul class="h-40 overflow-y-scroll">
+      @if(categories.isLoading()) {
+        <p>Loading</p>
+      }
+      @else {
+        @for(category of categories.value()?.data?.data; track category.id) {
+          <li class="flex items-center gap-1">
+            <input 
+              [id]="category.id+'_'+category.title" 
+              type="checkbox"
+              [value]="category"
+              [checked]="isCategorySelected(category.id)"
+              (change)="onChangeSelectedCategory(category)"
+              />
+            <label [for]="category.id+'_'+category.title">{{category.title}} ({{category.productCounts}})</label>
+          </li>
+        }
+      }
+      @let lengt = categories.value()?.data?.data?.length;
+      @if(categories.value()?.data?.totalElements !== lengt) {
+        <a (click)="showMore()" class="text-main-color">Show more</a>
+      }
+    </ul>
+  </div>
 </div>

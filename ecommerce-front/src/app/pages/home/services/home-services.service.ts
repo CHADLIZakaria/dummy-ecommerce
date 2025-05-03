@@ -15,20 +15,19 @@ export class HomeServices {
     return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${this.baseUrl}categories?size=0`)
   }
 
-  getCategoriesWithNumberProduct(): Observable<EcomResponse<EcomPagination<CategoryWithProduct[]>>> {
-    return this.http.get<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(`${this.baseUrl}categories/search-with-products?size=10`)
-  }
+  categoriesWithProductSize = signal<number>(10)
   categoryKeyword = signal<string>('')
   brandKeyword = signal<string>('')
   productKeyword = signal<string>('')
+  idsCategory = signal<string>('')
   categoriesWithNumberProductResource = httpResource<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(
-    () => `${this.baseUrl}categories/search-with-products?size=10&keyword=${this.categoryKeyword()}`
+    () => `${this.baseUrl}categories/search-with-products?size=${this.categoriesWithProductSize()}&keyword=${this.categoryKeyword()}`
   )
   brandsWithNumberProductsResource = httpResource<EcomResponse<EcomPagination<BrandWithProduct[]>>>(
     () => `${this.baseUrl}brands/search-with-products?size=10&keyword=${this.brandKeyword()}`
   )
   productsResource = httpResource<EcomResponse<EcomPagination<Product[]>>>(
-    () => `${this.baseUrl}products?size=10&keyword=${this.productKeyword()}`
+    () => `${this.baseUrl}products?size=10&keyword=${this.productKeyword()}&idsCategory=${this.idsCategory()}`
   )
   
 }

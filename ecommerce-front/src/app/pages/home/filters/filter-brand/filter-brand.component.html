@@ -1,38 +1,35 @@
 <div class="mt-5 mb-3">
-    <p>Brand</p> 
-    <button
+  <p>Category</p> 
+  <button
     ecomDropdown
-      [open]="open"
-      (clickOutside)="open = false"
-      (click)="open = !open"
-      class="relative my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
-      <span class="flex-1 text-left">All</span>
-      <i class="fa-solid fa-chevron-down"></i>
-      <div 
-        class="dropdown-menu absolute left-0 top-[120%] bg-white z-30 border rounded-sm px-2 border-main-color">
-        <div class="border rounded-sm my-2 flex items-center">
-          <input 
-            #searchBrand
-            class="px-2" 
-            type="text" 
-            placeholder="Search..." 
-            (input)="onSearchBrand(searchBrand.value)" />
-          <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
-        </div>
-        <ul>
-          @if(brandsWithNumberProductsResource.isLoading()) {
-            <p>Is Loading</p>
-          }
-          @else {
-            @for(brand of brandsWithNumberProductsResource.value()?.data?.data; track brand.id) {
-              <li class="flex items-center gap-1">
-                <input id="1" type="checkbox" />
-                <label for="1">{{brand.name}} ({{brand.productCounts}})</label>
-              </li>
-            }
-          }
-        </ul>
-        <span class="text-main-color">Show more</span>
+    class="relative my-1 w-full flex justify-between items-center border px-2 py-1 rounded-sm border-main-color">
+    <span class="flex-1 text-left">All</span>
+    <i class="fa-solid fa-chevron-down"></i>
+    <div 
+      class="hidden dropdown-menu absolute left-0 top-[120%] bg-white z-30 border rounded-sm px-2 border-main-color">
+      <div class="border rounded-sm my-2 flex items-center">
+        <input
+          #searchCategory
+          class="px-2" 
+          type="text" 
+          placeholder="Search..." 
+          (input)="onSearchBrand(searchCategory.value)" />
+        <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>
       </div>
-    </button>
+      <ul>
+        @if(brandsWithNumberProductsResource.isLoading()) {
+          <p>Loading</p>
+        }
+        @else {
+          @for(category of brandsWithNumberProductsResource.value()?.data?.data; track category.id) {
+            <li class="flex items-center gap-1">
+              <input [id]="category.id+'_'+category.name" type="checkbox" />
+              <label [for]="category.id+'_'+category.name">{{category.name}} ({{category.productCounts}})</label>
+            </li>
+          }
+        }
+      </ul>
+      <span class="text-main-color">Show more</span>
+    </div>
+  </button>
 </div>

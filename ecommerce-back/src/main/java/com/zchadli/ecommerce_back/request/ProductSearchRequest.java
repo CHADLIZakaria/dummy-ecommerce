@@ -3,6 +3,8 @@ package com.zchadli.ecommerce_back.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ProductSearchRequest {
@@ -10,4 +12,5 @@ public class ProductSearchRequest {
     private int size = 10;
     private String[] sort = {"id", "desc"};
     private String keyword;
+    private List<Long> idsCategory;
 }
