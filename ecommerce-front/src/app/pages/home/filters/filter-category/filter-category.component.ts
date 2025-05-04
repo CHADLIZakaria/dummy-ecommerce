@@ -27,7 +27,10 @@ export class FilterCategoryComponent {
       this.categoriesSelected.push(category)
     }
     const idsCategory = this.categoriesSelected.map(ele => ele.id).join()
-    this.homeService.idsCategory.set(idsCategory);
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(), 
+      idsCategory: idsCategory
+    })
   }
   getCategorySelected(): string {
     return this.categoriesSelected.map(category => category.title).join(", ")
@@ -35,7 +38,6 @@ export class FilterCategoryComponent {
   isCategorySelected(idCategory: number): boolean {
     return this.categoriesSelected.some(category => category.id===idCategory)
   }
-
   showMore(): void {
     this.homeService.categoriesWithProductSize.set(this.homeService.categoriesWithProductSize()+10)
   }

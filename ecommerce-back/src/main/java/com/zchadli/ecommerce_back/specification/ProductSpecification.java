@@ -17,7 +17,17 @@ public class ProductSpecification {
                     "%"+name.toLowerCase()+"%");
         };
     }
-    public static Specification<Product> inCategories(List<Long> idsCategories) {
-        return (root, query, criteriaBuilder) -> root.get("category").get("id").in(idsCategories);
+    public static Specification<Product> inCategories(List<Long> idsCategory) {
+        return (root, query, criteriaBuilder) -> root.get("category").get("id").in(idsCategory);
     }
+    public static Specification<Product> inBrands(List<Long> idsBrand) {
+        return (root, query, criteriaBuilder) -> root.get("brand").get("id").in(idsBrand);
+    }
+
+    public static Specification<Product> hasPriceInRange(Double minPrice, Double maxPrice) {
+        return (root, query, criteriaBuilder) -> {
+            return criteriaBuilder.between(root.get("price"), minPrice, maxPrice);
+        };
+    }
+
 }

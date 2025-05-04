@@ -23,8 +23,12 @@ public interface EcommerceClient {
 
 
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    void saveProduct(
+    EcommerceResponse<ProductResponse> saveProduct(
             @RequestPart(name="files") MultipartFile[] files,
             @RequestPart(name="coverImage") MultipartFile coverImage,
             @RequestPart(name = "product") Product product);
+
+
+    @PostMapping("/reviews")
+    void saveReview(@RequestBody() ReviewRequest reviewRequest);
 }

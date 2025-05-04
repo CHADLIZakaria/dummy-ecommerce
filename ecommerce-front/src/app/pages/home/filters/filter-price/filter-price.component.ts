@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { HomeServices } from '../../services/home-services.service';
 
 @Component({
   selector: 'ecom-filter-price',
@@ -10,24 +11,31 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 export class FilterPriceComponent {
   formPrice;
   minPrice = 0;
-  maxPrice = 1000
-  isValidPrice = false;
+  maxPrice = 100000
+  homeService = inject(HomeServices);
   
   constructor(private formBuilder: FormBuilder) {
     this.formPrice = this.formBuilder.group({
       minPrice: this.minPrice,
       maxPrice: this.maxPrice
-    })
-    
+    })    
     this.formPrice.valueChanges.subscribe(value => {
       if(value.minPrice! >= value.maxPrice!) {
         this.formPrice.patchValue({
-          maxPrice: value.minPrice!+10         
+          minPrice: value.minPrice!-10
         })
       }
+      else if(value.maxPrice! - value.minPrice! <= 10) {
+        this.formPrice.patchValue({
+          minPrice: value.minPrice!,
+          maxPrice: value.minPrice!+10
+        })
+      }      
+      this.homeService.productFilter.set({
+        ...this.homeService.productFilter(), 
+        minPrice: value.minPrice!, 
+        maxPrice: value.maxPrice!
+      })
     })
-  }
-
-  onChange(value: any) {
   }
 }

@@ -1,12 +1,10 @@
 package com.zchadli.ecommerce_back.mapper;
 
-import com.zchadli.ecommerce_back.model.Brand;
-import com.zchadli.ecommerce_back.model.Category;
-import com.zchadli.ecommerce_back.model.Product;
-import com.zchadli.ecommerce_back.model.UploadedFile;
+import com.zchadli.ecommerce_back.model.*;
 import com.zchadli.ecommerce_back.request.BrandSaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
+import com.zchadli.ecommerce_back.request.ReviewSaveRequest;
 import com.zchadli.ecommerce_back.response.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -46,5 +44,10 @@ public interface EcommerceMapper {
     @Mapping(source = "products", target = "productCounts", qualifiedByName = "mapProductCount")
     BrandFilterResponse toBrandFilterResponse(Brand brand);
     List<BrandFilterResponse> toBrandsFilterResponse(List<Brand> brand);
+
+    Review toReview(ReviewSaveRequest reviewSaveRequest);
+    @Mapping(source = "product.id", target = "idProduct")
+    ReviewResponse toReviewResponse(Review review);
+
 
 }

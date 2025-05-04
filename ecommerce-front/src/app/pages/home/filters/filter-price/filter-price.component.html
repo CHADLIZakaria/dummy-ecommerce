@@ -5,16 +5,18 @@
         formControlName="minPrice"
         class="absolute w-full left-0 top-0 appearance-none bg-transparent" 
         type="range" 
-        min="0" 
-        max="1000"
-        value="0" />
+        [min]="minPrice" 
+        [max]="maxPrice"
+        [value]="minPrice"
+      />
       <input
         formControlName="maxPrice"
         class="absolute w-full left-0 top-0 appearance-none bg-transparent" 
         type="range" 
-        min="0" 
-        max="1000" 
-        value="1000"/>
+        [min]="minPrice"
+        [max]="maxPrice"
+        [value]="maxPrice"
+      />
       <div class="relative w-full h-2 rounded-md bg-zinc-400">
         @let minPricePourcentage = (formPrice.get('minPrice')?.value! * 100) / (maxPrice);
         @let maxPricePourcentage = 100-((formPrice.get('maxPrice')?.value! * 100) / (maxPrice));

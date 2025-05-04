@@ -13,4 +13,7 @@ public class ProductSearchRequest {
     private String[] sort = {"id", "desc"};
     private String keyword;
     private List<Long> idsCategory;
+    private List<Long> idsBrand;
+    private Double minPrice;
+    private Double maxPrice;
 }

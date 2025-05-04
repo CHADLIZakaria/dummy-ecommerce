@@ -11,6 +11,9 @@ export class FilterKeywordComponent {
   homeService = inject(HomeServices)
 
   onChanageProduct(value: string) {
-    this.homeService.productKeyword.set(value)
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(),
+      keyword: value
+    })
   }
 }

@@ -41,10 +41,6 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
             Category category = ecommerceClient.getCategoryByTitle(product.category()).data();
             //Save Brand
             EcommerceResponse<BrandResponse> brandResponse = ecommerceClient.saveBrand(new BrandRequest(product.brand()));
-            System.out.println("brand status "+brandResponse.status());
-            System.out.println("product "+product.title());
-
-
             if(brandResponse.status()==409) {
                 brandResponse = ecommerceClient.getBrandByName(product.brand());
             }
@@ -52,10 +48,15 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
                 brandResponse = ecommerceClient.saveBrand(new BrandRequest(product.title()));
             }
             Product productToSave = dummyJsonMapper.toProduct(product, category.getId(), brandResponse.data().id());
-            saveProduct(productToSave, imagesPath, coverImageDestination);
+            ProductResponse newProduct =  saveProduct(productToSave, imagesPath, coverImageDestination);
+            product.reviews().forEach(
+                review -> {
+                    ecommerceClient.saveReview(dummyJsonMapper.toReview(review, newProduct.id()));
+                }
+            );
         });
     }
-    private void saveProduct(Product product, List<String> path, String coverImage) {
+    private ProductResponse saveProduct(Product product, List<String> path, String coverImage) {
         List<MultipartFile> fileList = new ArrayList<>();
         for(String image: path) {
             File file = new File(PATH_PRODUCT+image);
@@ -67,7 +68,7 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
         }
         MultipartFile[] multipartFiles = fileList.toArray(new MultipartFile[0]);
         MultipartFile coverImageFile = new FileSystemMultipartFile(new File(PATH_PRODUCT+coverImage));
-        ecommerceClient.saveProduct(multipartFiles, coverImageFile, product);
+        return ecommerceClient.saveProduct(multipartFiles, coverImageFile, product).data();
     }
     @Override
     public void saveCategories() {

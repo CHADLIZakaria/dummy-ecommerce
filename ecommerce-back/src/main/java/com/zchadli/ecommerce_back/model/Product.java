@@ -28,4 +28,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_brand")
     private Brand brand;
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
 }

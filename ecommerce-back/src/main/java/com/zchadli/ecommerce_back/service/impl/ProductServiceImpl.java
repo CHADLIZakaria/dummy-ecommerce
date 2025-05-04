@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         product.setBrand(brand);
         product = productDao.save(product);
-        //Uploads Images
+        //Upload Images
         List<UploadedFile> uploadedFiles = new ArrayList<>();
         for(MultipartFile currentFile: files) {
             UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, currentFile);
@@ -80,6 +80,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if(productSearchRequest.getIdsCategory() != null && !productSearchRequest.getIdsCategory().isEmpty()) {
             specification = specification.and(ProductSpecification.inCategories(productSearchRequest.getIdsCategory()));
+        }
+        if(productSearchRequest.getMinPrice() != null && productSearchRequest.getMaxPrice() != null) {
+            specification = specification.and(ProductSpecification.hasPriceInRange(productSearchRequest.getMinPrice(), productSearchRequest.getMaxPrice()));
+        }
+        if(productSearchRequest.getIdsBrand() != null && !productSearchRequest.getIdsBrand().isEmpty()) {
+            specification = specification.and(ProductSpecification.inBrands(productSearchRequest.getIdsBrand()));
         }
         Page<Product> productPage = productDao.findAll(specification, pageable);
         return new PageResponse<>(
