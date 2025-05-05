@@ -3,8 +3,8 @@ package com.zchadli.ecommerce_back.controller;
 import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.CategorySearchRequest;
 import com.zchadli.ecommerce_back.response.CategoryFilterResponse;
-import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.CategoryResponse;
+import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -61,13 +62,15 @@ public class CategoryController {
     }
     @Operation(summary = "Search all categories with optional filters")
     @GetMapping("/search-with-products")
-    public EcommerceResponse<PageResponse<CategoryFilterResponse>> find(CategorySearchRequest categorySearchRequest) {
+    public EcommerceResponse<PageResponse<CategoryFilterResponse>> searchCategoriesWithProducts(CategorySearchRequest categorySearchRequest) {
         return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAllWithNumberProducts(categorySearchRequest));
     }
+
+
     @Operation(summary = "Search all categories with optional filters")
     @GetMapping()
-    public EcommerceResponse<PageResponse<CategoryResponse>> findWithNumberProducts(CategorySearchRequest categorySearchRequest) {
-        return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAll(categorySearchRequest));
+    public EcommerceResponse<PageResponse<CategoryResponse>> searchCategories(HttpServletRequest request) {
+        return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAll(request.getParameterMap()));
     }
     @Operation(summary = "Delete category by Id")
     @DeleteMapping("/{id}")

@@ -1,38 +1,27 @@
 package com.zchadli.ecommerce_back.specification;
 
 import com.zchadli.ecommerce_back.request.SearchCriteria;
-import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GenericSpecificationBuilder<T> {
-    private final List<SearchCriteria> params = new ArrayList<>();
+    private final List<SearchCriteria> searchCriteriaList = new ArrayList<>();
     public GenericSpecificationBuilder<T> with(String key, String operation, Object value) {
-        params.add(new SearchCriteria(key, operation, value));
+        if(value  != null) {
+            searchCriteriaList.add(new SearchCriteria(key, operation, value));
+        }
         return this;
     }
     public Specification<T> build() {
-        if(params.isEmpty()) {
+        if(searchCriteriaList.isEmpty()) {
             return null;
         }
-        return ((root, query, criteriaBuilder) -> {
-           List<Predicate> predicates = new ArrayList<>();
-           for(SearchCriteria param: params) {
-               String key = param.key();
-               String operation = param.operation();
-               Object value = param.value();
-               switch (operation.toLowerCase()) {
-                   case "equal":
-                       predicates.add(criteriaBuilder.equal(root.get(key), value));
-                       break;
-                   case "like":
-                       predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(key)), "%"+value.toString().toLowerCase()+"%"));
-                       break;
-               }
-           }
-           return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+        Specification<T> specification = new GenericSpecification<>(searchCriteriaList.get(0));
+        for(int i=1; i<searchCriteriaList.size(); i++) {
+            specification = Specification.where(specification).and(new GenericSpecification<>(searchCriteriaList.get(i)));
+        }
+        return specification;
     }
 }

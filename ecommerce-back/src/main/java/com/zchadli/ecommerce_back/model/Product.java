@@ -1,5 +1,6 @@
 package com.zchadli.ecommerce_back.model;
 
+import com.zchadli.ecommerce_back.utils.SlugUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String slug;
     private String description;
     private double price;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -30,4 +32,11 @@ public class Product {
     private Brand brand;
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
+    @PrePersist
+    @PreUpdate
+    public void generateSlug() {
+        if(name != null && (slug == null || slug.isEmpty())) {
+            this.slug = SlugUtils.toSlug(name);
+        }
+    }
 }

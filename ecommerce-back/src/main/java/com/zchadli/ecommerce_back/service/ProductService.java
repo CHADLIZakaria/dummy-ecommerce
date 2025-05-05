@@ -9,4 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ProductService {
     ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage);
     PageResponse<ProductResponse> findAll(ProductSearchRequest productSearchRequest);
+    ProductResponse findBySlug(String slug);
 }

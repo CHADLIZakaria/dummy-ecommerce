@@ -3,6 +3,7 @@ package com.zchadli.ecommerce_back.service.impl;
 import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
+import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
 import com.zchadli.ecommerce_back.model.Brand;
 import com.zchadli.ecommerce_back.model.Category;
@@ -94,5 +95,11 @@ public class ProductServiceImpl implements ProductService {
             productPage.getSize(),
             productPage.getNumber()
         );
+    }
+
+    @Override
+    public ProductResponse findBySlug(String slug) {
+        Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
+        return ecommerceMapper.toProductResponse(product);
     }
 }

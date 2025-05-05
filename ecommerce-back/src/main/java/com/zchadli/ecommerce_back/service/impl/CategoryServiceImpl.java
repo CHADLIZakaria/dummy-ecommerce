@@ -13,7 +13,8 @@ import com.zchadli.ecommerce_back.response.CategoryResponse;
 import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.service.CategoryService;
 import com.zchadli.ecommerce_back.service.UploadedFileService;
-import com.zchadli.ecommerce_back.specification.CategorySpecification;
+import com.zchadli.ecommerce_back.specification.GenericSpecificationBuilder;
+import com.zchadli.ecommerce_back.specification.SpecificationBuilderHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -62,8 +65,10 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
     @Override
-    public PageResponse<CategoryResponse> findAll(CategorySearchRequest categorySearchRequest) {
-        Page<Category> categoryPage = findPageCategory(categorySearchRequest);
+    public PageResponse<CategoryResponse> findAll(Map<String, String[]> categorySearchRequest) {
+        Specification<Category> specification = SpecificationBuilderHelper.buildSpecificationFromParams(categorySearchRequest);
+        Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(categorySearchRequest);
+        Page<Category> categoryPage = categoryDao.findAll(specification, pageable);
         return new PageResponse<>(
             ecommerceMapper.toCategoriesResponse(categoryPage.getContent()),
             categoryPage.getTotalElements(),
@@ -76,19 +81,18 @@ public class CategoryServiceImpl implements CategoryService {
         String[] sort = categorySearchRequest.getSort();
         Sort.Direction direction = Sort.Direction.fromString(sort[1]);
         Sort sortBy = Sort.by(direction, sort[0]);
-        Specification<Category> specification = Specification.where(null);
-        if(categorySearchRequest.getKeyword() != null && !categorySearchRequest.getKeyword().isBlank()) {
-            specification  = specification.and(CategorySpecification.titleContains(categorySearchRequest.getKeyword()));
-        }
+        GenericSpecificationBuilder<Category> builder = new GenericSpecificationBuilder<>();
+        builder.with("title", "like", categorySearchRequest.getKeyword());
+        Specification<Category> specification = builder.build();
         Pageable pageable = null;
         if(categorySearchRequest.getSize()==0) {
             pageable = Pageable.unpaged(sortBy);
         }
         else {
             pageable = PageRequest.of(
-                    categorySearchRequest.getPage(),
-                    categorySearchRequest.getSize(),
-                    sortBy
+                categorySearchRequest.getPage(),
+                categorySearchRequest.getSize(),
+                sortBy
             );
         }
         return categoryDao.findAll(specification, pageable);

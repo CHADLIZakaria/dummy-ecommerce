@@ -38,4 +38,9 @@ public class ProductController {
     public EcommerceResponse<PageResponse<ProductResponse>> find(ProductSearchRequest productSearchRequest) {
         return new EcommerceResponse<>(200, "Products retrieved successfully", productService.findAll(productSearchRequest));
     }
+    @Operation(summary = "find by slug")
+    @GetMapping("/{slug}")
+    public EcommerceResponse<ProductResponse> findBySlug(@PathVariable("slug") String slug) {
+        return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(slug));
+    }
 }
