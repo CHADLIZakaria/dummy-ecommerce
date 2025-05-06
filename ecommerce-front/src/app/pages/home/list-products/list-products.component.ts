@@ -4,10 +4,11 @@ import { FiltersComponent } from "../filters/filters.component";
 import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { dropDownAnimation } from '../../../shared/animations/animations';
 import { HomeServices } from '../services/home-services.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'ecom-list-products',
-  imports: [TitleComponent, FiltersComponent, DropdownDirective],
+  imports: [TitleComponent, FiltersComponent, DropdownDirective, RouterLink],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss',
   animations: [dropDownAnimation]
