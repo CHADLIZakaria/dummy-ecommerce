@@ -15,6 +15,7 @@ import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.request.ProductSearchRequest;
 import com.zchadli.ecommerce_back.response.PageResponse;
+import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.service.ProductService;
 import com.zchadli.ecommerce_back.service.UploadedFileService;
@@ -98,8 +99,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse findBySlug(String slug) {
+    public ProductDetailsResponse findBySlug(String slug) {
         Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
-        return ecommerceMapper.toProductResponse(product);
+        return ecommerceMapper.toProductDetailsResponse(product);
     }
 }

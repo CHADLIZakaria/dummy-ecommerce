@@ -4,6 +4,7 @@ import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.request.ProductSearchRequest;
 import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.PageResponse;
+import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +41,7 @@ public class ProductController {
     }
     @Operation(summary = "find by slug")
     @GetMapping("/{slug}")
-    public EcommerceResponse<ProductResponse> findBySlug(@PathVariable("slug") String slug) {
+    public EcommerceResponse<ProductDetailsResponse> findBySlug(@PathVariable("slug") String slug) {
         return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(slug));
     }
 }

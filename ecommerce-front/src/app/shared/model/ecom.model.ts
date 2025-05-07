@@ -38,3 +38,20 @@ export type Product = {
     images: string[];
     coverImage: string;
 }
+export type ProductDetails = {
+    id: number;
+    name: string;
+    slug: string;
+    description: string;
+    price: number;
+    category: string;
+    brand: string;
+    coverImage: string;
+    images: string[];
+    reviews: Review
+}
+export type Review = {
+    id: number;
+    rating: string;
+    comment: string;
+}

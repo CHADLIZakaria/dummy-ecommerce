@@ -34,6 +34,11 @@ public interface EcommerceMapper {
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);
 
+    @Mapping(source = "category.title", target = "category")
+    @Mapping(source = "coverImage.fileName", target = "coverImage")
+    @Mapping(source = "brand.name", target = "brand")
+    ProductDetailsResponse toProductDetailsResponse(Product product);
+
     default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
@@ -48,6 +53,5 @@ public interface EcommerceMapper {
     Review toReview(ReviewSaveRequest reviewSaveRequest);
     @Mapping(source = "product.id", target = "idProduct")
     ReviewResponse toReviewResponse(Review review);
-
-
+    List<ReviewResponse> toReviewsResponse(List<Review> review);
 }
