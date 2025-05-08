@@ -48,10 +48,27 @@ export type ProductDetails = {
     brand: string;
     coverImage: string;
     images: string[];
-    reviews: Review
+    reviews: Review[];
 }
 export type Review = {
     id: number;
-    rating: string;
+    rating: number;
     comment: string;
+}
+
+export const initProductDetails: EcomResponse<ProductDetails> = {
+    message: '',
+    status: 0,
+    data: {
+        id: 0,
+        name: '',
+        slug: '',
+        description: '',
+        price: 0,
+        category: '',
+        brand: '',
+        coverImage: '',
+        images: [],
+        reviews: []
+    }
 }
