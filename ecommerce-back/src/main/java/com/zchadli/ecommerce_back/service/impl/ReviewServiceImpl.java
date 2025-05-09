@@ -7,10 +7,17 @@ import com.zchadli.ecommerce_back.model.Review;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.repository.ReviewDao;
 import com.zchadli.ecommerce_back.request.ReviewSaveRequest;
+import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.response.ReviewResponse;
 import com.zchadli.ecommerce_back.service.ReviewService;
+import com.zchadli.ecommerce_back.specification.SpecificationBuilderHelper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +32,18 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = ecommerceMapper.toReview(reviewSaveRequest);
         review.setProduct(product);
         return ecommerceMapper.toReviewResponse(reviewDao.save(review));
+    }
+
+    @Override
+    public PageResponse<ReviewResponse> findReviews(Map<String, String[]> reviewSearchRequest) {
+        Specification<Review> specification = SpecificationBuilderHelper.buildSpecificationFromParams(reviewSearchRequest);
+        Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(reviewSearchRequest);
+        Page<Review> reviewPage = reviewDao.findAll(specification, pageable);
+        return new PageResponse<>(
+            ecommerceMapper.toReviewsResponse(reviewPage.getContent()),
+            reviewPage.getTotalElements(),
+            reviewPage.getSize(),
+            reviewPage.getNumber()
+        );
     }
 }

@@ -48,7 +48,6 @@ export type ProductDetails = {
     brand: string;
     coverImage: string;
     images: string[];
-    reviews: Review[];
 }
 export type Review = {
     id: number;
@@ -68,7 +67,17 @@ export const initProductDetails: EcomResponse<ProductDetails> = {
         category: '',
         brand: '',
         coverImage: '',
-        images: [],
-        reviews: []
+        images: []
+    }
+}
+
+export const initReviewPagination: EcomResponse<EcomPagination<Review[]>> = {
+    message: '',
+    status: 0,
+    data: {
+        totalElements: 0,
+        size: 0,
+        page: 0,
+        data: []
     }
 }

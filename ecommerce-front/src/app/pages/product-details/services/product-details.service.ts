@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { EcomResponse, initProductDetails, Product, ProductDetails } from '../../../shared/model/ecom.model';
+import { EcomPagination, EcomResponse, initProductDetails, initReviewPagination, Product, ProductDetails, Review } from '../../../shared/model/ecom.model';
 import { HttpClient, httpResource } from '@angular/common/http';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,19 @@ export class ProductDetailsService {
     () => `${this.baseUrl}products/${this.slug()}`,
     {defaultValue: initProductDetails}
   )
+
+  reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
+    () => ({
+      url: `${this.baseUrl}reviews`,
+      params: {
+        'product.slug__eq': this.slug()
+      }        
+    }),
+    {defaultValue: initReviewPagination}     
+  )
   avgReview = computed(
-    () =>  
-      //this.productDetailsResource.value.length > 0 ? 
-      this.productDetailsResource.value().data.reviews.reduce((acc, review)=> review.rating+acc, 0)/this.productDetailsResource.value().data.reviews.length
-      //:0
-    )
+    () => 
+      this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
+  )
+  
 }

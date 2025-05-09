@@ -19,6 +19,8 @@ public class Product {
     private String slug;
     private String description;
     private double price;
+    private String sku;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<UploadedFile> images;
     @ManyToOne
