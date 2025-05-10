@@ -1,4 +1,4 @@
 package com.zchadli.dummy_ecommerce_data.ecommerce.model;
 
-public record Product(String name, String description, Double price, Long idCategory, Long idBrand) {
+public record Product(String name, String description, Double price, Long idCategory, Long idBrand, String sku) {
 }

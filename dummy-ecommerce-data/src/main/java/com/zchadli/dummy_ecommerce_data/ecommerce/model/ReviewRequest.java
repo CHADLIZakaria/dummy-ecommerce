@@ -1,7 +1,13 @@
 package com.zchadli.dummy_ecommerce_data.ecommerce.model;
 
-public record ReviewRequest(
-        Long idProduct,
-        Integer rating,
-        String comment) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ReviewRequest {
+    Long idProduct;
+    Integer rating;
+    String comment;
+    Long idUser;
 }

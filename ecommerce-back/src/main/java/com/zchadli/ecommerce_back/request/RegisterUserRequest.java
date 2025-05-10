@@ -1,4 +1,4 @@
 package com.zchadli.ecommerce_back.request;
 
-public record RegisterUserRequest(String username, String password) {
+public record RegisterUserRequest(String username, String password, String firstName, String lastName) {
 }

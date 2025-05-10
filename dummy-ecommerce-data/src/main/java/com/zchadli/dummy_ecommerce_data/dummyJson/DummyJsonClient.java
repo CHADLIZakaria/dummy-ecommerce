@@ -12,4 +12,7 @@ public interface DummyJsonClient {
 
     @GetMapping(value = "/products?limit=0")
     DummyResponseProduct getProducts();
+
+    @GetMapping(value = "/users?limit=0")
+    DummyResponseUser getUsers();
 }

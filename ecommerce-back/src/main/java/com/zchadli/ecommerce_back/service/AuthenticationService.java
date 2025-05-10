@@ -6,7 +6,7 @@ import com.zchadli.ecommerce_back.request.RegisterUserRequest;
 import com.zchadli.ecommerce_back.response.LoginResponse;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface AuthentificationService {
+public interface AuthenticationService {
     User signup(RegisterUserRequest registerUserRequest, MultipartFile file);
     LoginResponse authenticate(LoginUserRequest loginUserRequest);
 }

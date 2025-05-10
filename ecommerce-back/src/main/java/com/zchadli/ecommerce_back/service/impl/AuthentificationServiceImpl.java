@@ -9,7 +9,7 @@ import com.zchadli.ecommerce_back.repository.UserDao;
 import com.zchadli.ecommerce_back.request.LoginUserRequest;
 import com.zchadli.ecommerce_back.request.RegisterUserRequest;
 import com.zchadli.ecommerce_back.response.LoginResponse;
-import com.zchadli.ecommerce_back.service.AuthentificationService;
+import com.zchadli.ecommerce_back.service.AuthenticationService;
 import com.zchadli.ecommerce_back.service.JwtService;
 import com.zchadli.ecommerce_back.service.UploadedFileService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class AuthentificationServiceImpl implements AuthentificationService {
+public class AuthentificationServiceImpl implements AuthenticationService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager  authenticationManager;
@@ -38,6 +38,8 @@ public class AuthentificationServiceImpl implements AuthentificationService {
                 .builder()
                 .username(registerUserRequest.username())
                 .password(passwordEncoder.encode(registerUserRequest.password()))
+                .firstName(registerUserRequest.firstName())
+                .lastName(registerUserRequest.lastName())
                 .role(Role.USER)
                 .file(uploadedFile)
                 .build();

@@ -1,7 +1,7 @@
 package com.zchadli.dummy_ecommerce_data.ecommerce.service.impl;
 
 import com.zchadli.dummy_ecommerce_data.dummyJson.DummyJsonClient;
-import com.zchadli.dummy_ecommerce_data.dummyJson.DummyJsonMapper;
+import com.zchadli.dummy_ecommerce_data.dummyJson.mapper.DummyJsonMapper;
 import com.zchadli.dummy_ecommerce_data.ecommerce.EcommerceClient;
 import com.zchadli.dummy_ecommerce_data.ecommerce.FileSystemMultipartFile;
 import com.zchadli.dummy_ecommerce_data.ecommerce.model.*;
@@ -23,9 +23,11 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
     private final EcommerceClient ecommerceClient;
     private final DummyJsonMapper dummyJsonMapper;
     private static final String PATH_PRODUCT = "uploads/products/";
+    private static final String PATH_USER = "uploads/users/";
+
     @Override
     public void saveProducts() {
-        dummyJsonClient.getProducts().getProducts().forEach(product -> {
+        dummyJsonClient.getProducts().products().forEach(product -> {
             AtomicInteger index = new AtomicInteger(1);
             List<String> imagesPath = new ArrayList<>();
             //Uploads Images
@@ -49,9 +51,12 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
             }
             Product productToSave = dummyJsonMapper.toProduct(product, category.getId(), brandResponse.data().id());
             ProductResponse newProduct =  saveProduct(productToSave, imagesPath, coverImageDestination);
+            //Reviews
             product.reviews().forEach(
                 review -> {
-                    ecommerceClient.saveReview(dummyJsonMapper.toReview(review, newProduct.id()));
+                    ReviewRequest reviewRequest = dummyJsonMapper.toReview(review, newProduct.id());
+                    reviewRequest.setIdUser(Math.round(Math.floor(Math.random()*100)+1));
+                    ecommerceClient.saveReview(reviewRequest);
                 }
             );
         });
@@ -70,12 +75,23 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
         MultipartFile coverImageFile = new FileSystemMultipartFile(new File(PATH_PRODUCT+coverImage));
         return ecommerceClient.saveProduct(multipartFiles, coverImageFile, product).data();
     }
+
+    public void saveUsers() {
+        dummyJsonClient.getUsers().users().forEach(
+            user -> {
+                String fileName = user.firstName().concat("_").concat(user.lastName())+".jpg";
+                FileHelper.downloadImage(user.image(), PATH_USER + fileName);
+                User newUser = dummyJsonMapper.toUser(user);
+                MultipartFile file = new FileSystemMultipartFile(new File(PATH_USER+fileName));
+                ecommerceClient.saveUser(file, newUser);
+            }
+        );
+    }
     @Override
     public void saveCategories() {
         List<Category> categoryResponses = getCategories();
         categoryResponses.forEach(this::saveCategory);
     }
-
     private void saveCategory(Category categoryResponse) {
         File file = new File("uploads/categories/" + categoryResponse.getTitle() + ".jpg");
         if (!file.exists()) {
@@ -84,7 +100,6 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
         MultipartFile multipartFile = new FileSystemMultipartFile(file);
         ecommerceClient.saveCategory(multipartFile, categoryResponse);
     }
-
     private List<Category> getCategories() {
         return dummyJsonMapper.toCategoryList(dummyJsonClient.getCategories());
     }

@@ -1,8 +1,12 @@
-package com.zchadli.dummy_ecommerce_data.dummyJson;
+package com.zchadli.dummy_ecommerce_data.dummyJson.mapper;
 
+import com.zchadli.dummy_ecommerce_data.dummyJson.DummyProduct;
+import com.zchadli.dummy_ecommerce_data.dummyJson.DummyReview;
+import com.zchadli.dummy_ecommerce_data.dummyJson.model.DummyUser;
 import com.zchadli.dummy_ecommerce_data.ecommerce.model.Category;
 import com.zchadli.dummy_ecommerce_data.ecommerce.model.Product;
 import com.zchadli.dummy_ecommerce_data.ecommerce.model.ReviewRequest;
+import com.zchadli.dummy_ecommerce_data.ecommerce.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -19,5 +23,7 @@ public interface DummyJsonMapper {
     @Mapping(source = "idBrand", target = "idBrand")
     Product toProduct(DummyProduct product, Long idCategory, Long idBrand);
     ReviewRequest toReview(DummyReview review, Long idProduct);
+
+    User toUser(DummyUser dummyUser);
 
 }

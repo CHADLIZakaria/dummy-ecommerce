@@ -21,12 +21,17 @@ public interface EcommerceClient {
     @GetMapping("/brands/name/{name}")
     EcommerceResponse<BrandResponse> getBrandByName(@PathVariable("name") String name);
 
-
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     EcommerceResponse<ProductResponse> saveProduct(
             @RequestPart(name="files") MultipartFile[] files,
             @RequestPart(name="coverImage") MultipartFile coverImage,
             @RequestPart(name = "product") Product product);
+
+
+    @PostMapping(value = "/auth/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    void saveUser(
+            @RequestPart(name="file") MultipartFile file,
+            @RequestPart(name = "user") User user);
 
 
     @PostMapping("/reviews")
