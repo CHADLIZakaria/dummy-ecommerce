@@ -42,6 +42,7 @@ export type ProductDetails = {
     id: number;
     name: string;
     slug: string;
+    sku: string;
     description: string;
     price: number;
     category: string;
@@ -53,6 +54,8 @@ export type Review = {
     id: number;
     rating: number;
     comment: string;
+    username: string;
+    userImage: string;
 }
 
 export const initProductDetails: EcomResponse<ProductDetails> = {
@@ -60,6 +63,7 @@ export const initProductDetails: EcomResponse<ProductDetails> = {
     status: 0,
     data: {
         id: 0,
+        sku: '',
         name: '',
         slug: '',
         description: '',

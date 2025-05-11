@@ -10,7 +10,7 @@ public record ProductDetailsResponse(
         Double price,
         String category,
         String brand,
-        List<ReviewResponse> reviews,
+        String sku,
         List<String> images,
         String coverImage) {
 }

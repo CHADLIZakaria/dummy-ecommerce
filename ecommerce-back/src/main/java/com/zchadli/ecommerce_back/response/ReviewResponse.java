@@ -4,5 +4,7 @@ public record ReviewResponse(
     Long id,
     Long idProduct,
     Integer rating,
-    String comment) {
+    String comment,
+    String username,
+    String userImage) {
 }

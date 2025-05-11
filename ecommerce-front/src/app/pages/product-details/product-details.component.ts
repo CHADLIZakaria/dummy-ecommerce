@@ -1,23 +1,24 @@
-import { Component, inject, Pipe } from '@angular/core';
-import { LandingComponent } from "../home/landing/landing.component";
-import { ProductDetailsService } from './services/product-details.service';
+import { Component, inject } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule, CurrencyPipe, SlicePipe } from '@angular/common';
-import { NumberPipe } from '../../shared/pipes/number.pipe';
-import { StarCountPipe } from '../../shared/pipes/star-count.pipe';
-import { StarPercentagePipe } from '../../shared/pipes/star-percentage.pipe';
+import { Observable } from 'rxjs';
 import { EcomHelper } from '../../shared/helper/ecomHelper';
+import { ImageService } from '../../shared/services/image.service';
+import { ReviewsComponent } from "./reviews/reviews.component";
+import { ProductDetailsService } from './services/product-details.service';
+import { NumberPipe } from '../../shared/pipes/number.pipe';
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [NumberPipe, StarCountPipe, StarPercentagePipe],
+  imports: [ReviewsComponent, NumberPipe],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent {
   productDetailsService = inject(ProductDetailsService);
   productDetailsResource = this.productDetailsService.productDetailsResource
-  numberStar = EcomHelper.range(5).reverse()
+  numberStar = EcomHelper.range(5)
+  imageService = inject(ImageService)
 
   constructor(private route: ActivatedRoute) {
     const slug = this.route.snapshot.paramMap.get('slug');

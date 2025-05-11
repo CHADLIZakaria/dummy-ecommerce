@@ -2,23 +2,23 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { EcomPagination, EcomResponse, initProductDetails, initReviewPagination, Product, ProductDetails, Review } from '../../../shared/model/ecom.model';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { url } from 'inspector';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductDetailsService {
-  private baseUrl = "http://localhost:8080/"
   slug = signal<string>('')
   
   
   productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
-    () => `${this.baseUrl}products/${this.slug()}`,
+    () => `${environment.baseUrl}products/${this.slug()}`,
     {defaultValue: initProductDetails}
   )
 
   reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
     () => ({
-      url: `${this.baseUrl}reviews`,
+      url: `${environment.baseUrl}reviews`,
       params: {
         'product.slug__eq': this.slug()
       }        

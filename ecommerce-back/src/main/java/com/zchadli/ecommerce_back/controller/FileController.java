@@ -26,6 +26,9 @@ public class FileController {
         else if("product".equals(table)) {
             imagePath = Paths.get("./uploads/products/"+filename);
         }
+        else if("user".equals(table)) {
+            imagePath = Paths.get("./uploads/users/"+filename);
+        }
         byte[] imageBytes = Files.readAllBytes(imagePath);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
