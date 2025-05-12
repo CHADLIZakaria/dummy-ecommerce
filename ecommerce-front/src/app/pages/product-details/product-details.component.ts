@@ -7,10 +7,11 @@ import { ImageService } from '../../shared/services/image.service';
 import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
 import { NumberPipe } from '../../shared/pipes/number.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, NumberPipe],
+  imports: [ReviewsComponent, NumberPipe, CommonModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
@@ -19,11 +20,15 @@ export class ProductDetailsComponent {
   productDetailsResource = this.productDetailsService.productDetailsResource
   numberStar = EcomHelper.range(5)
   imageService = inject(ImageService)
+  currentImage: number = 0
 
   constructor(private route: ActivatedRoute) {
     const slug = this.route.snapshot.paramMap.get('slug');
     if(slug) {
       this.productDetailsService.slug.set(slug)
     }
+  }
+  changeCurrentImage(index: number) {
+    this.currentImage = index
   }
 }

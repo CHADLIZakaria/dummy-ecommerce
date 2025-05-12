@@ -7,61 +7,52 @@
   <div class="relative max-w-screen-xl mx-auto">
       <div class="relative rounded-lg ">
           <div class="relative h-full pt-[100px] mx-auto">
-            <ol class="z-20 relative flex items-center whitespace-nowrap p-2 my-3">
-                <li class="inline-flex items-center">
-                  <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600" href="#">
-                    <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    Home
-                  </a>
-                  <svg class="shrink-0 mx-2 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m9 18 6-6-6-6"></path>
-                  </svg>
-                </li>
-                <li class="inline-flex items-center">
-                  <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600" href="#">
-                    <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-                      <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
-                    </svg>
-                    App Center
-                    <svg class="shrink-0 mx-2 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </a>
-                </li>
-                <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-                  Application
-                </li>
-            </ol>
             <div class="flex h-full justify-between overflow-hidden">
               <!-- Product Images -->
               <div class="z-20 w-full md:w-1/2 px-4 mb-8">
                   <div class="border w-[300px] h-[300px] mx-auto rounded-md bg-slate-200 shadow-sm">
-                    <img [src]="'http://localhost:8080/file/product/'+product.coverImage"
-                    class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg mb-4" id="mainImage">
+                    <img                       
+                      [src]="'http://localhost:8080/file/product/'+product.images[currentImage] "
+                      class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg mb-4" id="mainImage">
                   </div>
                   <div class="flex gap-4 py-4 justify-center overflow-x-auto">
-                    @for(image of product.images; track image) {
+                    @for(image of product.images; track image; let idx = $index) {
                       <img
-                          [src]="'http://localhost:8080/file/product/'+image"
-                          class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300" />
+                        (click)="changeCurrentImage(idx)"
+                        [ngClass]="{'border opacity-100 shadow-sm': idx===currentImage}"
+                        [src]="'http://localhost:8080/file/product/'+image"
+                        class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300 border-main-color border-solid hover:border" />
                     }
                   </div>
               </div>              
               <!-- Product Details -->
-              <div class="z-20 w-full flex flex-col gap-3 md:w-1/2 px-4">
+              <div class="z-20 w-full flex flex-col md:w-1/2 px-4">
+                  <ol class="relative flex items-center gap-2 mb-4">
+                    <li class="inline-flex gap-1 items-center">
+                      <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
+                        Home
+                      </a>
+                      <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                    </li>
+                    <li class="inline-flex gap-1 items-center">
+                      <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
+                        {{product.category}}
+                      </a>
+                      <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                    </li>
+                    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+                      {{product.name}}
+                    </li>
+                  </ol>            
                   <h2 class="text-3xl font-bold mb-2">
                       {{product.name}}
                   </h2>
-                  <div class="flex gap-3">
+                  <div class="flex gap-3 mb-2">
                     <p class="text-gray-600">Brand: {{product.brand}}</p>
                     <p class="text-gray-600">SKU: {{product.sku}}</p>
                   </div>
-                  <p class="text-gray-600">Category: {{product.category}}</p>
-                  <div class="flex items-center gap-3 ">
+                  <p class="text-gray-600 mb-2">Category: {{product.category}}</p>
+                  <div class="flex items-center gap-3 mb-2">
                     <div class="my-4">
                       <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">${{product.price}}</span>
                     </div>
