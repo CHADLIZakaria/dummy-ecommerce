@@ -97,7 +97,6 @@ public class ProductServiceImpl implements ProductService {
             productPage.getNumber()
         );
     }
-
     @Override
     public ProductDetailsResponse findBySlug(String slug) {
         Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));

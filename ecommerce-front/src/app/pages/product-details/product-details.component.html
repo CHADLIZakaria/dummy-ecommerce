@@ -19,9 +19,9 @@
                     @for(image of product.images; track image; let idx = $index) {
                       <img
                         (click)="changeCurrentImage(idx)"
-                        [ngClass]="{'border opacity-100 shadow-sm': idx===currentImage}"
+                        [ngClass]="idx===currentImage ? 'border opacity-100 shadow-sm': 'opacity-60 '"
                         [src]="'http://localhost:8080/file/product/'+image"
-                        class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300 border-main-color border-solid hover:border" />
+                        class="size-16 sm:size-20 object-cover rounded-md cursor-pointer hover:opacity-100 transition duration-300 border-main-color border-solid hover:border" />
                     }
                   </div>
               </div>              
@@ -73,9 +73,9 @@
                   <p class="text-gray-700 mb-6">
                     {{product.description}}
                   </p>
-                  <div class="flex space-x-4 mb-6">
+                  <div class="flex space-x-2">
                       <button
-                          class="bg-indigo-600 flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                          class="bg-main-color flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                               stroke-width="1.5" stroke="currentColor" class="size-6">
                               <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,15 +83,14 @@
                           </svg>
                           Add to Cart
                       </button>
-                      <button
-                          class="bg-gray-200 flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                              stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                          </svg>
+                      <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <i class="fa-regular fa-heart text-md"></i>
                           Wishlist
                       </button>
+                      <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <i class="fa-solid fa-code-compare"></i>
+                        Compare                  
+                      </button>                      
                   </div>
               </div>
             </div>
