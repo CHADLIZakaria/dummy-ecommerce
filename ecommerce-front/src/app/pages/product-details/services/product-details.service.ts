@@ -9,25 +9,30 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class ProductDetailsService {
   slug = signal<string>('')
-  
-  
+
+
   productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
     () => `${environment.baseUrl}products/${this.slug()}`,
     {defaultValue: initProductDetails}
   )
 
+  sort=signal({
+    'column': 'id',
+    'order': 'desc'
+  })
   reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
     () => ({
       url: `${environment.baseUrl}reviews`,
       params: {
-        'product.slug__eq': this.slug()
-      }        
+        'product.slug__eq': this.slug(),
+        'sort': this.sort().column+','+this.sort().order
+      }
     }),
-    {defaultValue: initReviewPagination}     
+    {defaultValue: initReviewPagination}
   )
   avgReview = computed(
-    () => 
+    () =>
       this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
-  
+
 }
