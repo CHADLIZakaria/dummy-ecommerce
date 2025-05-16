@@ -9,17 +9,17 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class ProductDetailsService {
   slug = signal<string>('')
-
-
-  productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
-    () => `${environment.baseUrl}products/${this.slug()}`,
-    {defaultValue: initProductDetails}
-  )
-
   sort=signal({
     'column': 'id',
     'order': 'desc'
   })
+
+  productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
+    () => ({
+      url:`${environment.baseUrl}products/${this.slug()}`,
+    }),
+    {defaultValue: initProductDetails}
+  )
   reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
     () => ({
       url: `${environment.baseUrl}reviews`,
