@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { dropDownAnimation } from '../../../../shared/animations/animations';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 import { DropdownDirective } from '../../../../shared/directives/dropdown.directive';
-import { HomeServices } from '../../services/home-services.service';
 import { Category } from '../../../../shared/model/ecom.model';
+import { HomeServices } from '../../services/home-services.service';
 
 @Component({
   selector: 'ecom-filter-category',
-  imports: [DropdownDirective],
+  imports: [DropdownDirective, LoadingComponent],
   templateUrl: './filter-category.component.html',
   styleUrl: './filter-category.component.scss',
   animations: [dropDownAnimation]
@@ -16,15 +17,15 @@ export class FilterCategoryComponent {
   categories = this.homeService.categoriesWithNumberProductResource
   categoriesSelected: Category[]= []
 
-  onSearchCategory(value: string): void {
-    this.homeService.categoryKeyword.set(value)
+  onSearchCategories(value: string): void {
+    this.homeService.brandKeyword.set(value)
   }  
-  onChangeSelectedCategory(category: Category): void {
-    if(this.categoriesSelected.includes(category)) {
-      this.categoriesSelected.splice(this.categoriesSelected.indexOf(category), 1)
+  onChangeSelectedCategory(brand: Category): void {
+    if(this.categoriesSelected.includes(brand)) {
+      this.categoriesSelected.splice(this.categoriesSelected.indexOf(brand), 1)
     }
     else {
-      this.categoriesSelected.push(category)
+      this.categoriesSelected.push(brand)
     }
     const idsCategory = this.categoriesSelected.map(ele => ele.id).join()
     this.homeService.productFilter.set({
@@ -32,11 +33,15 @@ export class FilterCategoryComponent {
       idsCategory: idsCategory
     })
   }
-  getCategorySelected(): string {
-    return this.categoriesSelected.map(category => category.title).join(", ")
-  }
   isCategorySelected(idCategory: number): boolean {
     return this.categoriesSelected.some(category => category.id===idCategory)
+  }
+  resetCategorySelected(): void {
+    this.categoriesSelected = []
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(), 
+      idsCategory: ''
+    })
   }
   showMore(): void {
     this.homeService.categoriesWithProductSize.set(this.homeService.categoriesWithProductSize()+10)

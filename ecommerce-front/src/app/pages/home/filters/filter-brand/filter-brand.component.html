@@ -52,7 +52,7 @@
     }
     @else {
     <ul class="h-40 overflow-y-scroll">
-        @for(brand of brands.value()?.data?.data; track brand.id) {
+        @for(brand of brands.value().data.data; track brand.id) {
           <li class="flex items-center gap-1">
             <input 
               [id]="brand.id+'_'+brand.name" 
@@ -65,7 +65,7 @@
           </li>
         }
       </ul>
-      @let isShowMoreVisible = brands.value()?.data?.totalElements !== brands.value()?.data?.data?.length;
+      @let isShowMoreVisible = brands.value().data.totalElements !== brands.value().data.data.length;
       @if(isShowMoreVisible) {
         <a 
         (click)="showMore()" 

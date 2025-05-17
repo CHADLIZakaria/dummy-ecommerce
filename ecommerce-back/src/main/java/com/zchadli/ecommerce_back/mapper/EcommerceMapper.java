@@ -27,9 +27,20 @@ public interface EcommerceMapper {
     Category toCategory(CategorySaveRequest categorySaveRequest);
     List<CategoryResponse> toCategoriesResponse(List<Category> categories);
 
-    @Mapping(source = "category.title", target = "category")
     @Mapping(source = "coverImage.fileName", target = "coverImage")
+    @Mapping(source = "reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
+    @Mapping(source = "reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
     ProductResponse toProductResponse(Product product);
+    @Named("mapReviewsCount")
+    default Integer mapReviewsCount(List<Review> reviews) {
+        return reviews != null ? reviews.size() : 0;
+    }
+
+    @Named("mapAvgReviews")
+    default Double mapAvgReviews(List<Review> reviews) {
+        return reviews != null ? reviews.stream().map(Review::getRating).reduce(0, Integer::sum)/(double)reviews.size() : 0d;
+    }
+
 
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);

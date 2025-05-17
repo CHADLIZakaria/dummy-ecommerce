@@ -8,7 +8,8 @@ public record ProductResponse(
         String slug,
         String description,
         Double price,
-        String category,
         List<String> images,
+        Double avgReview,
+        Double reviewsCounts,
         String coverImage) {
 }

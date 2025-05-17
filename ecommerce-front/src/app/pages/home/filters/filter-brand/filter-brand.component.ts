@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { dropDownAnimation } from '../../../../shared/animations/animations';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 import { DropdownDirective } from '../../../../shared/directives/dropdown.directive';
-import { HomeServices } from '../../services/home-services.service';
 import { Brand } from '../../../../shared/model/ecom.model';
+import { HomeServices } from '../../services/home-services.service';
 
 @Component({
   selector: 'ecom-filter-brand',
-  imports: [DropdownDirective],
+  imports: [DropdownDirective, LoadingComponent],
   templateUrl: './filter-brand.component.html',
   styleUrl: './filter-brand.component.scss',
   animations: [dropDownAnimation]
@@ -15,7 +16,6 @@ export class FilterBrandComponent {
   homeService = inject(HomeServices)
   brands = this.homeService.brandsWithNumberProductsResource
   brandsSelected: Brand[]= []
-
   onSearchBrands(value: string): void {
     this.homeService.brandKeyword.set(value)
   }  
@@ -32,13 +32,17 @@ export class FilterBrandComponent {
       idsBrand: idsBrand
     })
   }
-  getBrandsSelected(): string {
-    return this.brandsSelected.map(brand => brand.name).join(", ")
-  }
   isBrandSelected(idBrand: number): boolean {
     return this.brandsSelected.some(brand => brand.id===idBrand)
   }
+  resetBrandSelected(): void {
+    this.brandsSelected = []
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(), 
+      idsBrand: ''
+    })
+  }
   showMore(): void {
-    //this.homeService.brandsWithNumberProductsResource.set(this.homeService.brandsWithNumberProductsResource()+10)
+    this.homeService.brandsWithProductSize.set(this.homeService.brandsWithProductSize()+10)
   }
 }

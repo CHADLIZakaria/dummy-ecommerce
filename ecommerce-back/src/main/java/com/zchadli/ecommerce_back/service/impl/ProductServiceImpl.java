@@ -13,24 +13,23 @@ import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
-import com.zchadli.ecommerce_back.request.ProductSearchRequest;
 import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
+import com.zchadli.ecommerce_back.response.RangePriceResponse;
 import com.zchadli.ecommerce_back.service.ProductService;
 import com.zchadli.ecommerce_back.service.UploadedFileService;
-import com.zchadli.ecommerce_back.specification.ProductSpecification;
+import com.zchadli.ecommerce_back.specification.SpecificationBuilderHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -67,28 +66,9 @@ public class ProductServiceImpl implements ProductService {
         return ecommerceMapper.toProductResponse(productDao.save(product));
     }
     @Override
-    public PageResponse<ProductResponse> findAll(ProductSearchRequest productSearchRequest) {
-        String[] sort = productSearchRequest.getSort();
-        Sort.Direction direction = Sort.Direction.fromString(sort[1]);
-        Sort sortBy = Sort.by(direction, sort[0]);
-        Pageable pageable = PageRequest.of(
-            productSearchRequest.getPage(),
-            productSearchRequest.getSize(),
-            sortBy
-        );
-        Specification<Product> specification = Specification.where(null);
-        if(productSearchRequest.getKeyword() != null && !productSearchRequest.getKeyword().isBlank()) {
-            specification  = specification.and(ProductSpecification.nameContains(productSearchRequest.getKeyword()));
-        }
-        if(productSearchRequest.getIdsCategory() != null && !productSearchRequest.getIdsCategory().isEmpty()) {
-            specification = specification.and(ProductSpecification.inCategories(productSearchRequest.getIdsCategory()));
-        }
-        if(productSearchRequest.getMinPrice() != null && productSearchRequest.getMaxPrice() != null) {
-            specification = specification.and(ProductSpecification.hasPriceInRange(productSearchRequest.getMinPrice(), productSearchRequest.getMaxPrice()));
-        }
-        if(productSearchRequest.getIdsBrand() != null && !productSearchRequest.getIdsBrand().isEmpty()) {
-            specification = specification.and(ProductSpecification.inBrands(productSearchRequest.getIdsBrand()));
-        }
+    public PageResponse<ProductResponse> findAll(Map<String, String[]> productSearchRequest) {
+        Specification<Product> specification = SpecificationBuilderHelper.buildSpecificationFromParams(productSearchRequest);
+        Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(productSearchRequest);
         Page<Product> productPage = productDao.findAll(specification, pageable);
         return new PageResponse<>(
             ecommerceMapper.toProductsResponse(productPage.getContent()),
@@ -101,5 +81,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailsResponse findBySlug(String slug) {
         Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
         return ecommerceMapper.toProductDetailsResponse(product);
+    }
+    @Override
+    public RangePriceResponse findRangePrice(Map<String, String[]> productSearchRequest) {
+        Specification<Product> specification = SpecificationBuilderHelper.buildSpecificationFromParams(productSearchRequest);
+        Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(productSearchRequest);
+        List<Product> products = productDao.findAll(specification, pageable).get().toList();
+        Double maxPrice = products.stream().map(Product::getPrice).max(Double::compare).orElse(0d);
+        Double minPrice = products.stream().map(Product::getPrice).min(Double::compare).orElse(0d);
+        return new RangePriceResponse(minPrice, maxPrice);
     }
 }

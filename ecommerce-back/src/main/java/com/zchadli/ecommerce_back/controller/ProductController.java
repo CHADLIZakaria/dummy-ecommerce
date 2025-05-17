@@ -1,14 +1,11 @@
 package com.zchadli.ecommerce_back.controller;
 
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
-import com.zchadli.ecommerce_back.request.ProductSearchRequest;
-import com.zchadli.ecommerce_back.response.EcommerceResponse;
-import com.zchadli.ecommerce_back.response.PageResponse;
-import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
-import com.zchadli.ecommerce_back.response.ProductResponse;
+import com.zchadli.ecommerce_back.response.*;
 import com.zchadli.ecommerce_back.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -36,12 +33,16 @@ public class ProductController {
     }
     @Operation(summary = "Search all products with optional filters")
     @GetMapping()
-    public EcommerceResponse<PageResponse<ProductResponse>> find(ProductSearchRequest productSearchRequest) {
-        return new EcommerceResponse<>(200, "Products retrieved successfully", productService.findAll(productSearchRequest));
+    public EcommerceResponse<PageResponse<ProductResponse>> find(HttpServletRequest productSearchRequest) {
+        return new EcommerceResponse<>(200, "Products retrieved successfully", productService.findAll(productSearchRequest.getParameterMap()));
     }
     @Operation(summary = "find by slug")
     @GetMapping("/{slug}")
     public EcommerceResponse<ProductDetailsResponse> findBySlug(@PathVariable("slug") String slug) {
         return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(slug));
+    }
+    @GetMapping("/getRangePrice")
+    public EcommerceResponse<RangePriceResponse> findRangePrice(HttpServletRequest productSearchRequest) {
+        return new EcommerceResponse<>(200, "Range Price retrieved successfully", productService.findRangePrice(productSearchRequest.getParameterMap()));
     }
 }

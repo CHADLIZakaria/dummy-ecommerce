@@ -65,8 +65,6 @@ public class CategoryController {
     public EcommerceResponse<PageResponse<CategoryFilterResponse>> searchCategoriesWithProducts(CategorySearchRequest categorySearchRequest) {
         return new EcommerceResponse<>(200, "Categories retrieved successfully", categoryService.findAllWithNumberProducts(categorySearchRequest));
     }
-
-
     @Operation(summary = "Search all categories with optional filters")
     @GetMapping()
     public EcommerceResponse<PageResponse<CategoryResponse>> searchCategories(HttpServletRequest request) {

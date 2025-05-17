@@ -14,17 +14,6 @@ export type Category = {
     title: string;
     imagePath: string;
 }
-export type CategoryWithProduct = {
-    id: number;
-    title: string;
-    imagePath: string;
-    productCounts: number;
-}
-export type BrandWithProduct = {
-    id: number;
-    name: string;
-    productCounts: number;
-}
 export type Brand = {
     id: number;
     name: string;
@@ -37,6 +26,8 @@ export type Product = {
     price: number;
     images: string[];
     coverImage: string;
+    avgReview: number,
+    reviewsCounts: number
 }
 export type ProductDetails = {
     id: number;

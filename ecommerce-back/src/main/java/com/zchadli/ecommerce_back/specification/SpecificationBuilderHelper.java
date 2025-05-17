@@ -5,10 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SpecificationBuilderHelper {
     private static final Map<String, String> OPERATOR_MAP = Map.of(
@@ -19,16 +17,29 @@ public class SpecificationBuilderHelper {
     "in", "in");
     public static <T> Specification<T> buildSpecificationFromParams(Map<String, String[]> parameterMap) {
         GenericSpecificationBuilder<T> builder = new GenericSpecificationBuilder<>();
-        parameterMap.forEach((param, values) -> {
-            if(param.contains("__") && values.length > 0) {
+        Map<String, List<String>> filtersParam = new HashMap<>();
+        for(Map.Entry<String, String[]> entry: parameterMap.entrySet()) {
+            String key = entry.getKey();
+            String[] values = entry.getValue();
+            List<String> nonEmptyValues = Arrays.stream(values)
+                    .flatMap(value -> Arrays.stream(value.split(",")))
+                    .map(String::trim)
+                    .filter(v -> !v.isEmpty())
+                    .collect(Collectors.toList());
+            if(!nonEmptyValues.isEmpty()) {
+                filtersParam.put(key, nonEmptyValues);
+            }
+        }
+        filtersParam.forEach((param, values) -> {
+            if(param.contains("__") && values.size() > 0) {
                 String[] parts = param.split("__");
                 String key = parts[0];
                 String opKey = parts[1];
                 String operation = OPERATOR_MAP.get(opKey);
                 if(operation != null) {
-                    Object value = values[0];
+                    Object value = values.get(0);
                     if(operation.equals("in")) {
-                        value = Arrays.asList(values[0].split(","));
+                        value = Arrays.asList(values.get(0).split(","));
                     }
                     builder.with(key, operation, value);
                 }
