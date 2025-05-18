@@ -5,10 +5,12 @@ import { DropdownDirective } from '../../../shared/directives/dropdown.directive
 import { dropDownAnimation } from '../../../shared/animations/animations';
 import { HomeServices } from '../services/home-services.service';
 import { RouterLink } from '@angular/router';
+import { EcomHelper } from '../../../shared/helper/ecomHelper';
+import { NumberPipe } from '../../../shared/pipes/number.pipe';
 
 @Component({
   selector: 'ecom-list-products',
-  imports: [TitleComponent, FiltersComponent, DropdownDirective, RouterLink],
+  imports: [TitleComponent, FiltersComponent, DropdownDirective, RouterLink,NumberPipe],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss',
   animations: [dropDownAnimation]
@@ -17,4 +19,11 @@ export class ListProductsComponent {
   homeService = inject(HomeServices)
   productsResource = this.homeService.productsResource;
   open = false;
+  numberStar = EcomHelper.range(5)
+  showMoreProducts() {
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(),
+      size: this.homeService.productFilter().size+10
+    })
+  }
 }

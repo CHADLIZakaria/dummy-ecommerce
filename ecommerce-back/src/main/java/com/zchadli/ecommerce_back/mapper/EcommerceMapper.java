@@ -40,16 +40,12 @@ public interface EcommerceMapper {
     default Double mapAvgReviews(List<Review> reviews) {
         return reviews != null ? reviews.stream().map(Review::getRating).reduce(0, Integer::sum)/(double)reviews.size() : 0d;
     }
-
-
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);
-
     @Mapping(source = "category.title", target = "category")
     @Mapping(source = "coverImage.fileName", target = "coverImage")
     @Mapping(source = "brand.name", target = "brand")
     ProductDetailsResponse toProductDetailsResponse(Product product);
-
     default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
