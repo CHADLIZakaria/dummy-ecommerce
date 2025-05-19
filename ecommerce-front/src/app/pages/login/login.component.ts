@@ -24,16 +24,13 @@ export class LoginComponent {
   })
   toggleShowPassword() {
     this.showPassword = !this.showPassword
-  }
-  
+  }  
   login() {
     this.loginService.login({
       username: this.formLogin.value.username!, 
       password: this.formLogin.value.password!
     }).subscribe(data => {
       if(data.status === 200) {
-        localStorage.setItem("token", data.data.token)
-        this.loginService.user.set(data.data)
         this.router.navigate(['/'])
       }
       else {

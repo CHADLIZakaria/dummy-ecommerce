@@ -1,53 +1,55 @@
-<nav class="fixed z-50 left-1/2 -translate-x-1/2 top-0 h-24 w-full m-auto bg-white navbar drop-shadow-md flex">
-    <a class="flex items-center space-x-3">
-      <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap">Dummy E-Shop</span>
-    </a>
-    <div class="flex">
-        <input type="text" />
-        <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="text-gray-500 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 me-1">
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-            <span class="sr-only">Search</span>
-        </button>
-    </div>
-    <ul class="ml-auto flex items-center gap-5 justify-between font-medium">
-        <li>
-            <a class="rounded-sm hover:text-main-color">Home</a>
-        </li>
-        <li>
-            <button 
-                class="flex items-center rounded-sm hover:text-main-color">
-                Categories 
-                <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+<nav class="fixed z-50 top-0 h-24 bg-white navbar drop-shadow-md w-full">
+    <div class="max-w-screen-xl mx-auto h-full flex items-center">
+        <a class="flex items-center space-x-3">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
+          <span class="self-center text-2xl font-semibold whitespace-nowrap">Dummy E-Shop</span>
+        </a>
+        <div class="flex">
+            <input type="text" />
+            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="text-gray-500 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 me-1">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
+                <span class="sr-only">Search</span>
             </button>
-        </li>
-        @if(loginService.user() === null) {
-            <li class="flex">
-                <a class="rounded-sm hover:text-main-color">Login</a>
-                /
-                <a class="rounded-sm hover:text-main-color">Register</a>
+        </div>
+        <ul class="ml-auto flex items-center gap-5 justify-between font-medium">
+            <li>
+                <a routerLink="/" class="rounded-sm hover:text-main-color">Home</a>
             </li>
-        }
-        @if(loginService.user() !== null) {
-            <li class="w-12 h-12">
-                <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-1.png" alt="avatar" class="rounded-full" />
-            </li>  
-        }
-    </ul>
-    <div class="hidden mt-1 border-gray-200 shadow-xs bg-gray-50 md:bg-white border-y">
-        <div class="bg-main-500 grid max-w-screen-xl px-4 py-5 mx-auto sm:grid-cols-2 md:px-6">
-            <ul>
-                <li>
-                    <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
-                        <div class="font-semibold">Online Stores</div>
-                        <span class="text-sm">Connect with third-party tools that you're already using.</span>
-                    </a>
+            <li>
+                <button 
+                    class="flex items-center rounded-sm hover:text-main-color">
+                    Categories 
+                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+            </li>
+            @if(loginService.user() === null) {
+                <li class="flex gap-1">
+                    <a routerLink="/login" class="rounded-sm hover:text-main-color">Login</a>
+                    /
+                    <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
-            </ul>
+            }
+            @if(loginService.user() !== null) {
+                <li class="w-12 h-12">
+                    <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-1.png" alt="avatar" class="rounded-full" />
+                </li>  
+            }
+        </ul>
+        <div class="hidden mt-1 border-gray-200 shadow-xs bg-gray-50 md:bg-white border-y">
+            <div class="bg-main-500 grid max-w-screen-xl px-4 py-5 mx-auto sm:grid-cols-2 md:px-6">
+                <ul>
+                    <li>
+                        <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
+                            <div class="font-semibold">Online Stores</div>
+                            <span class="text-sm">Connect with third-party tools that you're already using.</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>

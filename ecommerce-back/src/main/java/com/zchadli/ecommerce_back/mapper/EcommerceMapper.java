@@ -65,4 +65,6 @@ public interface EcommerceMapper {
     @Mapping(source = "user.file.fileName", target = "userImage")
     ReviewResponse toReviewResponse(Review review);
     List<ReviewResponse> toReviewsResponse(List<Review> review);
+    @Mapping(source = "file.fileName", target = "filePath")
+    UserResponse toUserResponse(User user);
 }
