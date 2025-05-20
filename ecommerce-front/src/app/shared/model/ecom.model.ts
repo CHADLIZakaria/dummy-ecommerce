@@ -48,7 +48,10 @@ export type Review = {
     username: string;
     userImage: string;
 }
-
+export type User = {
+    username: string;
+    filePath: string
+}
 export const initProductDetails: EcomResponse<ProductDetails> = {
     message: '',
     status: 0,
@@ -68,6 +71,16 @@ export const initProductDetails: EcomResponse<ProductDetails> = {
 
 export const initReviewPagination: EcomResponse<EcomPagination<Review[]>> = {
     message: '',
+    status: 0,
+    data: {
+        totalElements: 0,
+        size: 0,
+        page: 0,
+        data: []
+    }
+}
+export const initCategoryPagination: EcomResponse<EcomPagination<Category[]>> = {
+     message: '',
     status: 0,
     data: {
         totalElements: 0,

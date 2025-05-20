@@ -39,7 +39,7 @@ public class SpecificationBuilderHelper {
                 if(operation != null) {
                     Object value = values.get(0);
                     if(operation.equals("in")) {
-                        value = Arrays.asList(values.get(0).split(","));
+                        value = values;
                     }
                     builder.with(key, operation, value);
                 }

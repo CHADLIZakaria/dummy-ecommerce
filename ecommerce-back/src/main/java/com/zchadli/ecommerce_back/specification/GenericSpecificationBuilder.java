@@ -9,7 +9,7 @@ import java.util.List;
 public class GenericSpecificationBuilder<T> {
     private final List<SearchCriteria> searchCriteriaList = new ArrayList<>();
     public GenericSpecificationBuilder<T> with(String key, String operation, Object value) {
-        if(value  != null) {
+        if(value != null) {
             searchCriteriaList.add(new SearchCriteria(key, operation, value));
         }
         return this;

@@ -2,17 +2,14 @@ package com.zchadli.ecommerce_back.specification;
 
 import com.zchadli.ecommerce_back.request.SearchCriteria;
 import jakarta.persistence.criteria.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Collection;
 
-
+@RequiredArgsConstructor
 public class GenericSpecification<T> implements Specification<T> {
     private final SearchCriteria searchCriteria;
-    public GenericSpecification(SearchCriteria searchCriteria) {
-        this.searchCriteria = searchCriteria;
-    }
-
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Path<?> path;
