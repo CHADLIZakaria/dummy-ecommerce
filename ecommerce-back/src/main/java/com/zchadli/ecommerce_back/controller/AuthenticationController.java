@@ -18,9 +18,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping(value = "/register", consumes =  MediaType.MULTIPART_FORM_DATA_VALUE)
     public EcommerceResponse<User> register(
-            @RequestPart("file") MultipartFile file,
+            @RequestPart(value="file", required = false) MultipartFile file,
             @RequestPart("user") RegisterUserRequest registerUserRequest) {
-        return new EcommerceResponse<>(200, "User register successfully", authenticationService.signup(registerUserRequest, file));
+        return new EcommerceResponse<>(201, "User register successfully", authenticationService.signup(registerUserRequest, file));
     }
     @PostMapping("/login")
     public EcommerceResponse<LoginResponse> login(@RequestBody LoginUserRequest loginUserRequest) {

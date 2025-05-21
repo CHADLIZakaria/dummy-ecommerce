@@ -1,5 +1,5 @@
 <nav class="fixed z-50 top-0 h-24 bg-white navbar drop-shadow-md w-full">
-    <div class="max-w-screen-xl mx-auto h-full flex items-center">
+    <div class="max-w-screen-xl mx-auto h-full flex items-center relative">
         <a class="flex items-center space-x-3">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap">Dummy E-Shop</span>
@@ -19,6 +19,7 @@
             </li>
             <li>
                 <button 
+                    (click)="showCategories = !showCategories"
                     class="flex items-center rounded-sm hover:text-main-color">
                     Categories 
                     <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -39,17 +40,23 @@
                 </li>  
             }
         </ul>
-        <div class="hidden mt-1 border-gray-200 shadow-xs bg-gray-50 md:bg-white border-y">
-            <div class="bg-main-500 grid max-w-screen-xl px-4 py-5 mx-auto sm:grid-cols-2 md:px-6">
-                <ul>
-                    <li>
-                        <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">
-                            <div class="font-semibold">Online Stores</div>
-                            <span class="text-sm">Connect with third-party tools that you're already using.</span>
-                        </a>
-                    </li>
-                </ul>
+        @if(showCategories) {
+            <div class="border-gray-200 shadow-xs bg-gray-50 absolute top-full left-0 border-y w-full">
+                @if(categoriesResource.isLoading()) {
+                }
+                @else {
+                    <ul class="bg-main-500 grid grid-rows-4 grid-cols-5 px-4 py-1 mx-auto">
+                        @for(category of categoriesResource.value().data.data; track category.id) {
+                            <li>
+                                <a class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
+                                    <img class="w-10 h-10" [src]="'http://localhost:8080/file/category/'+category.imagePath" />
+                                    <div class="font-semibold">{{category.title}}</div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
             </div>
-        </div>
+        }
     </div>
 </nav>

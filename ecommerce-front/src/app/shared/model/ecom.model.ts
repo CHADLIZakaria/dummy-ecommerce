@@ -48,7 +48,7 @@ export type Review = {
     username: string;
     userImage: string;
 }
-export type User = {
+export type UserAuth = {
     username: string;
     filePath: string
 }
@@ -80,7 +80,7 @@ export const initReviewPagination: EcomResponse<EcomPagination<Review[]>> = {
     }
 }
 export const initCategoryPagination: EcomResponse<EcomPagination<Category[]>> = {
-     message: '',
+    message: '',
     status: 0,
     data: {
         totalElements: 0,

@@ -76,7 +76,6 @@ public class CategoryServiceImpl implements CategoryService {
             categoryPage.getNumber()
         );
     }
-
     private Page<Category> findPageCategory(CategorySearchRequest categorySearchRequest) {
         String[] sort = categorySearchRequest.getSort();
         Sort.Direction direction = Sort.Direction.fromString(sort[1]);

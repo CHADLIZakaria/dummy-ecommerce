@@ -98,6 +98,7 @@
                   </span>
                 </button>
                 <button 
+                  (click)="quickViewService.slug.set(product.slug)"
                   type="button" 
                   class="group/view relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
                   <i class="fa-regular fa-eye"></i>
@@ -136,7 +137,12 @@
       <button
         (click)="showMoreProducts()"
         type="button" 
-        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">Show more</button>
+        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
+        Show more
+      </button>
     </div>
   </div>
+  @if(quickViewService.slug() !== '') {
+    <ecom-quick-view />
+  }
 </section>

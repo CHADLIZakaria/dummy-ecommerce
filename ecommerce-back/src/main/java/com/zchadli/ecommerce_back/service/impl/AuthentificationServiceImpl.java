@@ -1,6 +1,7 @@
 package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.base.BadCredentialsException;
+import com.zchadli.ecommerce_back.exception.user.UserAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.user.UserNotFoundException;
 import com.zchadli.ecommerce_back.model.Role;
 import com.zchadli.ecommerce_back.model.UploadedFile;
@@ -30,19 +31,22 @@ public class AuthentificationServiceImpl implements AuthenticationService {
     private static final String PATH_USER = "uploads/users/";
     @Override
     public User signup(RegisterUserRequest registerUserRequest, MultipartFile file) {
+        if(userDao.existsByUsername(registerUserRequest.username())){
+            throw new UserAlreadyExistsException(registerUserRequest.username());
+        }
         UploadedFile uploadedFile = null;
         if(file != null) {
             uploadedFile = uploadedFileService.uploadFile(PATH_USER, file);
         }
         User user = User
-                .builder()
-                .username(registerUserRequest.username())
-                .password(passwordEncoder.encode(registerUserRequest.password()))
-                .firstName(registerUserRequest.firstName())
-                .lastName(registerUserRequest.lastName())
-                .role(Role.USER)
-                .file(uploadedFile)
-                .build();
+            .builder()
+            .username(registerUserRequest.username())
+            .password(passwordEncoder.encode(registerUserRequest.password()))
+            .firstName(registerUserRequest.firstName())
+            .lastName(registerUserRequest.lastName())
+            .role(Role.USER)
+            .file(uploadedFile)
+            .build();
         return userDao.save(user);
     }
     @Override

@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { NumberPipe } from '../../../shared/pipes/number.pipe';
 import { QuickViewComponent } from '../popup/quick-view/quick-view.component';
+import { QuickViewService } from '../popup/services/quick-view.service';
 
 @Component({
   selector: 'ecom-list-products',
@@ -21,6 +22,9 @@ export class ListProductsComponent {
   productsResource = this.homeService.productsResource;
   open = false;
   numberStar = EcomHelper.range(5)
+  currentProduct: string = ''
+  quickViewService = inject(QuickViewService)
+
   showMoreProducts() {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),

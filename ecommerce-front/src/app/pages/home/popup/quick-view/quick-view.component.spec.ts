@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FilterReviewComponent } from './filter-review.component';
+import { QuickViewComponent } from './quick-view.component';
 
-describe('FilterReviewComponent', () => {
-  let component: FilterReviewComponent;
-  let fixture: ComponentFixture<FilterReviewComponent>;
+describe('QuickViewComponent', () => {
+  let component: QuickViewComponent;
+  let fixture: ComponentFixture<QuickViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilterReviewComponent]
+      imports: [QuickViewComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FilterReviewComponent);
+    fixture = TestBed.createComponent(QuickViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

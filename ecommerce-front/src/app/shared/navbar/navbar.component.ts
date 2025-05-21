@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LoginService } from '../../pages/login/services/login.service';
 import { RouterLink } from '@angular/router';
+import { NavbarService } from './services/navbar.service';
 
 @Component({
   selector: 'ecom-navbar',
@@ -10,5 +11,9 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   loginService = inject(LoginService)
+  categoriesResource = inject(NavbarService).categoriesResource
+  showCategories = false;
+  
+
 
 }

@@ -2,12 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DragDropDirective } from '../../shared/directives/drag-drop.directive';
+import { RegisterService } from './services/register.service';
+import { FadeInOut } from '../../shared/animations/animations';
 
 @Component({
   selector: 'ecom-register',
   imports: [CommonModule, ReactiveFormsModule, DragDropDirective],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  animations: [FadeInOut(200, 300, true)]
 })
 export class RegisterComponent {
   formBuilder = inject(FormBuilder)
@@ -17,9 +20,9 @@ export class RegisterComponent {
   imagePreview: string | ArrayBuffer | null = null
   formRegister = this.formBuilder.group(
     {
-      'username': ['', [Validators.required, Validators.minLength(4)]],
-      'password': ['', [Validators.required, Validators.minLength(6)]],
-      'confirmPassword': ['', [Validators.required]],
+      'username': ['zakaria', [Validators.required, Validators.minLength(4)]],
+      'password': ['zakaria', [Validators.required, Validators.minLength(6)]],
+      'confirmPassword': ['zakaria', [Validators.required]],
       'firstName': [''],
       'lastName': ['']
     },
@@ -27,11 +30,7 @@ export class RegisterComponent {
       validators: this.passwordMatchValidator
     }
   )
-
-  register() {
-  }
-
-
+  registerService = inject(RegisterService)
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value
     const confirmPassword = form.get('confirmPassword')?.value
@@ -45,8 +44,7 @@ export class RegisterComponent {
     this.showConfirmPassword = !this.showConfirmPassword
   }
 
-  handleFiles(files: FileList | File[]) {
-    console.log(event)
+  handleFiles(files: FileList | File[]): void{
     const file = Array.isArray(files) ? files[0] : files.item(0)
     if(file && file.type.startsWith('image/')) {
       const reader = new FileReader()
@@ -57,6 +55,29 @@ export class RegisterComponent {
     }
     else {
       this.imagePreview = null
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement
+    if(input.files && input.files.length > 0) {
+      this.handleFiles(Array.from (input.files));
+    }
+  }
+
+  onSave() {
+    if(this.formRegister.valid) {
+      const {confirmPassword, ...user} = this.formRegister.value
+      this.registerService.saveUser(user).subscribe(data => {
+        if(data.status ===200) {
+
+        }
+        else {
+          this.errorMessage = data.message
+        }
+        console.log(data)
+      })
+
     }
   }
 
