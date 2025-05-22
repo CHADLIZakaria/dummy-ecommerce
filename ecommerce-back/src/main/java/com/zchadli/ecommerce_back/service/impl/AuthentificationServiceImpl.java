@@ -68,7 +68,7 @@ public class AuthentificationServiceImpl implements AuthenticationService {
         return LoginResponse
                 .builder()
                 .token(jwt)
-                .expiresIn(jwtService.getExpirationTime())
+                .expiresAt(jwtService.getExpirationTime())
                 .build();
     }
 }

@@ -3,10 +3,11 @@ import { CategoriesService } from './services/categories.service';
 import { CommonModule } from '@angular/common';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
+import { SidebarComponent } from "../../shared/sidebar/sidebar.component";
 
 @Component({
   selector: 'ecom-categories',
-  imports: [CommonModule, LoadingComponent],
+  imports: [CommonModule, LoadingComponent, SidebarComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })

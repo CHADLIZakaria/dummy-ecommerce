@@ -4,103 +4,103 @@
 }
 @if(productDetailsResource.value()) {
   @let product = productDetailsResource.value().data;
-  <div class="relative max-w-screen-xl mx-auto">
-      <div class="relative rounded-lg  pt-5">
-          <div class="relative h-full mx-auto">
-            <div class="flex h-full justify-between overflow-hidden">
-              <!-- Product Images -->
-              <div class="z-20 w-full md:w-1/2 px-4 mb-8">
-                  <div class="border w-[300px] h-[300px] mx-auto rounded-md bg-slate-200 shadow-sm">
-                    <img                       
-                      [src]="'http://localhost:8080/file/product/'+product.images[currentImage] "
-                      class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg mb-4" id="mainImage">
-                  </div>
-                  <div class="flex gap-4 py-4 justify-center overflow-x-auto">
-                    @for(image of product.images; track image; let idx = $index) {
-                      <img
-                        (click)="changeCurrentImage(idx)"
-                        [ngClass]="idx===currentImage ? 'border opacity-100 shadow-sm': 'opacity-60 '"
-                        [src]="'http://localhost:8080/file/product/'+image"
-                        class="size-16 sm:size-20 object-cover rounded-md cursor-pointer hover:opacity-100 transition duration-300 border-main-color border-solid hover:border" />
-                    }
-                  </div>
-              </div>              
-              <!-- Product Details -->
-              <div class="z-20 w-full flex flex-col md:w-1/2 px-4">
-                  <ol class="relative flex items-center gap-2 mb-4">
-                    <li class="inline-flex gap-1 items-center">
-                      <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
-                        Home
-                      </a>
-                      <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-                    </li>
-                    <li class="inline-flex gap-1 items-center">
-                      <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
-                        {{product.category}}
-                      </a>
-                      <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-                    </li>
-                    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-                      {{product.name}}
-                    </li>
-                  </ol>            
-                  <h2 class="text-3xl font-bold mb-2">
-                      {{product.name}}
-                  </h2>
-                  <div class="flex gap-3 mb-2">
-                    <p class="text-gray-600">Brand: {{product.brand}}</p>
-                    <p class="text-gray-600">SKU: {{product.sku}}</p>
-                  </div>
-                  <p class="text-gray-600 mb-2">Category: {{product.category}}</p>
-                  <div class="flex items-center gap-3 mb-2">
-                    <div class="my-4">
-                      <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">${{product.price}}</span>
-                    </div>
-                    <div class="flex gap-1 items-center">
-                      @for(currentStar of numberStar; track currentStar) {
-                        @if(productDetailsService.avgReview()>=(currentStar+1)) {
-                          <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
-                        }
-                        @else {
-                          <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
-                        }                      
-                      }
-                      <span class="ml-2 text-gray-600">    
-                        {{productDetailsService.avgReview() | number}} ({{productDetailsService.reviewsResource.value().data.totalElements}} reviews)
-                      </span>
-                    </div>
-                  </div>
-                  <p class="text-gray-700 mb-6">
-                    {{product.description}}
-                  </p>
-                  <div class="flex space-x-2">
-                      <button
-                          class="bg-main-color flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                              stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                          </svg>
-                          Add to Cart
-                      </button>
-                      <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <i class="fa-regular fa-heart text-md"></i>
-                          Wishlist
-                      </button>
-                      <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <i class="fa-solid fa-code-compare"></i>
-                        Compare                  
-                      </button>                      
-                  </div>
+  <div class="pt-5 relative">
+    <div class="absolute top-0 left-0 w-full h-full -z-10">
+       <svg height="600px" width="100%">
+           <rect x="0" y="0" width="1500" height="600" fill="#bde0fe"></rect>
+           <path d="M0 443L50 441.3C100 439.7 200 436.3 300 437.8C400 439.3 500 445.7 600 456.5C700 467.3 800 482.7 900 476.8C1000 471 1100 444 1200 440.2C1300 436.3 1400 455.7 1450 465.3L1500 475L1500 601L1450 601C1400 601 1300 601 1200 601C1100 601 1000 601 900 601C800 601 700 601 600 601C500 601 400 601 300 601C200 601 100 601 50 601L0 601Z" 
+               fill="#FAFAFA" stroke-linecap="round" stroke-linejoin="miter">
+           </path>
+       </svg>
+     </div>
+    <div class="flex h-full justify-between overflow-hidden">
+        <!-- Product Images -->
+        <div class="z-20 w-full md:w-1/2 px-4 mb-8">
+            <div class="border w-[300px] h-[300px] mx-auto rounded-md bg-slate-200 shadow-sm">
+              <img                       
+                [src]="'http://localhost:8080/file/product/'+product.images[currentImage] "
+                class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg mb-4" id="mainImage">
+            </div>
+            <div class="flex gap-4 py-4 justify-center overflow-x-auto">
+              @for(image of product.images; track image; let idx = $index) {
+                <img
+                  (click)="changeCurrentImage(idx)"
+                  [ngClass]="idx===currentImage ? 'border opacity-100 shadow-sm': 'opacity-60 '"
+                  [src]="'http://localhost:8080/file/product/'+image"
+                  class="size-16 sm:size-20 object-cover rounded-md cursor-pointer hover:opacity-100 transition duration-300 border-main-color border-solid hover:border" />
+              }
+            </div>
+        </div>              
+        <!-- Product Details -->
+        <div class="z-20 w-full flex flex-col md:w-1/2 px-4">
+            <ol class="relative flex items-center gap-2 mb-4">
+              <li class="inline-flex gap-1 items-center">
+                <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
+                  Home
+                </a>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+              </li>
+              <li class="inline-flex gap-1 items-center">
+                <a class="cursor-pointer flex items-center text-sm text-gray-500 hover:text-main-color">
+                  {{product.category}}
+                </a>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+              </li>
+              <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+                {{product.name}}
+              </li>
+            </ol>            
+            <h2 class="text-3xl font-bold mb-2">
+                {{product.name}}
+            </h2>
+            <div class="flex gap-3 mb-2">
+              <p class="text-gray-600">Brand: {{product.brand}}</p>
+              <p class="text-gray-600">SKU: {{product.sku}}</p>
+            </div>
+            <p class="text-gray-600 mb-2">Category: {{product.category}}</p>
+            <div class="flex items-center gap-3 mb-2">
+              <div class="my-4">
+                <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">${{product.price}}</span>
+              </div>
+              <div class="flex gap-1 items-center">
+                @for(currentStar of numberStar; track currentStar) {
+                  @if(productDetailsService.avgReview()>=(currentStar+1)) {
+                    <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+                  }
+                  @else {
+                    <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
+                  }                      
+                }
+                <span class="ml-2 text-gray-600">    
+                  {{productDetailsService.avgReview() | number}} ({{productDetailsService.reviewsResource.value().data.totalElements}} reviews)
+                </span>
               </div>
             </div>
-          </div>
-          <div class="absolute bg-slate-200 left-0 top-0 h-full w-full">
-              <div class="w-full absolute">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#bde0fe" fill-opacity="1" d="M0,288L80,293.3C160,299,320,309,480,314.7C640,320,800,320,960,309.3C1120,299,1280,277,1360,266.7L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg>
-              </div>
-          </div>
-      </div>
-      <ecom-reviews />
-  </div>
+            <p class="text-gray-700 mb-6">
+              {{product.description}}
+            </p>
+            <div class="flex space-x-2">
+                <button
+                    class="bg-main-color flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                    </svg>
+                    Add to Cart
+                </button>
+                <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                  <i class="fa-regular fa-heart text-md"></i>
+                    Wishlist
+                </button>
+                <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                  <i class="fa-solid fa-code-compare"></i>
+                  Compare                  
+                </button>                      
+            </div>
+        </div>
+    </div>
+  </div>             
+  <ecom-reviews />
+
 }

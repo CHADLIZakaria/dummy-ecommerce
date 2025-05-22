@@ -16,9 +16,6 @@ export class AppComponent implements OnInit {
   loginService = inject(LoginService)
   
   ngOnInit(): void {
-    this.loginService.getUser().subscribe(data => {
-      console.log(data)
-    })
   }  
 
 }

@@ -4,5 +4,5 @@ export type UserLoginRequest = {
 }
 export type UserToken = {
     token: string,
-    expiresIn: number
+    expiresAt: number
 }

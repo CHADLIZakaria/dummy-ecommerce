@@ -24,7 +24,7 @@ public class JwtServiceImpl implements JwtService {
     private Long jwtExpirationTime;
     @Override
     public Long getExpirationTime() {
-        return jwtExpirationTime;
+        return jwtExpirationTime+new Date().getTime();
     }
     @Override
     public String extractUsername(String token) {
