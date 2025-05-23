@@ -19,7 +19,7 @@ export class LoginService {
   
   private _user = signal<UserAuth | null>(null)
   user = computed(() => this._user())
-  isLoggedIn = computed(() => !!this._user)
+  isLoggedIn = computed(() => !!this._user())
 
   constructor() { 
     if(this.isBrowser) {
@@ -41,7 +41,6 @@ export class LoginService {
     return this.http.post<EcomResponse<UserAuth>>(`${environment.baseUrl}users`, {}).pipe(
       tap(data => {
         if(data.status===200) {
-          console.log(data)
           this._user.set(data.data)
         }
       })
@@ -52,7 +51,6 @@ export class LoginService {
   }
   private storeToken(token: string, expiresAt: number) {
     if(this.isBrowser) {
-      console.log(token)
       localStorage.setItem(this.expKey, expiresAt.toString())
       localStorage.setItem(this.tokenKey, token.toString())
       this.autoLogout(expiresAt)
@@ -71,7 +69,6 @@ export class LoginService {
   private autoLogout(expiresAt: number) {
     if(!this.isBrowser) return;
     const delay = expiresAt - Date.now()
-    console.log(delay)
     if(this.logoutTimer) clearTimeout(this.logoutTimer)
     if(delay > 0) {
       this.logoutTimer = setTimeout(() => this.logout(), delay)
@@ -84,7 +81,6 @@ export class LoginService {
     const token = localStorage.getItem(this.tokenKey)
     const expiresAt = parseInt(localStorage.getItem(this.expKey) || '0', 10)
     if(token && expiresAt > Date.now()) {
-      console.log("auto login")
       this.autoLogout(expiresAt)
       this.fetchUser().subscribe()
     }

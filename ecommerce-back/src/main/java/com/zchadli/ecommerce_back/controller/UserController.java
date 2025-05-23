@@ -4,6 +4,7 @@ import com.zchadli.ecommerce_back.exception.user.UserNotFoundException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.repository.UserDao;
+import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,9 +19,9 @@ public class UserController {
     private final UserDao userDao;
     private final EcommerceMapper ecommerceMapper;
     @PostMapping()
-    public UserResponse getUser(Authentication authentication) {
+    public EcommerceResponse<UserResponse> getUser(Authentication authentication) {
         String username = authentication.getName();
         User user = userDao.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-        return ecommerceMapper.toUserResponse(user);
+        return new EcommerceResponse<>(200, "User retrieved successfully", ecommerceMapper.toUserResponse(user));
     }
 }

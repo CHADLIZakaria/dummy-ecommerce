@@ -1,5 +1,5 @@
 <nav class="sticky z-50 top-0 h-24 bg-white navbar drop-shadow-md w-full">
-    <div class="flex h-full items-center justify-between">
+    <div class="flex h-full items-center justify-between px-5 mx-auto">
         <div class="flex ">
             <!--logo-->
             <a class="flex items-center space-x-3">
@@ -31,20 +31,37 @@
                     </svg>
                 </button>
             </li>
-            @if(loginService.user === null) {
+            @if(user() === null) {
                 <li class="flex gap-1">
                     <a routerLink="/login" class="rounded-sm hover:text-main-color">Login</a>
                     /
                     <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
-            }
-            {{loginService.user()?.filePath}}
-            @if(loginService.user !== null) {
-                <li class="w-12 h-12">
-                    <img 
-                        [src]="'http://localhost:8080/file/user'+loginService.user()?.filePath" 
-                        class="rounded-full" />
-                </li>  
+            }            
+            @if(user() !== null) {
+                <li class="relative">
+                    <button 
+                        ecomDropdown
+                        #dropdownUser="ecomDropdown"
+                        (click)="dropdownUser.toggleDropdown()"
+                        class="hs-dropdown-toggle py-1 ps-1 pe-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                        <img 
+                            class="w-8 h-auto rounded-full" 
+                            [src]="'http://localhost:8080/file/user/'+user()?.filePath" />
+                        <span class="font-medium truncate max-w-30">{{user()?.username}}</span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu absolute left-0 top-full mt-1 w-full bg-white border shadow-md rounded-md flex flex-col">
+                        <li class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
+                            Favorites
+                            <i class="fa-regular fa-heart"></i>
+                        </li>
+                        <li class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
+                            Logout
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </li>
+                    </ul>
+                </li>                  
             }
         </ul>
     </div>

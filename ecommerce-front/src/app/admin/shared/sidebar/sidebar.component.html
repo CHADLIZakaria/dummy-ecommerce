@@ -1,0 +1,27 @@
+
+<aside class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 shadow-md border-r-2" aria-label="Sidebar">
+    <button 
+        class="inline-flex items-center justify-end p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-main-color focus:outline-none focus:ring-2 focus:ring-gray-200">
+       <i class="fa-solid fa-bars text-xl"></i>
+    </button>
+   <div class="h-full px-3 py-4 overflow-y-auto">
+      <ul class="space-y-2 font-medium">
+        @for(link of links; track link) {
+            <li>
+                <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-main-color group">
+                    <i 
+                    [ngClass]="link.icon"
+                    class="fas-solid text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="ms-3">{{link.name}}</span>
+                </a>
+            </li>    
+        }
+        <li>
+            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-main-color group">
+               <i class="fa-solid fa-right-from-bracket text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+               <span class="ms-3">Log Out</span>
+            </a>
+        </li>
+      </ul>
+   </div>
+</aside>
