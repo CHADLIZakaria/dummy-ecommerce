@@ -75,7 +75,6 @@ export class RegisterComponent {
         else {
           this.errorMessage = data.message
         }
-        console.log(data)
       })
 
     }

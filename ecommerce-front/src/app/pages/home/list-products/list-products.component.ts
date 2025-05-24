@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { TitleComponent } from "../../../shared/components/title/title.component";
 import { FiltersComponent } from "../filters/filters.component";
 import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
@@ -9,6 +9,7 @@ import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { NumberPipe } from '../../../shared/pipes/number.pipe';
 import { QuickViewComponent } from '../popup/quick-view/quick-view.component';
 import { QuickViewService } from '../popup/services/quick-view.service';
+import { Product } from '../../../shared/model/ecom.model';
 
 @Component({
   selector: 'ecom-list-products',
@@ -24,11 +25,34 @@ export class ListProductsComponent {
   numberStar = EcomHelper.range(5)
   currentProduct: string = ''
   quickViewService = inject(QuickViewService)
+  products = signal<Product[]>([])
 
-  showMoreProducts() {
+  constructor() {
+    effect(() => {
+      const newProducts = this.productsResource.value()?.data?.data || [];
+      const page = this.homeService.productFilter().page
+      if(page === 0) {
+        this.products.set(newProducts)
+      }
+      else {
+          this.products.update(prev => [...prev, ...newProducts])
+      }
+    })
+  }
+
+  loadMoreProducts() {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
-      size: this.homeService.productFilter().size+10
+      page: this.homeService.productFilter().page+1
     })
+  }
+  onScroll(event: any) {
+    const element=event.target;
+    if(element.scrollHeight - element.scrollTop <= element.clientHeight +50 && !this.productsResource.isLoading()) {
+      this.loadMoreProducts()
+    }
+  }
+  onChangeSort(column: string, direction: string) {
+    
   }
 }

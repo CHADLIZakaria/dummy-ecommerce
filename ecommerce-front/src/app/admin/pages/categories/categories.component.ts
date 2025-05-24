@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
 import { SidebarComponent } from "../../shared/sidebar/sidebar.component";
+import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 
 @Component({
   selector: 'ecom-categories',
-  imports: [CommonModule, LoadingComponent, SidebarComponent],
+  imports: [CommonModule, LoadingComponent, SidebarComponent, DropdownDirective],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
@@ -22,5 +23,8 @@ export class CategoriesComponent {
       ...this.categoriesService.query(),
       page: index
     })
+  }
+  onChangeSort(column: string, direction: string) {
+
   }
 }

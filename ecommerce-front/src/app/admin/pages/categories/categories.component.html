@@ -3,8 +3,64 @@
     <div class="max-w-screen-lg mx-auto">
         <!--Search-->
         <h4 class="text-center text-2xl font-medium">Categories</h4>
-        <div>
-            <input type="text" class="border border-gray-200 px-2 py-1 placeholder:text-xs outline-2 outline-main-color border-1 shadow-md rounded-md"/>
+        <div class="flex justify-between">
+            <div class="flex gap-1">
+                <input 
+                    placeholder="Search Category"
+                    type="text" 
+                    class="border border-gray-200 px-2 py-1 placeholder:text-xs outline-2 outline-main-color border-1 shadow-md rounded-md"/>
+                <button class="bg-main-color rounded-md px-1 flex  items-center gap-1">
+                    <span>Add</span>
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+             <!--Sort -->
+            <div class="flex justify-end">
+                <div
+                    ecomDropdown
+                    #dropdownSortReview="ecomDropdown"
+                    class="relative">
+                    <button 
+                    (click)="dropdownSortReview.toggleDropdown()"
+                    type="button"                       
+                    class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
+                        <i class="fa-solid fa-arrow-up-z-a -ms-0.5 me-2 h-4 w-4"></i>
+                        Sort
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div          
+                        class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
+                        <ul class="p-2 text-left text-sm font-medium text-gray-500">
+                            <li>
+                                <a
+                                (click)="onChangeSort('id', 'desc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Most Recent
+                                </a>
+                            <li>
+                                <a 
+                                (click)="onChangeSort('id', 'asc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Oldest First
+                                </a>
+                            <li>
+                            <a 
+                                (click)="onChangeSort('rating', 'desc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Highest Rating
+                            </a>
+                            </li>
+                            <li>
+                            <a 
+                                (click)="onChangeSort('rating', 'asc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Lowest Rating
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         @if(categoriesService.categories.isLoading()) {
             <ecom-loading 
@@ -15,9 +71,9 @@
             @let categoriesPagination = categoriesService.categories.value().data;        
             <div class="grid grid-cols-4 gap-1 mx-auto mt-3">
                 @for(category of categoriesPagination.data; track category.id) {
-                    <div class="bg-slate-300">
-                        <img [src]="'http://localhost:8080/file/category/'+category.imagePath" />
-                        <div class="px-5 pb-5 flex justify-between items-center">
+                    <div class="bg-slate-300 rounded-md">
+                        <img class="rounded-t-md" [src]="'http://localhost:8080/file/category/'+category.imagePath" />
+                        <div class="px-5 pb-5 flex justify-between items-center py-1">
                             <h5 class="text-xl font-semibold tracking-tight text-gray-900">{{category.title}}</h5>
                             <div class="flex items-center justify-between gap-1">
                                 <button class="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 text-center">

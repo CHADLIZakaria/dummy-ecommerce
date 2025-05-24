@@ -1,6 +1,6 @@
 <section class="mb-3 mx-auto max-w-screen-lg flex gap-3">
   <!-- Filters -->
-   <div class="w-64 sticky h-full top-0">
+   <div class="w-64 top-24 sticky h-full">
     <ecom-filters />
    </div>
   <!-- Heading & List Products -->
@@ -9,74 +9,63 @@
       <ecom-title 
         title="Discover Our"
         subtitle="Products" /> 
-      <div class="relative">
-        <button 
-          ecomDropdown
-          type="button" 
-          class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 sm:w-auto">
-          <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4" />
-          </svg>
-          Sort
-          <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
-          </svg>
-          <div          
-            class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
-            <ul class="p-2 text-left text-sm font-medium text-gray-500">
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">The most popular </a>
-              </li>
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Newest </a>
-              </li>
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Increasing price </a>
-              </li>
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Decreasing price </a>
-              </li>
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">No. reviews </a>
-              </li>
-              <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">Discount % </a>
-              </li>
-            </ul>
-          </div>
-        </button>
+      <div
+                    ecomDropdown
+                    #dropdownSortReview="ecomDropdown"
+                    class="relative">
+                    <button 
+                    (click)="dropdownSortReview.toggleDropdown()"
+                    type="button"                       
+                    class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
+                        <i class="fa-solid fa-arrow-up-z-a -ms-0.5 me-2 h-4 w-4"></i>
+                        Sort
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div          
+                        class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
+                        <ul class="p-2 text-left text-sm font-medium text-gray-500">
+                            <li>
+                              <a
+                                (click)="onChangeSort('id', 'desc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Alphabetically, A-Z
+                              </a>
+                            <li>
+                              <a 
+                                (click)="onChangeSort('id', 'asc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Alphabetically, Z-A
+                              </a>
+                            <li>
+                              <a 
+                                (click)="onChangeSort('rating', 'desc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Price, Low to High
+                              </a>
+                            </li>
+                            <li>
+                              <a 
+                                (click)="onChangeSort('rating', 'asc')"
+                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                Price, High to Low
+                              </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    </div>  
+    <div class="my-4 flex justify-between">
+      <div>
+        <i class="fa-solid fa-fire text-main-color"></i>
+        {{productsResource.value()?.data?.totalElements}} products
       </div>
-    </div>   
-    @if(productsResource.isLoading()) {
-      <div class="my-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
-        <div class="group/cart animate-pulse duration-500 mb-3 relative rounded-lg border bg-white border-slate-200 shadow-sm">
-          <div class="h-44 w-full bg-white relative">
-            <a class="flex h-full" href="#">
-              <div class="mx-auto h-full bg-main-color w-full flex items-center justify-center">
-                <i class="fa-solid fa-image text-2xl"></i>
-              </div>
-            </a>
-          </div>
-          <div class="flex flex-col py-3 px-2 gap-1">
-            <div class="bg-gray-200 w-48 h-2 rounded-full"></div>            
-            <div class="bg-gray-200 w-48 h-2 rounded-full"></div>  
-            <div class="mt-2 bg-gray-200 w-10 h-2 rounded-full"></div>
-          </div>          
-        </div>
+      <div>
+        Showing 10 elements
       </div>
-    }
-    @else {
-      <div class="my-4 flex justify-between">
-        <div>
-          <i class="fa-solid fa-fire text-main-color"></i>
-          {{productsResource.value()?.data?.totalElements}} products
-        </div>
-        <div>
-          Showing 10 elements
-        </div>
-      </div>
-      <div class="my-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
-        @for(product of productsResource.value()?.data?.data; track product.id) {
+    </div>
+    <div class="h-[80vh] overflow-y-auto" (scroll)="onScroll($event)">
+      <div class="my-4 grid gap-4 md:mb-8 grid-cols-3">
+        @for(product of products(); track product.id) {
           <div class="group/cart relative">
             <div class="h-56 w-full bg-slate-300 relative rounded-lg border border-slate-200 shadow-sm">
               <a [routerLink]="['/products', product.slug]" class="flex h-full">
@@ -131,15 +120,25 @@
             </div>
           </div>
         }
-      </div>
-    }
-    <div class="w-full text-center">
-      <button
-        (click)="showMoreProducts()"
-        type="button" 
-        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
-        Show more
-      </button>
+      </div>    
+      @if(productsResource.isLoading()) {
+        <div class="my-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
+          <div class="group/cart animate-pulse duration-500 mb-3 relative rounded-lg border bg-white border-slate-200 shadow-sm">
+            <div class="h-44 w-full bg-white relative">
+              <a class="flex h-full" href="#">
+                <div class="mx-auto h-full bg-main-color w-full flex items-center justify-center">
+                  <i class="fa-solid fa-image text-2xl"></i>
+                </div>
+              </a>
+            </div>
+            <div class="flex flex-col py-3 px-2 gap-1">
+              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>            
+              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>  
+              <div class="mt-2 bg-gray-200 w-10 h-2 rounded-full"></div>
+            </div>          
+          </div>
+        </div>
+      }
     </div>
   </div>
   @if(quickViewService.slug() !== '') {

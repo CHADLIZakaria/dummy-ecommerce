@@ -17,9 +17,11 @@ export class NavbarComponent {
   showCategories = false;
   user = this.loginService.user
   constructor() {
-    effect(() => {
-      console.log(this.user())
-    })
+    
+  }
+
+  onLogout() {
+    this.loginService.logout()
   }
 
 

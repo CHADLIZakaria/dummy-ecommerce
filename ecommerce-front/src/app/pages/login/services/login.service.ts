@@ -5,6 +5,7 @@ import { UserLoginRequest, UserToken } from '../model/login.model';
 import { Observable, tap } from 'rxjs';
 import { EcomResponse, UserAuth } from '../../../shared/model/ecom.model';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class LoginService {
   private tokenKey = 'token'
   private expKey = 'token-exp'
   private logoutTimer: any = null
+  private router = inject(Router)
   
   private _user = signal<UserAuth | null>(null)
   user = computed(() => this._user())
@@ -59,11 +61,12 @@ export class LoginService {
   logout() {
     if(this.isBrowser) {
       localStorage.removeItem(this.tokenKey)
-      this._user.set(null)
+      localStorage.removeItem(this.expKey)
     }
     this._user.set(null)
     if(this.logoutTimer) {
       clearTimeout(this.logoutTimer)
+      this.router.navigate(['/'])
     }
   }
   private autoLogout(expiresAt: number) {
