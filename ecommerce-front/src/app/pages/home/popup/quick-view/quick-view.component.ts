@@ -13,7 +13,7 @@ import { LoadingComponent } from "../../../../shared/components/loading/loading.
 })
 export class QuickViewComponent {
   quickViewService = inject(QuickViewService)
-  productDetailsResource = this.quickViewService.productDetailsReource
+  quickViewDetailsResource = this.quickViewService.quickViewDetailsResource
   currentImage = 0
   numberStar = EcomHelper.range(5)
   changeCurrentImage(idx: number) {

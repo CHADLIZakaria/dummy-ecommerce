@@ -1,7 +1,9 @@
 package com.zchadli.ecommerce_back.controller;
 
+import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.response.*;
+import com.zchadli.ecommerce_back.service.FavoriteService;
 import com.zchadli.ecommerce_back.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final FavoriteService favoriteService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<EcommerceResponse<ProductResponse>> save(
             @RequestPart("product") @Valid @NotNull
@@ -44,5 +48,9 @@ public class ProductController {
     @GetMapping("/getRangePrice")
     public EcommerceResponse<RangePriceResponse> findRangePrice(HttpServletRequest productSearchRequest) {
         return new EcommerceResponse<>(200, "Range Price retrieved successfully", productService.findRangePrice(productSearchRequest.getParameterMap()));
+    }
+    @PostMapping("/toggle/{productId}")
+    public EcommerceResponse<Boolean> toggleFavorite(@PathVariable Long productId, @AuthenticationPrincipal User user) {
+       return new EcommerceResponse<>(200, "Favorite toggled", favoriteService.toggleFavorite(user, productId));
     }
 }

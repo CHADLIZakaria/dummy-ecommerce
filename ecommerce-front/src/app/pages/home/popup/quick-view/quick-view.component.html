@@ -3,11 +3,11 @@
     class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-[#000000]/80">
     <div class="relative p-4 w-full max-w-2xl max-h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div class="relative bg-white rounded-lg shadow-sm ">
-            @if(productDetailsResource.isLoading()) {
+            @if(quickViewDetailsResource.isLoading()) {
                 <ecom-loading size="sm" />
             }
             @else {
-                @let product = productDetailsResource.value().data;
+                @let product = quickViewDetailsResource.value().data;
                 <div class="relative max-w-screen-xl mx-auto mt-2">
                     <div class="relative rounded-lg">                        
                         <div class="flex h-full justify-between overflow-hidden p-4">

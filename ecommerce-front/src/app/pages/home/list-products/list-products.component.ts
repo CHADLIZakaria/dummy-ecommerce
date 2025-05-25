@@ -53,6 +53,10 @@ export class ListProductsComponent {
     }
   }
   onChangeSort(column: string, direction: string) {
-    
+    this.homeService.productFilter.set({
+      ...this.homeService.productFilter(),
+      sort: column+','+direction,
+      page: 0
+    })
   }
 }

@@ -8,12 +8,12 @@ import { EcomResponse, initProductDetails, ProductDetails } from '../../../../sh
 export class QuickViewService {
   slug = signal('')
   
-  productDetailsReource = resource<EcomResponse<ProductDetails>, {slug: string}>({
+  quickViewDetailsResource = resource<EcomResponse<ProductDetails>, {slug: string}>({
     request: () => ({
       slug: this.slug()
     }),
     loader: async({request}) => {
-      const product = await fetch(`${environment.baseUrl}products/${request.slug}`)
+      const product = await fetch(`${environment.baseUrl}products/green-chili-pepper`)
       return product.json()
     },
     defaultValue: initProductDetails

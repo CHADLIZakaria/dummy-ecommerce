@@ -62,12 +62,13 @@ export class HomeServices {
     () => ({
       url: `${environment.baseUrl}products`,
       params: {
-        size: this.productFilter().size,
+        'page': this.productFilter().page,
         'name__like': this.productFilter().keyword,
         'brand.id__in': this.productFilter().idsBrand,
         'category.id__in': this.productFilter().idsCategory,
         'price__gte': this.productFilter().minPrice,
-        'price__lte': this.productFilter().maxPrice,        
+        'price__lte': this.productFilter().maxPrice,
+        'sort': this.productFilter().sort      
       }
     })
   )

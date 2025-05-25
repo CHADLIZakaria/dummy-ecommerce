@@ -6,54 +6,54 @@
   <!-- Heading & List Products -->
   <div class="flex-1 my-4 border-2 py-4 px-5 rounded-md bg-white ml-10">
     <div class="flex justify-between">
-      <ecom-title 
+      <ecom-title
         title="Discover Our"
-        subtitle="Products" /> 
+        subtitle="Products" />
       <div
                     ecomDropdown
                     #dropdownSortReview="ecomDropdown"
                     class="relative">
-                    <button 
+                    <button
                     (click)="dropdownSortReview.toggleDropdown()"
-                    type="button"                       
+                    type="button"
                     class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
                         <i class="fa-solid fa-arrow-up-z-a -ms-0.5 me-2 h-4 w-4"></i>
                         Sort
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div          
+                    <div
                         class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
                         <ul class="p-2 text-left text-sm font-medium text-gray-500">
                             <li>
                               <a
-                                (click)="onChangeSort('id', 'desc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                                (click)="onChangeSort('name', 'asc')"
+                                class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                                 Alphabetically, A-Z
                               </a>
                             <li>
-                              <a 
-                                (click)="onChangeSort('id', 'asc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                              <a
+                                (click)="onChangeSort('name', 'desc')"
+                                class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                                 Alphabetically, Z-A
                               </a>
                             <li>
-                              <a 
-                                (click)="onChangeSort('rating', 'desc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                              <a
+                                (click)="onChangeSort('price', 'asc')"
+                                class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                                 Price, Low to High
                               </a>
                             </li>
                             <li>
-                              <a 
-                                (click)="onChangeSort('rating', 'asc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                              <a
+                                (click)="onChangeSort('price', 'desc')"
+                                class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                                 Price, High to Low
                               </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-    </div>  
+    </div>
     <div class="my-4 flex justify-between">
       <div>
         <i class="fa-solid fa-fire text-main-color"></i>
@@ -72,36 +72,36 @@
                 <img class="mx-auto h-full object-top group-hover/cart:scale-105" [src]="'http://localhost:8080/file/product/'+product.coverImage" alt="" />
               </a>
               <div class="absolute right-0 top-0 w-8 mt-1 mr-1 flex flex-col gap-1 items-center">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   class="group/wishlist relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
                   <i class="fa-regular fa-heart"></i>
                   <span class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/wishlist:scale-100 group-hover/wishlist:opacity-100 duration-500 transition-all">Add To wishlist</span>
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   class="group/compare relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
                   <i class="fa-solid fa-code-compare"></i>
                   <span class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/compare:scale-100 group-hover/compare:opacity-100 duration-500 transition-all">
                     Compare products
                   </span>
                 </button>
-                <button 
+                <button
                   (click)="quickViewService.slug.set(product.slug)"
-                  type="button" 
+                  type="button"
                   class="group/view relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
                   <i class="fa-regular fa-eye"></i>
-                  <span 
+                  <span
                     class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/view:scale-100 group-hover/view:opacity-100 duration-500 transition-all">
                     Quick view
                   </span>
                 </button>
               </div>
-              <button 
+              <button
                 class="flex gap-1 items-center absolute border bg-main-color px-2 py-2 rounded-md transition-all  left-1/2 top-100 -translate-x-1/2 -translate-y-1 opacity-0 group-hover/cart:opacity-100 group-hover/cart:-translate-y-1/2 ">
                 <span class="text-sm text-nowrap">Add to Cart</span>
                 <i class="fa-solid fa-cart-shopping"></i>
-              </button>            
+              </button>
             </div>
             <div class="flex flex-col px-2 pt-5 pb-2">
               <a [routerLink]="['products', product.slug]" class="text-lg font-semibold leading-tight text-gray-900 hover:underline">{{product.name}}</a>
@@ -120,7 +120,7 @@
             </div>
           </div>
         }
-      </div>    
+      </div>
       @if(productsResource.isLoading()) {
         <div class="my-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3">
           <div class="group/cart animate-pulse duration-500 mb-3 relative rounded-lg border bg-white border-slate-200 shadow-sm">
@@ -132,10 +132,10 @@
               </a>
             </div>
             <div class="flex flex-col py-3 px-2 gap-1">
-              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>            
-              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>  
+              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>
+              <div class="bg-gray-200 w-48 h-2 rounded-full"></div>
               <div class="mt-2 bg-gray-200 w-10 h-2 rounded-full"></div>
-            </div>          
+            </div>
           </div>
         </div>
       }

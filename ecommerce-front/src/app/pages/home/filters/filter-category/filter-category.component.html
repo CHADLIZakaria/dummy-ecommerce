@@ -65,8 +65,7 @@
           </li>
         }
       </ul>
-      @let isShowMoreVisible = categories.value().data.totalElements !== categories.value().data.data.length;
-      @if(isShowMoreVisible) {
+      @if(categories.value().data.totalElements !== categories.value().data.data.length;) {
         <a 
         (click)="showMore()" 
         class="text-main-color cursor-pointer">

@@ -1,0 +1,7 @@
+package com.zchadli.ecommerce_back.service;
+
+import com.zchadli.ecommerce_back.model.User;
+
+public interface FavoriteService {
+    boolean toggleFavorite(User user, Long idProduct);
+}
