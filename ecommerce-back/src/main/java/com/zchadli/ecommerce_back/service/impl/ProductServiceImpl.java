@@ -5,12 +5,10 @@ import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;
 import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
-import com.zchadli.ecommerce_back.model.Brand;
-import com.zchadli.ecommerce_back.model.Category;
-import com.zchadli.ecommerce_back.model.Product;
-import com.zchadli.ecommerce_back.model.UploadedFile;
+import com.zchadli.ecommerce_back.model.*;
 import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
+import com.zchadli.ecommerce_back.repository.FavoriteDao;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.response.PageResponse;
@@ -27,9 +25,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
     private final UploadedFileService uploadedFileService;
     private final CategoryDao categoryDao;
     private final BrandDao brandDao;
+    private final FavoriteDao favoriteDao;
     private static final String PATH = "uploads/products/";
     @Override
     public ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage) {
@@ -63,13 +61,14 @@ public class ProductServiceImpl implements ProductService {
         UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, coverImage);
         product.setCoverImage(uploadedFile);
         uploadedFile.setProduct(product);
-        return ecommerceMapper.toProductResponse(productDao.save(product));
+        return ecommerceMapper.toProductResponse(productDao.save(product), Collections.emptySet());
     }
     @Override
-    public PageResponse<ProductResponse> findAll(Map<String, String[]> productSearchRequest) {
+    public PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest) {
         Specification<Product> specification = SpecificationBuilderHelper.buildSpecificationFromParams(productSearchRequest);
         Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(productSearchRequest);
         Page<Product> productPage = productDao.findAll(specification, pageable);
+        Set<Long> favoriteProductIds = favoriteDao.findByUser(user).stream().map(favorite -> favorite.getProduct().getId()).collect(Collectors.toSet());
         return new PageResponse<>(
             ecommerceMapper.toProductsResponse(productPage.getContent()),
             productPage.getTotalElements(),

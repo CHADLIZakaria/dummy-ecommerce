@@ -6,11 +6,13 @@ import com.zchadli.ecommerce_back.request.CategorySaveRequest;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.request.ReviewSaveRequest;
 import com.zchadli.ecommerce_back.response.*;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface EcommerceMapper {
@@ -27,10 +29,11 @@ public interface EcommerceMapper {
     Category toCategory(CategorySaveRequest categorySaveRequest);
     List<CategoryResponse> toCategoriesResponse(List<Category> categories);
 
-    @Mapping(source = "coverImage.fileName", target = "coverImage")
-    @Mapping(source = "reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
-    @Mapping(source = "reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
-    ProductResponse toProductResponse(Product product);
+    @Mapping(source = "product.coverImage.fileName", target = "coverImage")
+    @Mapping(source = "product.reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
+    @Mapping(source = "product.reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
+    @Mapping(source = "product", target = "isFavorite", qualifiedByName = "isProductFavorite")
+    ProductResponse toProductResponse(Product product, Set<Long> favoriteProductIds);
     @Named("mapReviewsCount")
     default Integer mapReviewsCount(List<Review> reviews) {
         return reviews != null ? reviews.size() : 0;
@@ -49,8 +52,16 @@ public interface EcommerceMapper {
     default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
+
     List<ProductResponse> toProductsResponse(List<Product> products);
 
+    default List<ProductResponse> toProductsResponse(List<Product> products, Set<Long>  favoriteProductIds) {
+        return products.stream().map(product -> toProductResponse(product, favoriteProductIds)).toList();
+    }
+    @Named("isProductFavorite")
+    static boolean isProductFavorite(Product product, @Context Set<Long> favoriteProductIds) {
+        return favoriteProductIds.contains(product.getId());
+    }
     Brand toBrand(BrandSaveRequest brandSaveRequest);
     BrandResponse toBrandResponse(Brand brand);
     @Mapping(source = "products", target = "productCounts", qualifiedByName = "mapProductCount")

@@ -37,8 +37,8 @@ public class ProductController {
     }
     @Operation(summary = "Search all products with optional filters")
     @GetMapping()
-    public EcommerceResponse<PageResponse<ProductResponse>> find(HttpServletRequest productSearchRequest) {
-        return new EcommerceResponse<>(200, "Products retrieved successfully", productService.findAll(productSearchRequest.getParameterMap()));
+    public EcommerceResponse<PageResponse<ProductResponse>> find(@AuthenticationPrincipal User user, HttpServletRequest productSearchRequest) {
+        return new EcommerceResponse<>(200, "Products retrieved successfully", productService.findAll(user, productSearchRequest.getParameterMap()));
     }
     @Operation(summary = "find by slug")
     @GetMapping("/{slug}")

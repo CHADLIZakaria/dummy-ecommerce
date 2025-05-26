@@ -11,5 +11,6 @@ public record ProductResponse(
         List<String> images,
         Double avgReview,
         Double reviewsCounts,
-        String coverImage) {
+        String coverImage,
+        boolean isFavorite) {
 }
