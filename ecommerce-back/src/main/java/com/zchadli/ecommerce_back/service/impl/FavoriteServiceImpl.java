@@ -21,18 +21,17 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final UserDao userDao;
 
     @Override
-    public boolean toggleFavorite(User user, Long idProduct) {
+    public String toggleFavorite(User user, Long idProduct) {
         Product product = productDao.findById(idProduct).orElseThrow(() -> new ProductNotFoundException(idProduct));
         Optional<Favorite> favoriteOptional = favoriteDao.findByUserAndProduct(user, product);
         if(favoriteOptional.isPresent()) {
             favoriteDao.delete(favoriteOptional.get());
+            return "Product "+product.getName()+" just been removed from favorites.";
         }
-        else {
-            Favorite favorite = new Favorite();
-            favorite.setUser(user);
-            favorite.setProduct(product);
-            favoriteDao.save(favorite);
-        }
-        return true;
+        Favorite favorite = new Favorite();
+        favorite.setUser(user);
+        favorite.setProduct(product);
+        favoriteDao.save(favorite);
+        return "Product "+product.getName()+" just been added from favorites.";
     }
 }

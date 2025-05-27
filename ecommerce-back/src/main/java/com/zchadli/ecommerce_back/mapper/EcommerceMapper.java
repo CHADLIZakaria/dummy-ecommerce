@@ -29,11 +29,21 @@ public interface EcommerceMapper {
     Category toCategory(CategorySaveRequest categorySaveRequest);
     List<CategoryResponse> toCategoriesResponse(List<Category> categories);
 
-    @Mapping(source = "product.coverImage.fileName", target = "coverImage")
+    @Mapping(source = "product.coverImage", target = "coverImage", qualifiedByName = "mapUploadedFileToFileName")
     @Mapping(source = "product.reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
     @Mapping(source = "product.reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
-    @Mapping(source = "product", target = "isFavorite", qualifiedByName = "isProductFavorite")
-    ProductResponse toProductResponse(Product product, Set<Long> favoriteProductIds);
+    @Mapping(target = "favorite", ignore = true)
+    ProductResponse toProductResponse(Product product);
+    default ProductResponse toProductResponse(Product product, Set<Long> favoriteProductIds) {
+        ProductResponse response = toProductResponse(product);
+        response.setFavorite(favoriteProductIds != null && favoriteProductIds.contains(product.getId()));
+        return response;
+    }
+    default List<ProductResponse> toProductsResponse(List<Product> products, Set<Long> favoriteProductIds) {
+        return products.stream()
+                .map(product -> toProductResponse(product, favoriteProductIds))
+                .toList();
+    }
     @Named("mapReviewsCount")
     default Integer mapReviewsCount(List<Review> reviews) {
         return reviews != null ? reviews.size() : 0;
@@ -54,10 +64,6 @@ public interface EcommerceMapper {
     }
 
     List<ProductResponse> toProductsResponse(List<Product> products);
-
-    default List<ProductResponse> toProductsResponse(List<Product> products, Set<Long>  favoriteProductIds) {
-        return products.stream().map(product -> toProductResponse(product, favoriteProductIds)).toList();
-    }
     @Named("isProductFavorite")
     static boolean isProductFavorite(Product product, @Context Set<Long> favoriteProductIds) {
         return favoriteProductIds.contains(product.getId());
@@ -78,4 +84,8 @@ public interface EcommerceMapper {
     List<ReviewResponse> toReviewsResponse(List<Review> review);
     @Mapping(source = "file.fileName", target = "filePath")
     UserResponse toUserResponse(User user);
+    @Named("mapUploadedFileToFileName")
+    default String mapUploadedFileToFileName(UploadedFile file) {
+        return file != null ? file.getFileName() : null;
+    }
 }

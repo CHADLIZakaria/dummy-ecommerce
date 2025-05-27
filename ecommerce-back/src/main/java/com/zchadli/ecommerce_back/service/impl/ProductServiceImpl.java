@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
         UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, coverImage);
         product.setCoverImage(uploadedFile);
         uploadedFile.setProduct(product);
-        return ecommerceMapper.toProductResponse(productDao.save(product), Collections.emptySet());
+        return ecommerceMapper.toProductResponse(productDao.save(product));
     }
     @Override
     public PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest) {
@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> productPage = productDao.findAll(specification, pageable);
         Set<Long> favoriteProductIds = favoriteDao.findByUser(user).stream().map(favorite -> favorite.getProduct().getId()).collect(Collectors.toSet());
         return new PageResponse<>(
-            ecommerceMapper.toProductsResponse(productPage.getContent()),
+            ecommerceMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
             productPage.getTotalElements(),
             productPage.getSize(),
             productPage.getNumber()
