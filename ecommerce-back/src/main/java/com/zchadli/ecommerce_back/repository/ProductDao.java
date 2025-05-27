@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
    boolean existsByName(String name);
-
     Optional<Product> findBySlug(String slug);
 }

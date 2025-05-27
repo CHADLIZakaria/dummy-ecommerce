@@ -4,6 +4,7 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CategoriesComponent } from './admin/pages/categories/categories.component';
+import { FavoriteUserProductsComponent } from './pages/favorite-user-products/favorite-user-products.component';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,8 @@ export const routes: Routes = [
         path: 'categories',
         component: CategoriesComponent
     },
-
-
+    {
+        path: 'favorites',
+        component: FavoriteUserProductsComponent
+    },
 ];

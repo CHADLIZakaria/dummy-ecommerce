@@ -17,7 +17,6 @@ export class CategoriesService {
     request: () => ({
       size: this.query().size,
       page: this.query().page
-    
     }),
     loader: async({request}) => {
       const categories = await fetch(`${environment.baseUrl}categories?size=${request.size}&page=${request.page}`)

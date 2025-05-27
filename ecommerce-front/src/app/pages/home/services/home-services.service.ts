@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Category, EcomPagination, EcomResponse, Product } from '../../../shared/model/ecom.model';
+import { Category, EcomPagination, EcomResponse, FavoriteRespone, Product } from '../../../shared/model/ecom.model';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BrandWithProduct, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
@@ -72,5 +72,7 @@ export class HomeServices {
       }
     })
   )
-  
+  toggleFavorite(idProduct: number): Observable<EcomResponse<FavoriteRespone>> {
+    return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {})
+  }
 }

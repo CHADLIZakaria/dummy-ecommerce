@@ -1,19 +1,20 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { TitleComponent } from "../../../shared/components/title/title.component";
-import { FiltersComponent } from "../filters/filters.component";
-import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
-import { dropDownAnimation } from '../../../shared/animations/animations';
-import { HomeServices } from '../services/home-services.service';
+import { CommonModule } from '@angular/common';
+import { Component, effect, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { dropDownAnimation } from '../../../shared/animations/animations';
+import { TitleComponent } from "../../../shared/components/title/title.component";
+import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
-import { NumberPipe } from '../../../shared/pipes/number.pipe';
+import { Product } from '../../../shared/model/ecom.model';
+import { FiltersComponent } from "../filters/filters.component";
 import { QuickViewComponent } from '../popup/quick-view/quick-view.component';
 import { QuickViewService } from '../popup/services/quick-view.service';
-import { Product } from '../../../shared/model/ecom.model';
+import { HomeServices } from '../services/home-services.service';
+import { AlertComponent } from "../../../shared/components/alert/alert.component";
 
 @Component({
   selector: 'ecom-list-products',
-  imports: [TitleComponent, FiltersComponent, DropdownDirective, RouterLink, NumberPipe, QuickViewComponent],
+  imports: [TitleComponent, FiltersComponent, DropdownDirective, RouterLink, QuickViewComponent, CommonModule, AlertComponent],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss',
   animations: [dropDownAnimation]
@@ -26,6 +27,8 @@ export class ListProductsComponent {
   currentProduct: string = ''
   quickViewService = inject(QuickViewService)
   products = signal<Product[]>([])
+  showAlert = false;
+  messageAlert = ''
 
   constructor() {
     effect(() => {
@@ -39,7 +42,6 @@ export class ListProductsComponent {
       }
     })
   }
-
   loadMoreProducts() {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
@@ -58,5 +60,20 @@ export class ListProductsComponent {
       sort: column+','+direction,
       page: 0
     })
+  }
+  toggleFavorite(idProduct: number) {
+    this.homeService.toggleFavorite(idProduct).subscribe(
+      data => {
+        if(data.status===200) {
+          this.showAlert = true
+          this.messageAlert = data.data.message
+          this.products().forEach(product => {
+            if(product.id === idProduct) {
+              product.favorite = data.data.isFavorite
+            }
+          })
+        }
+      }
+    )
   }
 }

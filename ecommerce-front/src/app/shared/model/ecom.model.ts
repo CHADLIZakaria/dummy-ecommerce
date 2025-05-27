@@ -26,8 +26,9 @@ export type Product = {
     price: number;
     images: string[];
     coverImage: string;
-    avgReview: number,
-    reviewsCounts: number
+    avgReview: number;
+    reviewsCounts: number;
+    favorite: boolean;
 }
 export type ProductDetails = {
     id: number;
@@ -51,6 +52,10 @@ export type Review = {
 export type UserAuth = {
     username: string;
     filePath: string
+}
+export type FavoriteRespone = {
+    message: string,
+    isFavorite: boolean
 }
 export const initProductDetails: EcomResponse<ProductDetails> = {
     message: '',

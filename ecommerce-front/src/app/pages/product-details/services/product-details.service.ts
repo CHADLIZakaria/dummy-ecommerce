@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class ProductDetailsService {
   slug = signal<string>('')
-  sort=signal({
+  sort = signal({
     'column': 'id',
     'order': 'desc'
   })
