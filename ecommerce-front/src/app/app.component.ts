@@ -1,14 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./shared/navbar/navbar.component";
-import { HomeComponent } from "./pages/home/home.component";
-import { CommonModule } from '@angular/common';
 import { LoginService } from './pages/login/services/login.service';
-import { CategoriesComponent } from "./admin/pages/categories/categories.component";
+import { NavbarComponent } from "./shared/navbar/navbar.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, CategoriesComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

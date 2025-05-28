@@ -1,6 +1,7 @@
 package com.zchadli.ecommerce_back.controller;
 
 import com.zchadli.ecommerce_back.model.User;
+import com.zchadli.ecommerce_back.request.FavoriteSearchRequest;
 import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.response.UserResponse;
@@ -26,8 +27,10 @@ public class UserController {
         return new EcommerceResponse<>(200, "User retrieved successfully", userService.getUser(username));
     }
     @GetMapping("/user/favorites")
-    public EcommerceResponse<List<ProductResponse>> find(@AuthenticationPrincipal User user) {
-        System.out.println(user);
-        return new EcommerceResponse<>(200, "Products retrieved successfully", userService.findFavoritesProducts(user));
+    public EcommerceResponse<List<ProductResponse>> find(
+            @AuthenticationPrincipal User user,
+            FavoriteSearchRequest favoriteSearchRequest
+            ) {
+        return new EcommerceResponse<>(200, "Products retrieved successfully", userService.findFavoritesProducts(user, favoriteSearchRequest));
     }
 }

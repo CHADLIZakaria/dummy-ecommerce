@@ -1,0 +1,35 @@
+.alert::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 4px;
+    background-color: rgb(20 184 166);
+    animation: move-width 5s linear forwards;;
+}
+.alert::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgb(209 213 219);
+}
+@keyframes move-width {
+  0% {
+    width: 100%;
+  }
+  25% {
+    width: 75%;
+  }
+  50% {
+    width: 50%;
+  }
+  75% {
+    width: 25%;
+  }
+  100% {
+    width: 0%;
+  }
+}

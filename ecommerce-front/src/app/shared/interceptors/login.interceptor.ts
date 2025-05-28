@@ -14,7 +14,6 @@ export const loginInterceptor: HttpInterceptorFn = (req, next) => {
         'Authorization': `Bearer ${token}`
       }
     })
-
   }
   return next(req);
 };

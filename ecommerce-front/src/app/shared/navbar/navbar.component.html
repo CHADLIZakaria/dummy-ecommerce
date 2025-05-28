@@ -53,7 +53,9 @@
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </button>
                     <ul class="dropdown-menu absolute left-0 top-full mt-1 w-full bg-white border shadow-md rounded-md flex flex-col hidden">
-                        <li class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
+                        <li 
+                            [routerLink]="['/favorites']"
+                            class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
                             Favorites
                             <i class="fa-regular fa-heart"></i>
                         </li>
