@@ -21,6 +21,12 @@ export type BrandWithProduct = {
     name: string;
     productCounts: number;
 }
+export type CartItem = {
+    productId: number;
+    productName: string;
+    quantity: number;
+    price: number;
+}
 export const initProductFilter: ProductFilter = {
     size: 10,
     keyword: '',

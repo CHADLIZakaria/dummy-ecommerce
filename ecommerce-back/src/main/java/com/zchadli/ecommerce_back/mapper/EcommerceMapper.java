@@ -1,10 +1,7 @@
 package com.zchadli.ecommerce_back.mapper;
 
 import com.zchadli.ecommerce_back.model.*;
-import com.zchadli.ecommerce_back.request.BrandSaveRequest;
-import com.zchadli.ecommerce_back.request.CategorySaveRequest;
-import com.zchadli.ecommerce_back.request.ProductSaveRequest;
-import com.zchadli.ecommerce_back.request.ReviewSaveRequest;
+import com.zchadli.ecommerce_back.request.*;
 import com.zchadli.ecommerce_back.response.*;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -88,4 +85,9 @@ public interface EcommerceMapper {
     default String mapUploadedFileToFileName(UploadedFile file) {
         return file != null ? file.getFileName() : null;
     }
+    @Mapping(source = "cartItemRequest.id", target = "id")
+    CartItem toCartItem(CartItemRequest cartItemRequest, User user);
+    CartItemResponse toCartItemResponse(CartItem cartItem);
+
+
 }

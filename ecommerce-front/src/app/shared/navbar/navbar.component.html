@@ -37,7 +37,13 @@
                     /
                     <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
-            }            
+            }
+            <li>                
+                <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center border  rounded-lg focus:ring-4 focus:outline-none focus:main-color">
+                    <i class="fa-solid fa-cart-shopping"></i>                   
+                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">20</div>
+                </button>
+            </li>
             @if(user() !== null) {
                 <li 
                     ecomDropdown

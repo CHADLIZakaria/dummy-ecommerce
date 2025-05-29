@@ -11,6 +11,7 @@ import { QuickViewComponent } from '../popup/quick-view/quick-view.component';
 import { QuickViewService } from '../popup/services/quick-view.service';
 import { HomeServices } from '../services/home-services.service';
 import { AlertComponent } from "../../../shared/components/alert/alert.component";
+import { CartItem } from '../models/home.model';
 
 @Component({
   selector: 'ecom-list-products',
@@ -75,5 +76,17 @@ export class ListProductsComponent {
         }
       }
     )
+  }
+  onAddToCart(product: Product) {
+    const cartItem: CartItem = {
+      productId: product.id,
+      price: product.price,
+      productName: product.name,
+      quantity: 1
+    }
+    console.log(cartItem)
+    this.homeService.addCart(cartItem).subscribe(data => {
+      console.log(data)
+    })
   }
 }

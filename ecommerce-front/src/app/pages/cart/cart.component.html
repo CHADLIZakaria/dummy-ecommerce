@@ -1,0 +1,57 @@
+<div class="mx-10 my-10">
+    <ecom-title
+        title="Your"
+        subtitle="Cart"/>
+    <div class="flex justify-between mt-3">
+        <div class="flex flex-col">
+            <div class="border flex items-center gap-5 px-1 py-1 bg-white rounded-md shadow-md relative">
+                <div class="p-3 bg-slate-200 rounded-md">
+                    <img class="h-32 w-32" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="imac image" />
+                </div>
+                <div class="flex items-center gap-3">
+                    <p class="font-semibold text-lg">Essence Mascara Lash Princess</p>                   
+                    <span>$800</span>
+                    <div class="flex items-center border-gray-100">
+                        <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-main-color hover:text-blue-50"> - </span>
+                        <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="1" min="1" />
+                        <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-main-color hover:text-blue-50"> + </span>
+                    </div>
+                    <span>Subtotale</span>
+                    <span class="text-main-color">$ 800</span>
+                </div>
+                <div>
+                </div>        
+                <button
+                    class="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2">
+                    <i class="fa-solid fa-circle-xmark text-red-700 text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <p class="text-xl font-semibold text-gray-900">Order summary</p>
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <dl class="flex items-center justify-between gap-4">
+                        <dt class="text-base font-normal text-gray-500">Essence Mascara Lash Princess(2)</dt>
+                        <dd class="text-base font-medium text-gray-900">$7,592.00</dd>
+                    </dl>
+                </div>        
+                <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
+                    <dt class="text-base font-bold text-gray-900">Total</dt>
+                    <dd class="text-base font-bold text-gray-900">$8,191.00</dd>
+                </dl>
+            </div>
+            <a href="#" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">Proceed to Checkout</a>
+            <div class="flex items-center justify-center gap-2">
+            <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
+            <a href="#" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
+                Continue Shopping
+                <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+                </svg>
+            </a>
+            </div>
+        </div>
+    </div>
+</div>
