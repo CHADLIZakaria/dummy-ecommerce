@@ -20,13 +20,12 @@ public class CartServiceImpl implements CartService {
     private final UserDao userRepository;
     private final EcommerceMapper ecommerceMapper;
 
-    public List<CartItem> getCartItems(User user) {
-        return cartItemRepository.findByUser(user);
+    public List<CartItemResponse> getCartItems(User user) {
+        return ecommerceMapper.toCartItemsResponse(cartItemRepository.findByUser(user));
     }
 
     public CartItemResponse addItemToCart(User user, CartItemRequest cartItemRequest) {
-        CartItem cartItem = ecommerceMapper.toCartItem(cartItemRequest, user);
-        cartItem.setUser(user);
+        CartItem cartItem = ecommerceMapper.toCartItem(cartItemRequest, user.getId());
         return ecommerceMapper.toCartItemResponse(cartItemRepository.save(cartItem));
     }
 

@@ -18,7 +18,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public List<CartItem> getCart(@AuthenticationPrincipal User user) {
+    public List<CartItemResponse> getCart(@AuthenticationPrincipal User user) {
         return cartService.getCartItems(user);
     }
 

@@ -79,12 +79,11 @@ export class ListProductsComponent {
   }
   onAddToCart(product: Product) {
     const cartItem: CartItem = {
-      productId: product.id,
-      price: product.price,
+      productImage: product.coverImage,
       productName: product.name,
+      price: product.price,
       quantity: 1
     }
-    console.log(cartItem)
     this.homeService.addCart(cartItem).subscribe(data => {
       console.log(data)
     })

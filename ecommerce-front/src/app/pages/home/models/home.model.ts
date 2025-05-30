@@ -22,7 +22,8 @@ export type BrandWithProduct = {
     productCounts: number;
 }
 export type CartItem = {
-    productId: number;
+    id?: number;
+    productImage: string;
     productName: string;
     quantity: number;
     price: number;

@@ -12,8 +12,8 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
     private String productName;
+    private String productImage;
     private int quantity;
     private double price;
     @ManyToOne(fetch = FetchType.LAZY)

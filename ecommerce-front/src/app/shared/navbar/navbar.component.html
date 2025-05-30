@@ -39,10 +39,21 @@
                 </li>
             }
             <li>                
-                <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center border  rounded-lg focus:ring-4 focus:outline-none focus:main-color">
+                <a 
+                    [routerLink]="['/cart']"
+                    type="button" 
+                    class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
                     <i class="fa-solid fa-cart-shopping"></i>                   
-                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">20</div>
-                </button>
+                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
+                        20
+                    </div>
+                    <div class="border absolute top-full mt-1 bg-white left-0 rounded-sm shadow-md">
+                        <div class="rounded-sm shadow-md flex">
+                            <img src="http://localhost:8080/file/product/Gucci-Bloom-Eau-de0_20250527T002259.png" class="w-10 h-10" />
+                            <span>Gucci Bloom Eau de</span>
+                        </div>
+                    </div>
+                </a>
             </li>
             @if(user() !== null) {
                 <li 
@@ -68,7 +79,7 @@
                         <li class="px-2 py-1 cursor-pointer hover:bg-main-color rounded-md">
                            <button 
                             (click)="onLogout()"    
-                            class="w-full flex items-center justify-between ">
+                            class="w-full flex items-center justify-between">
                                Logout
                                <i class="fa-solid fa-right-from-bracket"></i>
                            </button>

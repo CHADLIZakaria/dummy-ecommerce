@@ -85,9 +85,8 @@ public interface EcommerceMapper {
     default String mapUploadedFileToFileName(UploadedFile file) {
         return file != null ? file.getFileName() : null;
     }
-    @Mapping(source = "cartItemRequest.id", target = "id")
-    CartItem toCartItem(CartItemRequest cartItemRequest, User user);
+    @Mapping(source = "userId", target = "user.id")
+    CartItem toCartItem(CartItemRequest cartItemRequest, Long userId);
     CartItemResponse toCartItemResponse(CartItem cartItem);
-
-
+    List<CartItemResponse> toCartItemsResponse(List<CartItem> cartItems);
 }
