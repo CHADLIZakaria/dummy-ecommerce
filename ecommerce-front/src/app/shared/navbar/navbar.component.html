@@ -22,10 +22,10 @@
                 <a routerLink="/" class="rounded-sm hover:text-main-color">Home</a>
             </li>
             <li>
-                <button 
+                <button
                     (click)="showCategories = !showCategories"
                     class="flex items-center rounded-sm hover:text-main-color">
-                    Categories 
+                    Categories
                     <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
@@ -38,54 +38,80 @@
                     <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
             }
-            <li>                
-                <a 
+            <li>
+                <a
                     [routerLink]="['/cart']"
-                    type="button" 
+                    type="button"
                     class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
-                    <i class="fa-solid fa-cart-shopping"></i>                   
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
                         20
                     </div>
-                    <div class="border absolute top-full mt-1 bg-white left-0 rounded-sm shadow-md">
-                        <div class="rounded-sm shadow-md flex">
-                            <img src="http://localhost:8080/file/product/Gucci-Bloom-Eau-de0_20250527T002259.png" class="w-10 h-10" />
-                            <span>Gucci Bloom Eau de</span>
+                    <div class="border absolute top-full mt-1 bg-white left-0 rounded-md shadow-md w-max">
+                        <div class="px-1 py-2">
+                            <div class="rounded-t-md border flex items-center px-2 py-1">
+                                <img src="http://localhost:8080/file/product/Gucci-Bloom-Eau-de0_20250527T002259.png" class="w-10 h-10" alt="" />
+                                <div class="flex flex-col">
+                                    <span>Gucci Bloom Eau de</span>
+                                    <span>2* $87</span>
+                                </div>
+                                <button
+                                    class="ml-3">
+                                    <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
+                                </button>
+                            </div>
+                             <div class="border border-t-0 flex items-center px-2 py-1">
+                                <img src="http://localhost:8080/file/product/Gucci-Bloom-Eau-de0_20250527T002259.png" class="w-10 h-10" />
+                                <div class="flex flex-col">
+                                    <span class="">Gucci Bloom Eau de</span>
+                                    <span class="">2* $87</span>
+                                </div>
+                                <button
+                                    class="ml-3">
+                                    <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
+                                </button>
+                            </div>
+                            <div class="border border-t-0 rounded-b-md flex justify-between px-2">
+                                <span class="border-r flex-1 py-1">Cart</span>
+                                <span class="flex-1 py-1">
+                                    Checkout
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </a>
             </li>
             @if(user() !== null) {
-                <li 
+                <li
                     ecomDropdown
                     #dropdownUser="ecomDropdown"
                     class="relative">
-                    <button 
+                    <button
                         (click)="dropdownUser.toggleDropdown()"
                         class="py-1 ps-1 pe-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                        <img 
-                            class="w-8 h-auto rounded-full" 
+                        <img
+                            class="w-8 h-auto rounded-full"
                             [src]="'http://localhost:8080/file/user/'+user()?.filePath" />
                         <span class="font-medium truncate max-w-30">{{user()?.username}}</span>
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </button>
                     <ul class="dropdown-menu absolute left-0 top-full mt-1 w-full bg-white border shadow-md rounded-md flex flex-col hidden">
-                        <li 
+                        <li
                             [routerLink]="['/favorites']"
                             class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
                             Favorites
                             <i class="fa-regular fa-heart"></i>
                         </li>
                         <li class="px-2 py-1 cursor-pointer hover:bg-main-color rounded-md">
-                           <button 
-                            (click)="onLogout()"    
+                           <button
+                            (click)="onLogout()"
                             class="w-full flex items-center justify-between">
                                Logout
                                <i class="fa-solid fa-right-from-bracket"></i>
                            </button>
                         </li>
                     </ul>
-                </li>                  
+                </li>
             }
         </ul>
     </div>
