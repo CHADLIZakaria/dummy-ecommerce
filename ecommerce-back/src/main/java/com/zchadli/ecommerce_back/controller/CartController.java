@@ -4,6 +4,7 @@ import com.zchadli.ecommerce_back.model.CartItem;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.request.CartItemRequest;
 import com.zchadli.ecommerce_back.response.CartItemResponse;
+import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,8 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public CartItemResponse addToCart(@RequestBody CartItemRequest cartItemRequest, @AuthenticationPrincipal User user) {
-        return cartService.addItemToCart(user, cartItemRequest);
+    public EcommerceResponse<CartItemResponse> addToCart(@RequestBody CartItemRequest cartItemRequest, @AuthenticationPrincipal User user) {
+        return new EcommerceResponse<>(200, cartItemRequest.productName()+" just been added to cart", cartService.addItemToCart(user, cartItemRequest));
     }
 
     @DeleteMapping("/remove/{itemId}")

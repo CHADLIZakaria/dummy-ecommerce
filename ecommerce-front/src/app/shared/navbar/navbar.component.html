@@ -38,50 +38,45 @@
                     <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
             }
-            <li>
+            <li class="relative group">
                 <a
                     [routerLink]="['/cart']"
-                    type="button"
-                    class="relative group inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
+                    class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
-                        20
-                    </div>
-                    <div class="border invisible opacity-0 group-hover:visible group-hover:opacity-100 transition duration-300 absolute top-full mt-1 bg-white left-0 rounded-md shadow-md w-max">
-                        <div class="px-1 py-2">
-                            <div class="rounded-t-md border flex items-center px-2 py-1">
-                                <img src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250510T213805.png" class="w-10 h-10" alt="" />
-                                <div class="flex flex-col">
-                                    <span>Gucci Bloom Eau de</span>
-                                    <span>2* $87</span>
-                                </div>
-                                <button
-                                    class="ml-3">
-                                    <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
-                                </button>
-                            </div>
-                             <div class="border border-t-0 flex items-center px-2 py-1">
-                                <img src="http://localhost:8080/file/product/Gucci-Bloom-Eau-de0_20250527T002259.png" class="w-10 h-10" />
-                                <div class="flex flex-col">
-                                    <span class="">Gucci Bloom Eau de</span>
-                                    <span class="">2* $87</span>
-                                </div>
-                                <button
-                                    class="ml-3">
-                                    <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
-                                </button>
-                            </div>
-                            <div class="border border-t-0 rounded-b-md flex justify-between px-2">
-                                <span class="border-r flex-1 py-1">Cart</span>
-                                <span class="flex-1 py-1">
-                                    Checkout
-                                </span>
-                            </div>
-                        </div>
+                     {{getNumberItems()}}
                     </div>
                 </a>
+                <div class="hidden group-hover:block absolute top-full right-0 shadow-md w-max z-50">
+                    <div class="px-1 py-2 max-h-96 overflow-y-auto min-w-[250px] mt-1 border bg-white rounded-md">
+                        @for (cartItem of cartItems(); track cartItem; let first=$first) {
+                            <div
+                                [ngClass]="first ? 'rounded-md': ''" 
+                                class="border border-b-0 rounded-b-none flex justify-between items-center px-2 py-1">
+                            <div class="flex gap-2">
+                                <img
+                                [src]="'http://localhost:8080/file/product/' + cartItem.productImage"
+                                class="w-10 h-10"
+                                [alt]="'cartItem' + cartItem.productName"
+                                />
+                                <div class="flex flex-col">
+                                    <span class="text-xs">{{ cartItem.productName }}</span>
+                                    <span>${{ cartItem.price }} * {{cartItem.quantity}} </span>
+                                </div>
+                            </div>
+                            <button class="ml-3">
+                                <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
+                            </button>
+                            </div>
+                        }
+                        <div class="border rounded-b-md border-t flex justify-between px-2 py-1">
+                            <span class="flex-1 text-center cursor-pointer hover:underline">Cart</span>
+                            <span class="flex-1 text-center cursor-pointer hover:underline">Checkout</span>
+                        </div>
+                    </div>
+                </div>
             </li>
-            @if(user() !== null) {
+             @if(user() !== null) {
                 <li
                     ecomDropdown
                     #dropdownUser="ecomDropdown"

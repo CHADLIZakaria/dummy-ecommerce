@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,16 @@ public class CartServiceImpl implements CartService {
     }
 
     public CartItemResponse addItemToCart(User user, CartItemRequest cartItemRequest) {
-        CartItem cartItem = ecommerceMapper.toCartItem(cartItemRequest, user.getId());
-        return ecommerceMapper.toCartItemResponse(cartItemRepository.save(cartItem));
+        Optional<CartItem> existingItem = cartItemRepository.findByUserAndProductName(user, cartItemRequest.productName());
+        if (existingItem.isPresent()) {
+            CartItem currentItem = existingItem.get();
+            currentItem.setQuantity(currentItem.getQuantity() + cartItemRequest.quantity());
+            return ecommerceMapper.toCartItemResponse(cartItemRepository.save(currentItem));
+        }
+        else {
+            CartItem newCartItem = ecommerceMapper.toCartItem(cartItemRequest, user.getId());
+            return ecommerceMapper.toCartItemResponse(cartItemRepository.save(newCartItem));
+        }
     }
 
     public void removeItem(Long itemId) {
