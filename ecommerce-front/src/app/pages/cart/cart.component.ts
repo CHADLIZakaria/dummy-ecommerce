@@ -1,35 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { TitleComponent } from "../../shared/components/title/title.component";
-import { LoginService } from '../login/services/login.service';
 import { UserService } from '../../shared/services/user.service';
 import { CartItem } from '../home/models/home.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ecom-cart',
-  imports: [TitleComponent],
+  imports: [TitleComponent, CommonModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
   userService = inject(UserService)
-  cartItems: CartItem[] = []
+  cartItems = computed(() => this.userService.cart());
   isLoading = false;
-  ngOnInit(): void {
-    this.fetchCart()
-  }
-  
-  fetchCart() {
-    this.isLoading = true
-    this.userService.getUserCart().subscribe(
-      data => {
-        this.cartItems = data
-        this.isLoading = false
-      }
-    )
-  }
+
 
   getTotalPrice() {
-    return this.cartItems.reduce((acc, cart) => cart.price+acc, 0)
+    return this.cartItems().reduce((acc, cart) => (cart.price * cart.quantity)+acc, 0)
   }
-      
+  getTotalItems() {
+    return this.cartItems().reduce((acc, cart) => cart.quantity+acc, 0)
+  }
+  onChangeQuantity(cartItem: CartItem, operation: '+' | '-') {
+    cartItem = {...cartItem, quantity: operation==='+' ? cartItem.quantity+1 : cartItem.quantity-1}
+    this.userService.updateQuantity(cartItem).subscribe(data => {
+      if(data.status===200) {
+
+      }
+    })
+  }
 }

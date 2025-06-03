@@ -28,6 +28,20 @@ public class CartController {
         return new EcommerceResponse<>(200, cartItemRequest.productName()+" just been added to cart", cartService.addItemToCart(user, cartItemRequest));
     }
 
+    @PutMapping("/item/{id}/{quantity}")
+    public EcommerceResponse<CartItemResponse> updateQuantity(
+            @PathVariable Long id,
+            @PathVariable Integer quantity,
+            @AuthenticationPrincipal User user) {
+        CartItemResponse response = cartService.updateQuantity(user, id, quantity);
+        if(response==null) {
+            return new EcommerceResponse<>(200, "Cart item deleted", null);
+        }
+        else {
+            return new EcommerceResponse<>(200, "Quantity updated", response);
+        }
+    }
+
     @DeleteMapping("/remove/{itemId}")
     public ResponseEntity<?> removeItem(@PathVariable Long itemId, @AuthenticationPrincipal User user) {
         cartService.removeItem(itemId);

@@ -50,7 +50,7 @@ export class HomeServices {
     () =>({
       url: `${environment.baseUrl}products/getRangePrice`,
       params: {     
-        'size': this.productFilterDebounced().size,
+        'size': this.productFilterDebounced().size * (this.productFilterDebounced().page+1),
         'name__like': this.productFilterDebounced().keyword,
         'brand.id__in': this.productFilterDebounced().idsBrand,
         'category.id__in': this.productFilterDebounced().idsCategory
@@ -74,8 +74,5 @@ export class HomeServices {
   )
   toggleFavorite(idProduct: number): Observable<EcomResponse<FavoriteRespone>> {
     return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {})
-  }
-  addCart(cartItem: CartItem) {
-    return this.http.post(`${environment.baseUrl}cart/add`, cartItem)
   }
 }

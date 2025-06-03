@@ -12,6 +12,7 @@ import { QuickViewService } from '../popup/services/quick-view.service';
 import { HomeServices } from '../services/home-services.service';
 import { AlertComponent } from "../../../shared/components/alert/alert.component";
 import { CartItem } from '../models/home.model';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'ecom-list-products',
@@ -27,6 +28,7 @@ export class ListProductsComponent {
   numberStar = EcomHelper.range(5)
   currentProduct: string = ''
   quickViewService = inject(QuickViewService)
+  userService = inject(UserService)
   products = signal<Product[]>([])
   showAlert = false;
   messageAlert = ''
@@ -84,8 +86,12 @@ export class ListProductsComponent {
       price: product.price,
       quantity: 1
     }
-    this.homeService.addCart(cartItem).subscribe(data => {
-      console.log(data)
+    this.userService.addCart(cartItem).subscribe(data => {
+      if(data.status===200) {
+        this.showAlert = true
+        this.messageAlert = data.message
+
+      }
     })
   }
 }

@@ -7,6 +7,7 @@ import com.zchadli.ecommerce_back.repository.CartItemDao;
 import com.zchadli.ecommerce_back.repository.UserDao;
 import com.zchadli.ecommerce_back.request.CartItemRequest;
 import com.zchadli.ecommerce_back.response.CartItemResponse;
+import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,21 @@ public class CartServiceImpl implements CartService {
             CartItem newCartItem = ecommerceMapper.toCartItem(cartItemRequest, user.getId());
             return ecommerceMapper.toCartItemResponse(cartItemRepository.save(newCartItem));
         }
+    }
+
+    @Override
+    public CartItemResponse updateQuantity(User user, Long idCart, Integer newQuantity) {
+        CartItem cartItem = cartItemRepository.findById(idCart).orElseThrow(() -> new RuntimeException("Cart item not found"));
+        if (!cartItem.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized access to cart item");
+        }
+        if (newQuantity <= 0) {
+            cartItemRepository.delete(cartItem);
+            return null;
+        }
+        cartItem.setQuantity(newQuantity);
+        CartItem saved = cartItemRepository.save(cartItem);
+        return ecommerceMapper.toCartItemResponse(saved);
     }
 
     public void removeItem(Long itemId) {
