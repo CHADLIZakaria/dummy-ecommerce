@@ -1,15 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
-import { ProductDetailsService } from '../services/product-details.service';
-import { NumberPipe } from '../../../shared/pipes/number.pipe';
 import { StarCountPipe } from "../../../shared/pipes/star-count.pipe";
 import { StarPercentagePipe } from "../../../shared/pipes/star-percentage.pipe";
-import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
-import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { ProductDetailsService } from '../services/product-details.service';
 
 @Component({
   selector: 'ecom-reviews',
-  imports: [NumberPipe, StarCountPipe, StarPercentagePipe, DropdownDirective, LoadingComponent],
+  imports: [CommonModule, StarCountPipe, StarPercentagePipe, DropdownDirective, LoadingComponent],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss'
 })

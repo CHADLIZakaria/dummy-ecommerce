@@ -1,9 +1,9 @@
 import { Component, effect, inject } from '@angular/core';
-import { slideAnimation } from '../../../shared/animations/animations';
-import { TitleComponent } from "../../../shared/components/title/title.component";
-import { EcomHelper } from '../../../shared/helper/ecomHelper';
-import { Category } from '../../../shared/model/ecom.model';
-import { HomeServices } from '../services/home-services.service';
+import { slideAnimation } from '../../../../shared/animations/animations';
+import { TitleComponent } from "../../../../shared/components/title/title.component";
+import { EcomHelper } from '../../../../shared/helper/ecomHelper';
+import { Category } from '../../../../shared/model/ecom.model';
+import { HomeServices } from '../../services/home-services.service';
 
 @Component({
   selector: 'ecom-list-categories',

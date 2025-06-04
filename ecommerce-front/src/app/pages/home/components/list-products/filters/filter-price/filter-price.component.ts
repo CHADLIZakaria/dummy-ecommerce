@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { HomeServices } from '../../services/home-services.service';
+import { HomeServices } from '../../../../services/home-services.service';
 
 @Component({
   selector: 'ecom-filter-price',

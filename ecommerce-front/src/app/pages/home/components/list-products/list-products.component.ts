@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { dropDownAnimation } from '../../../shared/animations/animations';
-import { TitleComponent } from "../../../shared/components/title/title.component";
-import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
-import { EcomHelper } from '../../../shared/helper/ecomHelper';
-import { Product } from '../../../shared/model/ecom.model';
-import { FiltersComponent } from "../filters/filters.component";
-import { QuickViewComponent } from '../popup/quick-view/quick-view.component';
-import { QuickViewService } from '../popup/services/quick-view.service';
-import { HomeServices } from '../services/home-services.service';
-import { AlertComponent } from "../../../shared/components/alert/alert.component";
-import { CartItem } from '../models/home.model';
-import { UserService } from '../../../shared/services/user.service';
+import { dropDownAnimation } from '../../../../shared/animations/animations';
+import { TitleComponent } from "../../../../shared/components/title/title.component";
+import { DropdownDirective } from '../../../../shared/directives/dropdown.directive';
+import { EcomHelper } from '../../../../shared/helper/ecomHelper';
+import { Product } from '../../../../shared/model/ecom.model';
+import { QuickViewComponent } from '../../popup/quick-view/quick-view.component';
+import { QuickViewService } from '../../popup/services/quick-view.service';
+import { HomeServices } from '../../services/home-services.service';
+import { AlertComponent } from "../../../../shared/components/alert/alert.component";
+import { CartItem } from '../../models/home.model';
+import { UserService } from '../../../../shared/services/user.service';
+import { FiltersComponent } from './filters/filters.component';
 
 @Component({
   selector: 'ecom-list-products',

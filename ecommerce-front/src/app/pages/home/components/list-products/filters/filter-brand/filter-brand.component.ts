@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { dropDownAnimation } from '../../../../shared/animations/animations';
-import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
-import { DropdownDirective } from '../../../../shared/directives/dropdown.directive';
-import { Brand } from '../../../../shared/model/ecom.model';
-import { HomeServices } from '../../services/home-services.service';
+import { LoadingComponent } from '../../../../../../shared/components/loading/loading.component';
+import { dropDownAnimation } from '../../../../../../shared/animations/animations';
+import { HomeServices } from '../../../../services/home-services.service';
+import { DropdownDirective } from '../../../../../../shared/directives/dropdown.directive';
+import { Brand } from '../../../../../../shared/model/ecom.model';
 
 @Component({
   selector: 'ecom-filter-brand',

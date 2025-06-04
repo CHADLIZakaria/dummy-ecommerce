@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { TitleComponent } from '../../../shared/components/title/title.component';
-import { FilterCategoryComponent } from "./filter-category/filter-category.component";
-import { FilterPriceComponent } from "./filter-price/filter-price.component";
-import { FilterKeywordComponent } from "./filter-keyword/filter-keyword.component";
 import { FilterBrandComponent } from "./filter-brand/filter-brand.component";
-import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
+import { FilterCategoryComponent } from "./filter-category/filter-category.component";
+import { FilterKeywordComponent } from "./filter-keyword/filter-keyword.component";
+import { FilterPriceComponent } from "./filter-price/filter-price.component";
+import { TitleComponent } from '../../../../../shared/components/title/title.component';
 
 @Component({
   selector: 'ecom-filters',

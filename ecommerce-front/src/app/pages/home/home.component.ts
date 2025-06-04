@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LandingComponent } from "./landing/landing.component";
-import { ListCategoriesComponent } from "./list-categories/list-categories.component";
-import { ListProductsComponent } from "./list-products/list-products.component";
+import { LandingComponent } from "./components/landing/landing.component";
+import { ListCategoriesComponent } from "./components/list-categories/list-categories.component";
+import { ListProductsComponent } from './components/list-products/list-products.component';
 
 @Component({
   selector: 'ecom-home',
