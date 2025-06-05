@@ -38,45 +38,45 @@
                     <a routerLink="/signup" class="rounded-sm hover:text-main-color">Register</a>
                 </li>
             }
-            <li class="relative group">
-                <a
-                    [routerLink]="['/cart']"
-                    class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
-                     {{getNumberItems()}}
-                    </div>
-                </a>
-                <div class="hidden group-hover:block absolute top-full right-0 shadow-md w-max z-50">
-                    <div class="px-1 py-2 max-h-96 overflow-y-auto min-w-[250px] mt-1 border bg-white rounded-md">
-                        @for (cartItem of cartItems(); track cartItem; let first=$first) {
-                            <div
-                                [ngClass]="first ? 'rounded-md': ''" 
-                                class="border border-b-0 rounded-b-none flex justify-between items-center px-2 py-1">
-                            <div class="flex gap-2">
-                                <img
-                                [src]="'http://localhost:8080/file/product/' + cartItem.productImage"
-                                class="w-10 h-10"
-                                [alt]="'cartItem' + cartItem.productName"
-                                />
-                                <div class="flex flex-col">
-                                    <span class="text-xs">{{ cartItem.productName }}</span>
-                                    <span>${{ cartItem.price }} * {{cartItem.quantity}} </span>
+            @if(user() !== null) {
+                <li class="relative group">
+                    <a
+                        [routerLink]="['/cart']"
+                        class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
+                        {{getNumberItems()}}
+                        </div>
+                    </a>
+                    <div class="hidden group-hover:block absolute top-full right-0 shadow-md w-max z-50">
+                        <div class="px-1 py-2 max-h-96 overflow-y-auto min-w-[250px] mt-1 border bg-white rounded-md">
+                            @for (cartItem of cartItems(); track cartItem; let first=$first) {
+                                <div
+                                    [ngClass]="first ? 'rounded-md': ''" 
+                                    class="border border-b-0 rounded-b-none flex justify-between items-center px-2 py-1">
+                                <div class="flex gap-2">
+                                    <img
+                                    [src]="'http://localhost:8080/file/product/' + cartItem.productImage"
+                                    class="w-10 h-10"
+                                    [alt]="'cartItem' + cartItem.productName"
+                                    />
+                                    <div class="flex flex-col">
+                                        <span class="text-xs">{{ cartItem.productName }}</span>
+                                        <span>${{ cartItem.price }} * {{cartItem.quantity}} </span>
+                                    </div>
                                 </div>
+                                <button class="ml-3">
+                                    <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
+                                </button>
+                                </div>
+                            }
+                            <div class="border rounded-b-md border-t flex justify-between px-2 py-1">
+                                <span class="flex-1 text-center cursor-pointer hover:underline">Cart</span>
+                                <span class="flex-1 text-center cursor-pointer hover:underline">Checkout</span>
                             </div>
-                            <button class="ml-3">
-                                <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
-                            </button>
-                            </div>
-                        }
-                        <div class="border rounded-b-md border-t flex justify-between px-2 py-1">
-                            <span class="flex-1 text-center cursor-pointer hover:underline">Cart</span>
-                            <span class="flex-1 text-center cursor-pointer hover:underline">Checkout</span>
                         </div>
                     </div>
-                </div>
-            </li>
-             @if(user() !== null) {
+                </li>
                 <li
                     ecomDropdown
                     #dropdownUser="ecomDropdown"
