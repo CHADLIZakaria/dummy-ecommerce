@@ -1,19 +1,17 @@
 <nav class="sticky z-50 top-0 h-24 bg-white navbar drop-shadow-md w-full">
     <div class="flex h-full items-center justify-between px-5 mx-auto">
-        <div class="flex ">
+        <div class="flex gap-5">
             <!--logo-->
             <a class="flex items-center space-x-3">
               <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
               <span class="self-center text-2xl font-semibold whitespace-nowrap">Dummy E-Shop</span>
             </a>
             <!--input search-->
-            <div class="flex">
-                <input type="text" />
-                <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="text-gray-500 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 me-1">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                    <span class="sr-only">Search</span>
+            <div class="flex relative">
+                <input type="text" class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md"/>
+                <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" 
+                    class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm me-1">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
                 </button>
             </div>
         </div>
