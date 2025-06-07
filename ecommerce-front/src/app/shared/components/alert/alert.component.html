@@ -6,6 +6,9 @@
         </div>
         <div>
             <p class="font-bold">{{message()}}</p>
+            @if(link()) {
+                <a class="underline" [routerLink]="[link()!.url]">{{link()?.title}}</a>
+            }
         </div>
     </div>
 </div>

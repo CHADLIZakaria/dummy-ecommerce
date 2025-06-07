@@ -34,12 +34,8 @@ public class CartController {
             @PathVariable Integer quantity,
             @AuthenticationPrincipal User user) {
         CartItemResponse response = cartService.updateQuantity(user, id, quantity);
-        if(response==null) {
-            return new EcommerceResponse<>(200, "Cart item deleted", null);
-        }
-        else {
-            return new EcommerceResponse<>(200, "Quantity updated", response);
-        }
+        return new EcommerceResponse<>(200, "Quantity updated", response);
+
     }
 
     @DeleteMapping("/remove/{itemId}")

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2, Output, EventEmitter, output } from '@angular/core';
+import { Directive, ElementRef, HostListener, output, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[ecomDropdown]',
@@ -22,7 +22,7 @@ export class DropdownDirective {
     if(dropdownMenuElem) {
       if (visible) {
         this.renderer.removeClass(dropdownMenuElem, 'hidden');
-      } 
+      }
       else {
         this.renderer.addClass(dropdownMenuElem, 'hidden');
       }
