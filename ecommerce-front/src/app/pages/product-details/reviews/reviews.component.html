@@ -27,7 +27,12 @@
             <div class="my-6 gap-8 sm:flex sm:items-start md:my-8">
                 <div class="shrink-0 space-y-4">
                     <p class="text-2xl font-semibold leading-none text-gray-900">{{productDetailsService.avgReview() | number:'1.0-2'}} out of 5</p>
-                    <button type="button" class="mb-2 me-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">Write a review</button>
+                    <button 
+                        type="button" 
+                        class="bg-main-color flex gap-2 items-center text-gray-900 px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
+                        <i class="fa-solid fa-pen"></i>
+                        Write a review
+                    </button>
                 </div>
                 <div class="mt-6 min-w-0 flex-1 space-y-3 sm:mt-0">
                     @for(star of numberStar; track star) {
@@ -133,6 +138,7 @@
                     View more reviews
                 </button>
             </div>
-        </div>        
+        </div>     
     }
 </section>
+<ecom-write-review />

@@ -13,7 +13,7 @@ export class QuickViewService {
       slug: this.slug()
     }),
     loader: async({request}) => {
-      const product = await fetch(`${environment.baseUrl}products/green-chili-pepper`)
+      const product = await fetch(`${environment.baseUrl}products/${request.slug}`)
       return product.json()
     },
     defaultValue: initProductDetails

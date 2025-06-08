@@ -6,10 +6,11 @@ import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { StarCountPipe } from "../../../shared/pipes/star-count.pipe";
 import { StarPercentagePipe } from "../../../shared/pipes/star-percentage.pipe";
 import { ProductDetailsService } from '../services/product-details.service';
+import { WriteReviewComponent } from "../popup/write-review/write-review.component";
 
 @Component({
   selector: 'ecom-reviews',
-  imports: [CommonModule, StarCountPipe, StarPercentagePipe, DropdownDirective, LoadingComponent],
+  imports: [CommonModule, StarCountPipe, StarPercentagePipe, DropdownDirective, LoadingComponent, WriteReviewComponent],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss'
 })
