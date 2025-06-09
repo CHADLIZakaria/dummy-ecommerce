@@ -10,6 +10,7 @@ import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
 import com.zchadli.ecommerce_back.repository.FavoriteDao;
 import com.zchadli.ecommerce_back.repository.ProductDao;
+import com.zchadli.ecommerce_back.request.ProductPrice;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
 import com.zchadli.ecommerce_back.response.PageResponse;
 import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
@@ -67,7 +68,11 @@ public class ProductServiceImpl implements ProductService {
     public PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest) {
         Specification<Product> specification = SpecificationBuilderHelper.buildSpecificationFromParams(productSearchRequest);
         Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(productSearchRequest);
-        Page<Product> productPage = productDao.findAll(specification, pageable);
+        boolean sortByAvgReview = pageable.getSort().stream()
+                .anyMatch(order -> order.getProperty().equals("avgReview"));
+        Page<Product> productPage = sortByAvgReview
+                ? productDao.findAllSortedByAvgReview(specification, pageable)
+                : productDao.findAll(specification, pageable);
         Set<Long> favoriteProductIds = favoriteDao.findByUser(user).stream().map(favorite -> favorite.getProduct().getId()).collect(Collectors.toSet());
         return new PageResponse<>(
             ecommerceMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
@@ -82,12 +87,10 @@ public class ProductServiceImpl implements ProductService {
         return ecommerceMapper.toProductDetailsResponse(product);
     }
     @Override
-    public RangePriceResponse findRangePrice(Map<String, String[]> productSearchRequest) {
-        Specification<Product> specification = SpecificationBuilderHelper.buildSpecificationFromParams(productSearchRequest);
-        Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(productSearchRequest);
-        List<Product> products = productDao.findAll(specification, pageable).get().toList();
-        Double maxPrice = products.stream().map(Product::getPrice).max(Double::compare).orElse(0d);
-        Double minPrice = products.stream().map(Product::getPrice).min(Double::compare).orElse(0d);
+    public RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest) {
+        List<ProductPrice> products = ecommerceMapper.toProducts(findAll(user, productSearchRequest).getData());
+        Double maxPrice = products.stream().map(ProductPrice::price).max(Double::compare).orElse(0d);
+        Double minPrice = products.stream().map(ProductPrice::price).min(Double::compare).orElse(0d);
         return new RangePriceResponse(minPrice, maxPrice);
     }
 }

@@ -41,6 +41,7 @@ public interface EcommerceMapper {
                 .map(product -> toProductResponse(product, favoriteProductIds))
                 .toList();
     }
+   List<ProductPrice> toProducts(List<ProductResponse> productsResponse);
     @Named("mapReviewsCount")
     default Integer mapReviewsCount(List<Review> reviews) {
         return reviews != null ? reviews.size() : 0;

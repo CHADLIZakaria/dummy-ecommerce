@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
+public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product>, ProductDaoCustom {
    boolean existsByName(String name);
     Optional<Product> findBySlug(String slug);
     List<Product> findByIdIn(Set<Long> ids, Sort sort);

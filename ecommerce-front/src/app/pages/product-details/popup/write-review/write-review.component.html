@@ -3,6 +3,11 @@
     class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-[#000000]/80">
     <div class="relative p-4 w-full max-w-2xl max-h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div class="relative bg-white rounded-lg shadow-sm px-5 py-2 flex flex-col gap-3">
+            <button
+                (click)="productDetailsService.showWritePopup.set(false)"
+                class="absolute right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                <i class="fa-solid fa-xmark text-xl"></i>
+           </button>
             <p class="text-lg text-main-color">Write A Review</p>
             <div class="flex space-x-1">
                 @for(star of numberStar; track star) {
@@ -16,9 +21,8 @@
             </div>
             <div>
                 <textarea id="review" name="review" rows="4" required="true" class="block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your review"></textarea>
-    
             </div>
-            <button class="bg-main-color text-gray-900 px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
+            <button class="bg-main-color w-fit self-end text-gray-900 px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
                 Save
             </button>
         </div>

@@ -46,8 +46,8 @@ public class ProductController {
         return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(slug));
     }
     @GetMapping("/getRangePrice")
-    public EcommerceResponse<RangePriceResponse> findRangePrice(HttpServletRequest productSearchRequest) {
-        return new EcommerceResponse<>(200, "Range Price retrieved successfully", productService.findRangePrice(productSearchRequest.getParameterMap()));
+    public EcommerceResponse<RangePriceResponse> findRangePrice(@AuthenticationPrincipal User user, HttpServletRequest productSearchRequest) {
+        return new EcommerceResponse<>(200, "Range Price retrieved successfully", productService.findRangePrice(user, productSearchRequest.getParameterMap()));
     }
     @PostMapping("/toggle/favorites/{productId}")
     public EcommerceResponse<FavoriteResponse> toggleFavorite(@PathVariable Long productId, @AuthenticationPrincipal User user) {

@@ -14,5 +14,5 @@ public interface ProductService {
     ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage);
     PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest);
     ProductDetailsResponse findBySlug(String slug);
-    RangePriceResponse findRangePrice(Map<String, String[]> productSearchRequest);
+    RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest);
 }

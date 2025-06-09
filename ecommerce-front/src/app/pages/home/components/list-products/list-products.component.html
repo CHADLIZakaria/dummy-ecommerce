@@ -50,6 +50,20 @@
                     Price, High to Low
                   </a>
                 </li>
+                <li>
+                  <a
+                    (click)="onChangeSort('avgReview', 'asc')"
+                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    Rating: Low to High
+                  </a>
+                </li>
+                <li>
+                  <a
+                    (click)="onChangeSort('avgReview', 'desc')"
+                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    Rating: High to Low
+                  </a>
+                </li>
             </ul>
           </div>
       </div>
@@ -82,7 +96,9 @@
                   @else {
                     <i class="fa-regular fa-heart"></i>
                   }
-                  <span class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/wishlist:scale-100 group-hover/wishlist:opacity-100 duration-500 transition-all">Add To wishlist</span>
+                  <span class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/wishlist:scale-100 group-hover/wishlist:opacity-100 duration-500 transition-all">
+                    Add To wishlist
+                  </span>
                 </button>
                 <button
                   type="button"
@@ -117,7 +133,7 @@
                 <div class="flex justify-between items-center">
                   <div class="flex items-center gap-0.5">
                     <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
-                    {{product.avgReview | number}}
+                    {{product.avgReview | number:'1.0-2'}}
                   </div>
                   <p class="text-sm font-medium leading-none text-gray-500">
                     ({{product.reviewsCounts}}) reviews

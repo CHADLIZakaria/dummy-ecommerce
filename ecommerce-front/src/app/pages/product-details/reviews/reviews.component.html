@@ -27,7 +27,8 @@
             <div class="my-6 gap-8 sm:flex sm:items-start md:my-8">
                 <div class="shrink-0 space-y-4">
                     <p class="text-2xl font-semibold leading-none text-gray-900">{{productDetailsService.avgReview() | number:'1.0-2'}} out of 5</p>
-                    <button 
+                    <button
+                        (click)="productDetailsService.showWritePopup.set(true)"
                         type="button" 
                         class="bg-main-color flex gap-2 items-center text-gray-900 px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
                         <i class="fa-solid fa-pen"></i>
@@ -101,33 +102,33 @@
             <div class="mt-3 flex flex-col gap-2">
             @for(review of reviews; track review.id) {
                 <div class="flex items-start rounded-md shadow-lg border border-white bg-slate-300 px-2 py-3">
-                <div class="flex-shrink-0">
-                    <div class="inline-block relative">
-                        <div class="relative w-16 h-16 rounded-full overflow-hidden border bg-white">
-                            <img 
-                            class="p-1.5 absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover" 
-                            [src]="'http://localhost:8080/file/user/'+review.userImage" alt="Profile picture">
+                    <div class="flex-shrink-0">
+                        <div class="inline-block relative">
+                            <div class="relative w-16 h-16 rounded-full overflow-hidden border bg-white">
+                                <img 
+                                class="p-1.5 absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover" 
+                                [src]="'http://localhost:8080/file/user/'+review.userImage" alt="Profile picture">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="ml-6">
-                    <p class="flex items-baseline">
-                        <span class="text-gray-600 font-bold">{{review.username}}</span>
-                    </p>
-                    <div class="flex gap-1 items-center mt-1">
-                        @for(star of numberStar; track star) {
-                            @if(review.rating>star) {
-                                <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+                    <div class="ml-6">
+                        <p class="flex items-baseline">
+                            <span class="text-gray-600 font-bold">{{review.username}}</span>
+                        </p>
+                        <div class="flex gap-1 items-center mt-1">
+                            @for(star of numberStar; track star) {
+                                @if(review.rating>star) {
+                                    <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+                                }
+                                @else {
+                                    <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
+                                }                      
                             }
-                            @else {
-                                <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
-                            }                      
-                        }
+                        </div>
+                        <div class="mt-3">
+                            <span class="font-bold">{{review.comment}}</span>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <span class="font-bold">{{review.comment}}</span>
-                    </div>
-                </div>
                 </div>
             }
             </div>
@@ -141,4 +142,6 @@
         </div>     
     }
 </section>
-<ecom-write-review />
+@if(productDetailsService.showWritePopup()) {
+    <ecom-write-review />
+}
