@@ -30,6 +30,5 @@ public class ReviewController {
             "",
             reviewService.findReviews(request.getParameterMap())
         );
-
     }
 }

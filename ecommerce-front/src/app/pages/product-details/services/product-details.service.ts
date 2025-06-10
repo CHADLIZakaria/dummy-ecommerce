@@ -13,6 +13,7 @@ export class ProductDetailsService {
     'column': 'id',
     'order': 'desc'
   })
+  showWritePopup = signal(false)
 
   productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
     () => ({

@@ -17,6 +17,7 @@ import { WriteReviewComponent } from "../popup/write-review/write-review.compone
 export class ReviewsComponent {
   productDetailsService = inject(ProductDetailsService)
   reviewResource = this.productDetailsService.reviewsResource
+  reviews = this.productDetailsService.reviewsResource.value().data.data;
   numberStar = EcomHelper.range(5)
 
   onChangeSort(column: string, order: string) {
