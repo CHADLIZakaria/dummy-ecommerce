@@ -1,6 +1,6 @@
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { LoginService } from '../../pages/login/services/login.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NavbarService } from './services/navbar.service';
 import { CommonModule } from '@angular/common';
 import { DropdownDirective } from '../directives/dropdown.directive';
@@ -14,9 +14,11 @@ import { CartItem } from '../../pages/home/models/home.model';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  @ViewChild('dropdownUser') dropdownUser!: DropdownDirective;  
   loginService = inject(LoginService)
   categoriesResource = inject(NavbarService).categoriesResource
   userService = inject(UserService)
+  router = inject(Router)
   showCategories = false;
   cartItems = computed(() => this.userService.cart());
   user = this.loginService.user
@@ -25,10 +27,13 @@ export class NavbarComponent {
   );
 
   onLogout() {
+    this.dropdownUser.closeDropdown()
     this.loginService.logout()
   }
 
-  
-
+  onNavigate(link: string) {
+    this.dropdownUser.closeDropdown()
+    this.router.navigate([link])
+  }
 
 }

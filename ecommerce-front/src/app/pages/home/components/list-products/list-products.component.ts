@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { dropDownAnimation } from '../../../../shared/animations/animations';
 import { TitleComponent } from "../../../../shared/components/title/title.component";
@@ -31,7 +31,8 @@ export class ListProductsComponent {
   userService = inject(UserService)
   products = signal<Product[]>([])
   showAlert = false;
-  messageAlert = ''
+  messageAlert = ''  
+  @ViewChild('dropdownSortReview') dropdownSortReview!: DropdownDirective;
 
   constructor() {
     effect(() => {
@@ -63,6 +64,7 @@ export class ListProductsComponent {
       sort: column+','+direction,
       page: 0
     })
+    this.dropdownSortReview.closeDropdown()  
   }
   toggleFavorite(idProduct: number) {
     this.homeService.toggleFavorite(idProduct).subscribe(

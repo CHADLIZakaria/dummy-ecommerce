@@ -9,7 +9,7 @@
             <!--input search-->
             <div class="flex relative">
                 <input type="text" class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md"/>
-                <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" 
+                <button type="button"
                     class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm me-1">
                     <i class="fa-solid fa-magnifying-glass text-lg"></i>
                 </button>
@@ -19,15 +19,31 @@
             <li>
                 <a routerLink="/" class="rounded-sm hover:text-main-color">Home</a>
             </li>
-            <li>
+            <li 
+                ecomDropdown
+                #dropdownCategory="ecomDropdown">
                 <button
-                    (click)="showCategories = !showCategories"
+                    (click)="dropdownCategory.toggleDropdown()"
                     class="flex items-center rounded-sm hover:text-main-color">
                     Categories
-                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
+                    <i class="fa-solid fa-chevron-down ms-1"></i>
                 </button>
+                <div class="dropdown-menu border-gray-200 shadow-xs bg-gray-50 absolute top-full left-0 border-y w-full  hidden">
+                    @if(categoriesResource.isLoading()) {
+                    }
+                    @else {
+                        <ul class="bg-main-500 grid grid-rows-4 grid-cols-5 px-4 py-1 mx-auto">
+                            @for(category of categoriesResource.value().data.data; track category.id) {
+                                <li>
+                                    <a (click)="onNavigate('favorites')" class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
+                                        <img class="w-10 h-10" [src]="'http://localhost:8080/file/category/'+category.imagePath" />
+                                        <div class="font-semibold">{{category.title}}</div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
             </li>
             @if(user() === null) {
                 <li class="flex gap-1">
@@ -90,7 +106,7 @@
                     </button>
                     <ul class="dropdown-menu absolute left-0 top-full mt-1 w-full bg-white border shadow-md rounded-md flex flex-col hidden">
                         <li
-                            [routerLink]="['/favorites']"
+                            (click)="onNavigate('favorites')"
                             class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
                             Favorites
                             <i class="fa-regular fa-heart"></i>
@@ -109,21 +125,6 @@
         </ul>
     </div>
     @if(showCategories) {
-        <div class="border-gray-200 shadow-xs bg-gray-50 absolute top-full left-0 border-y w-full">
-            @if(categoriesResource.isLoading()) {
-            }
-            @else {
-                <ul class="bg-main-500 grid grid-rows-4 grid-cols-5 px-4 py-1 mx-auto">
-                    @for(category of categoriesResource.value().data.data; track category.id) {
-                        <li>
-                            <a class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
-                                <img class="w-10 h-10" [src]="'http://localhost:8080/file/category/'+category.imagePath" />
-                                <div class="font-semibold">{{category.title}}</div>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            }
-        </div>
+        
     }
 </nav>
