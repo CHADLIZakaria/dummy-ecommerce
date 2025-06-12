@@ -35,7 +35,9 @@
                         <ul class="bg-main-500 grid grid-rows-4 grid-cols-5 px-4 py-1 mx-auto">
                             @for(category of categoriesResource.value().data.data; track category.id) {
                                 <li>
-                                    <a (click)="onNavigate('favorites')" class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
+                                    <a (click)="dropdownCategory.closeDropdown()"
+                                        [routerLink]="['favorites']"
+                                    class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
                                         <img class="w-10 h-10" [src]="'http://localhost:8080/file/category/'+category.imagePath" />
                                         <div class="font-semibold">{{category.title}}</div>
                                     </a>
@@ -106,7 +108,8 @@
                     </button>
                     <ul class="dropdown-menu absolute left-0 top-full mt-1 w-full bg-white border shadow-md rounded-md flex flex-col hidden">
                         <li
-                            (click)="onNavigate('favorites')"
+                            [routerLink]="['/favorites']"
+                            (click)="dropdownUser.closeDropdown()"
                             class="flex justify-between px-2 py-1 items-center cursor-pointer hover:bg-main-color rounded-md">
                             Favorites
                             <i class="fa-regular fa-heart"></i>

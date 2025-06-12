@@ -72,7 +72,5 @@ export class HomeServices {
       }
     })
   )
-  toggleFavorite(idProduct: number): Observable<EcomResponse<FavoriteRespone>> {
-    return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {})
-  }
+  
 }

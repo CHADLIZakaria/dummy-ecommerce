@@ -3,7 +3,7 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable, tap } from 'rxjs';
 import { CartItem } from '../../pages/home/models/home.model';
-import { EcomResponse } from '../model/ecom.model';
+import { EcomResponse, FavoriteRespone } from '../model/ecom.model';
 import { response } from 'express';
 
 @Injectable({
@@ -58,5 +58,9 @@ export class UserService {
       updatedCart = [...currentCart, cartItem];
     }
     this.cartSignal.set(updatedCart);
+  }
+
+  toggleFavorite(idProduct: number): Observable<EcomResponse<FavoriteRespone>> {
+    return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {})
   }
 }

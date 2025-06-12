@@ -30,10 +30,4 @@ export class NavbarComponent {
     this.dropdownUser.closeDropdown()
     this.loginService.logout()
   }
-
-  onNavigate(link: string) {
-    this.dropdownUser.closeDropdown()
-    this.router.navigate([link])
-  }
-
 }

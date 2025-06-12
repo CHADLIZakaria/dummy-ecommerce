@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { DropdownDirective } from '../../shared/directives/dropdown.directive';
 import { TitleComponent } from '../../shared/components/title/title.component';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'ecom-favorite-user-products',
@@ -15,6 +16,7 @@ import { AlertComponent } from '../../shared/components/alert/alert.component';
 })
 export class FavoriteUserProductsComponent implements OnInit {
   favoriteUserProductsService = inject(FavoriteUserProductsService)
+  userService = inject(UserService)
   products: Product[] = []
   showAlert = false
   messageAlert = ""
@@ -29,7 +31,7 @@ export class FavoriteUserProductsComponent implements OnInit {
     )
   }
   toggleFavorite(idProduct: number) {
-    this.favoriteUserProductsService.toggleFavorite(idProduct).subscribe(
+    this.userService.toggleFavorite(idProduct).subscribe(
       data => {
         if(data.status===200) {
           this.showAlert = true

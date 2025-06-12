@@ -163,11 +163,15 @@
         </div>
       }
     </div>
-    @if(showAlert) {
+    @if(alert.show) {
       <ecom-alert 
-        (showAlert)="showAlert = false"
-        [message]="messageAlert"
-        [link]="{title:'See Wishlist', url: '/favorites'}"
+        (showAlert)="alert.show= false"
+        [message]="alert.message"
+        [link]="
+        alert.type==='favorite' ? 
+          {title:'See Wishlist', url: '/favorites'}:
+          {title:'See Cart', url: '/cart'}  
+        "
       />
     }
   </div>

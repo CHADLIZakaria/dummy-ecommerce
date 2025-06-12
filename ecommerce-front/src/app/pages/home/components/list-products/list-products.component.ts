@@ -23,15 +23,14 @@ import { FiltersComponent } from './filters/filters.component';
 })
 export class ListProductsComponent {
   homeService = inject(HomeServices)
+  quickViewService = inject(QuickViewService)
+  userService = inject(UserService)
   productsResource = this.homeService.productsResource;
   open = false;
   numberStar = EcomHelper.range(5)
   currentProduct: string = ''
-  quickViewService = inject(QuickViewService)
-  userService = inject(UserService)
   products = signal<Product[]>([])
-  showAlert = false;
-  messageAlert = ''  
+  alert = {show: false, message: '', type: ''}
   @ViewChild('dropdownSortReview') dropdownSortReview!: DropdownDirective;
 
   constructor() {
@@ -67,11 +66,10 @@ export class ListProductsComponent {
     this.dropdownSortReview.closeDropdown()  
   }
   toggleFavorite(idProduct: number) {
-    this.homeService.toggleFavorite(idProduct).subscribe(
+    this.userService.toggleFavorite(idProduct).subscribe(
       data => {
         if(data.status===200) {
-          this.showAlert = true
-          this.messageAlert = data.data.message
+          this.alert = {type: 'favorite', show: true, message: data.data.message}
           this.products().forEach(product => {
             if(product.id === idProduct) {
               product.favorite = data.data.isFavorite
@@ -90,9 +88,7 @@ export class ListProductsComponent {
     }
     this.userService.addCart(cartItem).subscribe(data => {
       if(data.status===200) {
-        this.showAlert = true
-        this.messageAlert = data.message
-
+        this.alert = {type: 'cart', show: true, message: data.message}
       }
     })
   }
