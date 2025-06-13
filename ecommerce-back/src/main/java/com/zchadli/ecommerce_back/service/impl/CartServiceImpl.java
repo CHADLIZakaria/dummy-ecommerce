@@ -1,13 +1,12 @@
 package com.zchadli.ecommerce_back.service.impl;
 
-import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
+import com.zchadli.ecommerce_back.mapper.CartMapper;
 import com.zchadli.ecommerce_back.model.CartItem;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.repository.CartItemDao;
 import com.zchadli.ecommerce_back.repository.UserDao;
 import com.zchadli.ecommerce_back.request.CartItemRequest;
 import com.zchadli.ecommerce_back.response.CartItemResponse;
-import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,10 +19,10 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
     private final CartItemDao cartItemRepository;
     private final UserDao userRepository;
-    private final EcommerceMapper ecommerceMapper;
+    private final CartMapper cartMapper;
 
     public List<CartItemResponse> getCartItems(User user) {
-        return ecommerceMapper.toCartItemsResponse(cartItemRepository.findByUser(user));
+        return cartMapper.toCartItemsResponse(cartItemRepository.findByUser(user));
     }
 
     public CartItemResponse addItemToCart(User user, CartItemRequest cartItemRequest) {
@@ -31,11 +30,11 @@ public class CartServiceImpl implements CartService {
         if (existingItem.isPresent()) {
             CartItem currentItem = existingItem.get();
             currentItem.setQuantity(currentItem.getQuantity() + cartItemRequest.quantity());
-            return ecommerceMapper.toCartItemResponse(cartItemRepository.save(currentItem));
+            return cartMapper.toCartItemResponse(cartItemRepository.save(currentItem));
         }
         else {
-            CartItem newCartItem = ecommerceMapper.toCartItem(cartItemRequest, user.getId());
-            return ecommerceMapper.toCartItemResponse(cartItemRepository.save(newCartItem));
+            CartItem newCartItem = cartMapper.toCartItem(cartItemRequest, user.getId());
+            return cartMapper.toCartItemResponse(cartItemRepository.save(newCartItem));
         }
     }
 
@@ -51,7 +50,7 @@ public class CartServiceImpl implements CartService {
         }
         cartItem.setQuantity(newQuantity);
         CartItem saved = cartItemRepository.save(cartItem);
-        return ecommerceMapper.toCartItemResponse(saved);
+        return cartMapper.toCartItemResponse(saved);
     }
 
     public void removeItem(Long itemId) {

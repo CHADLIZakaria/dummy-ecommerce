@@ -1,0 +1,61 @@
+package com.zchadli.ecommerce_back.mapper;
+
+import com.zchadli.ecommerce_back.model.Product;
+import com.zchadli.ecommerce_back.model.Review;
+import com.zchadli.ecommerce_back.model.UploadedFile;
+import com.zchadli.ecommerce_back.request.ProductPrice;
+import com.zchadli.ecommerce_back.request.ProductSaveRequest;
+import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
+import com.zchadli.ecommerce_back.response.ProductResponse;
+import org.mapstruct.Context;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.util.List;
+import java.util.Set;
+
+@Mapper(componentModel = "spring")
+public interface ProductMapper extends  EcommerceMapper {
+    @Mapping(source = "product.coverImage", target = "coverImage", qualifiedByName = "mapUploadedFileToFileName")
+    @Mapping(source = "product.reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
+    @Mapping(source = "product.reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
+    @Mapping(target = "favorite", ignore = true)
+    ProductResponse toProductResponse(Product product);
+    default ProductResponse toProductResponse(Product product, Set<Long> favoriteProductIds) {
+        ProductResponse response = toProductResponse(product);
+        response.setFavorite(favoriteProductIds != null && favoriteProductIds.contains(product.getId()));
+        return response;
+    }
+    default List<ProductResponse> toProductsResponse(List<Product> products, Set<Long> favoriteProductIds) {
+        return products.stream()
+                .map(product -> toProductResponse(product, favoriteProductIds))
+                .toList();
+    }
+    List<ProductPrice> toProducts(List<ProductResponse> productsResponse);
+    @Named("mapReviewsCount")
+    default Integer mapReviewsCount(List<Review> reviews) {
+        return reviews != null ? reviews.size() : 0;
+    }
+
+    @Named("mapAvgReviews")
+    default Double mapAvgReviews(List<Review> reviews) {
+        return reviews != null ? reviews.stream().map(Review::getRating).reduce(0, Integer::sum)/(double)reviews.size() : 0d;
+    }
+    @Mapping(source = "idCategory", target = "category.id")
+    Product toProduct(ProductSaveRequest productSaveRequest);
+    @Mapping(source = "category.title", target = "category")
+    @Mapping(source = "coverImage.fileName", target = "coverImage")
+    @Mapping(source = "brand.name", target = "brand")
+    ProductDetailsResponse toProductDetailsResponse(Product product);
+
+
+    List<ProductResponse> toProductsResponse(List<Product> products);
+    @Named("isProductFavorite")
+    static boolean isProductFavorite(Product product, @Context Set<Long> favoriteProductIds) {
+        return favoriteProductIds.contains(product.getId());
+    }
+    default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
+        return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
+    }
+}

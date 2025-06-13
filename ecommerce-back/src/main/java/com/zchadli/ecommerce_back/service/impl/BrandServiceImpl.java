@@ -2,7 +2,7 @@ package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.brand.category.BrandAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
-import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
+import com.zchadli.ecommerce_back.mapper.BrandMapper;
 import com.zchadli.ecommerce_back.model.Brand;
 import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.request.BrandSaveRequest;
@@ -23,19 +23,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
     private final BrandDao brandDao;
-    private final EcommerceMapper ecommerceMapper;
+    private final BrandMapper brandMapper;
     @Override
     public BrandResponse save(BrandSaveRequest brandSaveRequest) {
         if(brandDao.existsByName(brandSaveRequest.name())) {
             throw new BrandAlreadyExistsException(brandSaveRequest.name());
         }
-        Brand brand = ecommerceMapper.toBrand(brandSaveRequest);
-        return ecommerceMapper.toBrandResponse(brandDao.save(brand));
+        Brand brand = brandMapper.toBrand(brandSaveRequest);
+        return brandMapper.toBrandResponse(brandDao.save(brand));
     }
     @Override
     public BrandResponse findByName(String name) {
         Brand brand = brandDao.findByName(name).orElseThrow(() -> new BrandNotFoundException(name));
-        return ecommerceMapper.toBrandResponse(brand);
+        return brandMapper.toBrandResponse(brand);
     }
     @Override
     public PageResponse<BrandFilterResponse> findAllWithNumberProducts(Map<String, String[]> brandSearchRequest) {
@@ -43,7 +43,7 @@ public class BrandServiceImpl implements BrandService {
         Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(brandSearchRequest);
         Page<Brand> brandPage = brandDao.findAll(specification, pageable);
         return new PageResponse<>(
-            ecommerceMapper.toBrandsFilterResponse(brandPage.getContent()),
+            brandMapper.toBrandsFilterResponse(brandPage.getContent()),
             brandPage.getTotalElements(),
             brandPage.getSize(),
             brandPage.getNumber()

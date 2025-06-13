@@ -2,7 +2,7 @@ package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.category.CategoryAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
-import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
+import com.zchadli.ecommerce_back.mapper.CategoryMapper;
 import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.UploadedFile;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
@@ -30,7 +30,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryDao categoryDao;
-    private final EcommerceMapper ecommerceMapper;
+    private final CategoryMapper categoryMapper;
     private final UploadedFileService uploadedFileService;
     private static final String PATH = "uploads/categories/";
     @Override
@@ -39,26 +39,26 @@ public class CategoryServiceImpl implements CategoryService {
             throw new CategoryAlreadyExistsException(categorySaveRequest.title());
         }
         UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, file);
-        Category category = ecommerceMapper.toCategory(categorySaveRequest);
+        Category category = categoryMapper.toCategory(categorySaveRequest);
         category.setFile(uploadedFile);
-        return ecommerceMapper.toCategoryResponse(categoryDao.save(category));
+        return categoryMapper.toCategoryResponse(categoryDao.save(category));
     }
     @Override
     public CategoryResponse findById(Long id) {
         Category category = categoryDao.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
-        return ecommerceMapper.toCategoryResponse(category);
+        return categoryMapper.toCategoryResponse(category);
     }
 
     @Override
     public CategoryResponse findByTitle(String title) {
         Category category = categoryDao.findByTitle(title).orElseThrow(() -> new CategoryNotFoundException(title));
-        return ecommerceMapper.toCategoryResponse(category);
+        return categoryMapper.toCategoryResponse(category);
     }
     @Override
     public PageResponse<CategoryFilterResponse> findAllWithNumberProducts(CategorySearchRequest categorySearchRequest) {
         Page<Category> categoryPage = findPageCategory(categorySearchRequest);
         return new PageResponse<>(
-                ecommerceMapper.toCategoriesFilterResponse(categoryPage.getContent()),
+                categoryMapper.toCategoriesFilterResponse(categoryPage.getContent()),
                 categoryPage.getTotalElements(),
                 categoryPage.getSize(),
                 categoryPage.getNumber()
@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(categorySearchRequest);
         Page<Category> categoryPage = categoryDao.findAll(specification, pageable);
         return new PageResponse<>(
-            ecommerceMapper.toCategoriesResponse(categoryPage.getContent()),
+                categoryMapper.toCategoriesResponse(categoryPage.getContent()),
             categoryPage.getTotalElements(),
             categoryPage.getSize(),
             categoryPage.getNumber()

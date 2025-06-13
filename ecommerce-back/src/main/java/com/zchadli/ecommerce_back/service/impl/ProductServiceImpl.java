@@ -4,7 +4,7 @@ import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundExceptio
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;
-import com.zchadli.ecommerce_back.mapper.EcommerceMapper;
+import com.zchadli.ecommerce_back.mapper.ProductMapper;
 import com.zchadli.ecommerce_back.model.*;
 import com.zchadli.ecommerce_back.repository.BrandDao;
 import com.zchadli.ecommerce_back.repository.CategoryDao;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
-    private final EcommerceMapper ecommerceMapper;
+    private final ProductMapper productMapper;
     private final UploadedFileService uploadedFileService;
     private final CategoryDao categoryDao;
     private final BrandDao brandDao;
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
         }
         Category category = categoryDao.findById(productSaveRequest.idCategory()).orElseThrow(() -> new CategoryNotFoundException(productSaveRequest.idCategory()));
         Brand brand = brandDao.findById(productSaveRequest.idBrand()).orElseThrow(() -> new BrandNotFoundException(productSaveRequest.idBrand()));
-        Product product = ecommerceMapper.toProduct(productSaveRequest);
+        Product product = productMapper.toProduct(productSaveRequest);
         product.setCategory(category);
         product.setBrand(brand);
         product = productDao.save(product);
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, coverImage);
         product.setCoverImage(uploadedFile);
         uploadedFile.setProduct(product);
-        return ecommerceMapper.toProductResponse(productDao.save(product));
+        return productMapper.toProductResponse(productDao.save(product));
     }
     @Override
     public PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest) {
@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
                 : productDao.findAll(specification, pageable);
         Set<Long> favoriteProductIds = favoriteDao.findByUser(user).stream().map(favorite -> favorite.getProduct().getId()).collect(Collectors.toSet());
         return new PageResponse<>(
-            ecommerceMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
+                productMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
             productPage.getTotalElements(),
             productPage.getSize(),
             productPage.getNumber()
@@ -84,11 +84,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDetailsResponse findBySlug(String slug) {
         Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
-        return ecommerceMapper.toProductDetailsResponse(product);
+        return productMapper.toProductDetailsResponse(product);
     }
     @Override
     public RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest) {
-        List<ProductPrice> products = ecommerceMapper.toProducts(findAll(user, productSearchRequest).getData());
+        List<ProductPrice> products = productMapper.toProducts(findAll(user, productSearchRequest).getData());
         Double maxPrice = products.stream().map(ProductPrice::price).max(Double::compare).orElse(0d);
         Double minPrice = products.stream().map(ProductPrice::price).min(Double::compare).orElse(0d);
         return new RangePriceResponse(minPrice, maxPrice);
