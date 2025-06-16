@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
@@ -17,7 +17,7 @@ import { WriteReviewComponent } from "../popup/write-review/write-review.compone
 export class ReviewsComponent {
   productDetailsService = inject(ProductDetailsService)
   reviewResource = this.productDetailsService.reviewsResource
-  reviews = this.productDetailsService.reviewsResource.value().data.data;
+  reviews = computed(() => this.reviewResource.value().data.data);
   numberStar = EcomHelper.range(5)
 
   onChangeSort(column: string, order: string) {
