@@ -13,6 +13,6 @@ import java.util.Map;
 public interface ProductService {
     ProductResponse save(ProductSaveRequest productSaveRequest, MultipartFile[] files, MultipartFile coverImage);
     PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest);
-    ProductDetailsResponse findBySlug(String slug);
+    ProductDetailsResponse findBySlug(User user, String slug);
     RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest);
 }

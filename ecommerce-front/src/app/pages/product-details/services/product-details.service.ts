@@ -31,8 +31,7 @@ export class ProductDetailsService {
     }),
     {defaultValue: initReviewPagination}
   )
-  avgReview = computed(
-    () =>
+  avgReview = computed(() =>
       this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
 

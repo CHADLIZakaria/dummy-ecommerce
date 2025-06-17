@@ -42,8 +42,8 @@ public class ProductController {
     }
     @Operation(summary = "find by slug")
     @GetMapping("/{slug}")
-    public EcommerceResponse<ProductDetailsResponse> findBySlug(@PathVariable("slug") String slug) {
-        return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(slug));
+    public EcommerceResponse<ProductDetailsResponse> findBySlug(@AuthenticationPrincipal User user, @PathVariable("slug") String slug) {
+        return new EcommerceResponse<>(200, "Product retrieved successfully", productService.findBySlug(user, slug));
     }
     @GetMapping("/getRangePrice")
     public EcommerceResponse<RangePriceResponse> findRangePrice(@AuthenticationPrincipal User user, HttpServletRequest productSearchRequest) {

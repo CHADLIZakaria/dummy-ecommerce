@@ -44,11 +44,10 @@ public interface ProductMapper extends  EcommerceMapper {
     }
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);
-    @Mapping(source = "category.title", target = "category")
-    @Mapping(source = "coverImage.fileName", target = "coverImage")
-    @Mapping(source = "brand.name", target = "brand")
-    ProductDetailsResponse toProductDetailsResponse(Product product);
-
+    @Mapping(source = "product.category.title", target = "category")
+    @Mapping(source = "product.coverImage.fileName", target = "coverImage")
+    @Mapping(source = "product.brand.name", target = "brand")
+    ProductDetailsResponse toProductDetailsResponse(Product product, boolean isFavorite);
 
     List<ProductResponse> toProductsResponse(List<Product> products);
     @Named("isProductFavorite")

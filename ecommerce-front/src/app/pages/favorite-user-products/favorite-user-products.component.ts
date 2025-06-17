@@ -7,6 +7,7 @@ import { DropdownDirective } from '../../shared/directives/dropdown.directive';
 import { TitleComponent } from '../../shared/components/title/title.component';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { UserService } from '../../shared/services/user.service';
+import { HomeServices } from '../home/services/home-services.service';
 
 @Component({
   selector: 'ecom-favorite-user-products',
@@ -17,6 +18,7 @@ import { UserService } from '../../shared/services/user.service';
 export class FavoriteUserProductsComponent implements OnInit {
   favoriteUserProductsService = inject(FavoriteUserProductsService)
   userService = inject(UserService)
+  homeService = inject(HomeServices)
   products: Product[] = []
   showAlert = false
   messageAlert = ""

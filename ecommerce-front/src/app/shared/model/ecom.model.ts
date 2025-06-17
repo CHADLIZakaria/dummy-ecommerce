@@ -41,6 +41,7 @@ export type ProductDetails = {
     brand: string;
     coverImage: string;
     images: string[];
+    isFavorite: boolean;
 }
 export type Review = {
     id: number;
@@ -70,7 +71,8 @@ export const initProductDetails: EcomResponse<ProductDetails> = {
         category: '',
         brand: '',
         coverImage: '',
-        images: []
+        images: [],
+        isFavorite: false
     }
 }
 

@@ -35,7 +35,7 @@ export class ListProductsComponent {
 
   constructor() {
     effect(() => {
-      const newProducts = this.productsResource.value()?.data?.data || [];
+      const newProducts = this.productsResource.value().data.data || [];
       const page = this.homeService.productFilter().page
       if(page === 0) {
         this.products.set(newProducts)

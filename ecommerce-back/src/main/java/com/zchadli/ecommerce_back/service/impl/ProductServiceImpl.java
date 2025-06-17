@@ -75,16 +75,17 @@ public class ProductServiceImpl implements ProductService {
                 : productDao.findAll(specification, pageable);
         Set<Long> favoriteProductIds = favoriteDao.findByUser(user).stream().map(favorite -> favorite.getProduct().getId()).collect(Collectors.toSet());
         return new PageResponse<>(
-                productMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
+            productMapper.toProductsResponse(productPage.getContent(), favoriteProductIds),
             productPage.getTotalElements(),
             productPage.getSize(),
             productPage.getNumber()
         );
     }
     @Override
-    public ProductDetailsResponse findBySlug(String slug) {
+    public ProductDetailsResponse findBySlug(User user, String slug) {
         Product product = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
-        return productMapper.toProductDetailsResponse(product);
+        boolean inFavorite = favoriteDao.findByUser(user).stream().filter(favorite -> Objects.equals(favorite.getProduct().getId(), product.getId())).toList().size()==1;
+        return productMapper.toProductDetailsResponse(product, inFavorite);
     }
     @Override
     public RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest) {
