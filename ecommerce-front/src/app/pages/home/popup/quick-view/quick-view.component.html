@@ -48,6 +48,7 @@
                                 <div class="flex justify-between my-2 ">
                                     <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">${{product.price}}</span>
                                     <button
+                                        (click)="onAddToCart(product)"
                                         class="bg-main-color flex gap-2 items-center text-white px-3 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -61,11 +62,17 @@
                                     {{product.description}}
                                 </p>
                                 <div class="flex gap-1">                                    
-                                    <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                                        <i class="fa-regular fa-heart text-md"></i>
+                                    <button 
+                                        (click)="toggleFavorite(product.id)"
+                                        class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                        <i  
+                                            [ngClass]="product.isFavorite ? 'fa-solid' : 'fa-regular'" 
+                                            class="fa-heart">
+                                        </i>
                                         Wishlist
                                     </button>
-                                    <button class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                    <button
+                                        class="bg-gray-200 flex gap-2 items-center text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                                         <i class="fa-solid fa-code-compare"></i>
                                         Compare                  
                                     </button>                      
@@ -77,4 +84,15 @@
             }
         </div>
     </div>
+     @if(alert.show) {
+      <ecom-alert 
+        (showAlert)="alert.show= false"
+        [message]="alert.message"
+        [link]="
+        alert.type==='favorite' ?
+          {title:'See Wishlist', url: '/favorites'}:
+          {title:'See Cart', url: '/cart'}  
+        "
+      />
+    }
 </div>

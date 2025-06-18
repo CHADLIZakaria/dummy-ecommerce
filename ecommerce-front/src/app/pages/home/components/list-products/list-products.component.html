@@ -90,12 +90,10 @@
                   (click)="toggleFavorite(product.id)"
                   type="button"
                   class="group/wishlist relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
-                  @if(product.favorite===true) {
-                    <i class="fa-solid fa-heart"></i>                  
-                  }
-                  @else {
-                    <i class="fa-regular fa-heart"></i>
-                  }
+                  <i  
+                    [ngClass]="product.favorite ? 'fa-solid' : 'fa-regular'" 
+                    class="fa-heart">
+                  </i>                  
                   <span class="absolute rounded-xl right-[110%] p-1 text-white top-50 bg-main-color text-xs text-nowrap opacity-0 scale-75 group-hover/wishlist:scale-100 group-hover/wishlist:opacity-100 duration-500 transition-all">
                     Add To wishlist
                   </span>
