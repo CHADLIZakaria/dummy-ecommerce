@@ -1,6 +1,7 @@
 import { Injectable, resource, signal } from '@angular/core';
 import { environment } from '../../../../../environments/environment.development';
 import { EcomResponse, initProductDetails, ProductDetails } from '../../../../shared/model/ecom.model';
+import { httpResource } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,8 @@ import { EcomResponse, initProductDetails, ProductDetails } from '../../../../sh
 export class QuickViewService {
   slug = signal('')
   
-  quickViewDetailsResource = resource<EcomResponse<ProductDetails>, {slug: string}>({
-    request: () => ({
-      slug: this.slug()
-    }),
-    loader: async({request}) => {
-      const product = await fetch(`${environment.baseUrl}products/${request.slug}`)
-      return product.json()
-    },
-    defaultValue: initProductDetails
-  })
+  quickViewDetailsResource = httpResource<EcomResponse<ProductDetails>>(() =>  
+    this.slug() === '' ? undefined:  `${environment.baseUrl}products/${this.slug()}`,
+    { defaultValue: initProductDetails }
+  )
 }

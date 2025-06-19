@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { NoScrollDirective } from '../../../../shared/directives/no-scroll.directive';
 import { QuickViewService } from '../services/quick-view.service';
 import { EcomHelper } from '../../../../shared/helper/ecomHelper';
@@ -22,13 +22,13 @@ export class QuickViewComponent {
   currentImage = 0
   numberStar = EcomHelper.range(5)
   alert = {show: false, message: '', type: ''}
+  
 
   changeCurrentImage(idx: number) {
     this.currentImage = idx;
   }
 
   toggleFavorite(idProduct: number) {
-    console.log("fav")
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
         if(data.status===200) {

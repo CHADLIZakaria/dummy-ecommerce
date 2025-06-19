@@ -45,18 +45,21 @@ export class ListProductsComponent {
       }
     })
   }
+  
   loadMoreProducts() {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
       page: this.homeService.productFilter().page+1
     })
   }
+
   onScroll(event: any) {
     const element=event.target;
     if(element.scrollHeight - element.scrollTop <= element.clientHeight +50 && !this.productsResource.isLoading()) {
       this.loadMoreProducts()
     }
   }
+
   onChangeSort(column: string, direction: string) {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
@@ -65,6 +68,7 @@ export class ListProductsComponent {
     })
     this.dropdownSortReview.closeDropdown()  
   }
+
   toggleFavorite(idProduct: number) {
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
@@ -79,6 +83,7 @@ export class ListProductsComponent {
       }
     )
   }
+
   onAddToCart(product: Product) {
     const cartItem: CartItem = {
       productImage: product.coverImage,
@@ -92,4 +97,5 @@ export class ListProductsComponent {
       }
     })
   }
+
 }
