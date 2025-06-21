@@ -15,10 +15,12 @@ import { Brand } from '../../../../../../shared/model/ecom.model';
 export class FilterBrandComponent {
   homeService = inject(HomeServices)
   brands = this.homeService.brandsWithNumberProductsResource
-  brandsSelected: Brand[]= []
+  brandsSelected: Brand[]= this.homeService.productFilter().brands
+
   onSearchBrands(value: string): void {
     this.homeService.brandKeyword.set(value)
   }  
+  
   onChangeSelectedBrand(brand: Brand): void {
     if(this.brandsSelected.includes(brand)) {
       this.brandsSelected.splice(this.brandsSelected.indexOf(brand), 1)
@@ -26,22 +28,26 @@ export class FilterBrandComponent {
     else {
       this.brandsSelected.push(brand)
     }
-    const idsBrand = this.brandsSelected.map(ele => ele.id).join()
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(), 
-      idsBrand: idsBrand
+      brands: this.brandsSelected,
+      page: 0
     })
   }
+  
   isBrandSelected(idBrand: number): boolean {
     return this.brandsSelected.some(brand => brand.id===idBrand)
   }
+  
   resetBrandSelected(): void {
     this.brandsSelected = []
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(), 
-      idsBrand: ''
+      brands: [],
+      page: 0
     })
   }
+
   showMore(): void {
     this.homeService.brandsWithProductSize.set(this.homeService.brandsWithProductSize()+10)
   }

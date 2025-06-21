@@ -16,11 +16,12 @@ import { Category } from '../../../../../../shared/model/ecom.model';
 export class FilterCategoryComponent {
   homeService = inject(HomeServices)
   categories = this.homeService.categoriesWithNumberProductResource
-  categoriesSelected: Category[]= []
+  categoriesSelected: Category[]= this.homeService.productFilter().categories
 
   onSearchCategories(value: string): void {
     this.homeService.brandKeyword.set(value)
-  }  
+  }
+
   onChangeSelectedCategory(brand: Category): void {
     if(this.categoriesSelected.includes(brand)) {
       this.categoriesSelected.splice(this.categoriesSelected.indexOf(brand), 1)
@@ -28,22 +29,26 @@ export class FilterCategoryComponent {
     else {
       this.categoriesSelected.push(brand)
     }
-    const idsCategory = this.categoriesSelected.map(ele => ele.id).join()
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(), 
-      idsCategory: idsCategory
+      categories: this.categoriesSelected,
+      page: 0
     })
   }
+
   isCategorySelected(idCategory: number): boolean {
     return this.categoriesSelected.some(category => category.id===idCategory)
   }
+  
   resetCategorySelected(): void {
     this.categoriesSelected = []
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(), 
-      idsCategory: ''
+      categories: [],
+      page: 0
     })
   }
+  
   showMore(): void {
     this.homeService.categoriesWithProductSize.set(this.homeService.categoriesWithProductSize()+10)
   }

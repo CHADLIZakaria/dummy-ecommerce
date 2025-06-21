@@ -9,11 +9,13 @@ import { HomeServices } from '../../../../services/home-services.service';
 })
 export class FilterKeywordComponent {
   homeService = inject(HomeServices)
+  keyword = this.homeService.productFilter().keyword
 
   onChanageProduct(value: string) {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
-      keyword: value
+      keyword: value,
+      page: 0
     })
   }
 }

@@ -1,8 +1,9 @@
 <div class="mt-5 mb-3">
     <input 
         #keywordProduct
-        class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md"
+        class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:ring-2 focus:ring-main-color focus:outline-none border-1 shadow-md rounded-md"
         type="text" 
         placeholder="Search By Product Name..."
+        [value]="keyword"
         (input)="onChanageProduct(keywordProduct.value)" />
 </div>

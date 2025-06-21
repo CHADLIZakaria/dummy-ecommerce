@@ -1,4 +1,4 @@
-import { EcomPagination, EcomResponse, Product } from "../../../shared/model/ecom.model";
+import { Brand, Category, EcomPagination, EcomResponse, Product } from "../../../shared/model/ecom.model";
 
 export type ProductFilter = {
     size: number;
@@ -7,8 +7,8 @@ export type ProductFilter = {
     keyword: string;
     minPrice: number;
     maxPrice: number;
-    idsCategory: string;
-    idsBrand: string;
+    categories: Category[];
+    brands: Brand[];
 }
 export type CategoryWithProduct = {
     id: number;
@@ -33,8 +33,8 @@ export const initProductFilter: ProductFilter = {
     keyword: '',
     minPrice: 0,
     maxPrice: Number.MAX_VALUE,
-    idsCategory: '',
-    idsBrand: '',
+    categories: [],
+    brands: [],
     page: 0,
     sort: 'id, desc'
 }
