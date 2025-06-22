@@ -34,6 +34,11 @@ export class ListProductsComponent {
   @ViewChild('dropdownSortReview') dropdownSortReview!: DropdownDirective;
 
   constructor() {
+    this.homeService.productFilter.set({
+    ...this.homeService.productFilter(),
+    page: 0
+    });
+    this.products.set([]);
     effect(() => {
       const newProducts = this.productsResource.value().data.data || [];
       const page = this.homeService.productFilter().page
