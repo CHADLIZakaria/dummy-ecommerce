@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { NoScrollDirective } from '../../../../shared/directives/no-scroll.directive';
 import { QuickViewService } from '../services/quick-view.service';
 import { EcomHelper } from '../../../../shared/helper/ecomHelper';
@@ -22,7 +22,7 @@ export class QuickViewComponent {
   currentImage = 0
   numberStar = EcomHelper.range(5)
   alert = {show: false, message: '', type: ''}
-  
+  onToggleFavorite = output<{idProduct: number, isFavorite: boolean}>();
 
   changeCurrentImage(idx: number) {
     this.currentImage = idx;
@@ -33,7 +33,9 @@ export class QuickViewComponent {
       data => {
         if(data.status===200) {
           this.alert = {type: 'favorite', show: true, message: data.data.message}
-          this.quickViewDetailsResource.value().data.isFavorite = ! this.quickViewDetailsResource.value().data.isFavorite          
+          this.quickViewDetailsResource.value().data.isFavorite = ! this.quickViewDetailsResource.value().data.isFavorite
+          console.log("toggle favorite")
+          this.onToggleFavorite.emit({ idProduct: idProduct, isFavorite: data.data.isFavorite });
         }
       }
     )

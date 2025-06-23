@@ -96,7 +96,7 @@
                 </a>
                 <div class="absolute right-0 top-0 w-8 mt-1 mr-1 flex flex-col gap-1 items-center">
                   <button
-                    (click)="toggleFavorite(product.id)"
+                    (click)="toggleFavorite({idProduct: product.id, isFavorite: product.favorite})"
                     type="button"
                     class="group/wishlist relative text-main-color border border-main-color hover:bg-main-color hover:text-white focus:outline-none font-medium rounded-full text-sm p-1.5 text-center inline-flex items-center">
                     <i
@@ -184,6 +184,8 @@
     }
   </div>
   @if(quickViewService.slug() !== '') {
-    <ecom-quick-view />
+    <ecom-quick-view 
+      (onToggleFavorite)="updateFavoriteInList($event)"
+    />
   }
 </section>

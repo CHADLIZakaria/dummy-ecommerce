@@ -50,7 +50,7 @@ export class ListProductsComponent {
       }
     })
   }
-  
+
   loadMoreProducts() {
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(),
@@ -71,22 +71,36 @@ export class ListProductsComponent {
       sort: column+','+direction,
       page: 0
     })
-    this.dropdownSortReview.closeDropdown()  
+    this.dropdownSortReview.closeDropdown()
   }
 
-  toggleFavorite(idProduct: number) {
-    this.userService.toggleFavorite(idProduct).subscribe(
+  toggleFavorite(event: {idProduct: number, isFavorite: boolean}) {
+    this.userService.toggleFavorite(event.idProduct).subscribe(
       data => {
         if(data.status===200) {
-          this.alert = {type: 'favorite', show: true, message: data.data.message}
+          this.alert = {
+            type: 'favorite',
+            show: true,
+            message: data.data.message
+          }
           this.products().forEach(product => {
-            if(product.id === idProduct) {
+            if(product.id === event.idProduct) {
               product.favorite = data.data.isFavorite
             }
           })
         }
       }
     )
+  }
+
+  updateFavoriteInList(event: { idProduct: number, isFavorite: boolean }) {
+    const { idProduct, isFavorite } = event;
+    console.log("fa")
+    this.products().forEach(product => {
+      if (product.id === idProduct) {
+        product.favorite = isFavorite;
+      }
+    });
   }
 
   onAddToCart(product: Product) {
