@@ -34,7 +34,6 @@ export class QuickViewComponent {
         if(data.status===200) {
           this.alert = {type: 'favorite', show: true, message: data.data.message}
           this.quickViewDetailsResource.value().data.isFavorite = ! this.quickViewDetailsResource.value().data.isFavorite
-          console.log("toggle favorite")
           this.onToggleFavorite.emit({ idProduct: idProduct, isFavorite: data.data.isFavorite });
         }
       }

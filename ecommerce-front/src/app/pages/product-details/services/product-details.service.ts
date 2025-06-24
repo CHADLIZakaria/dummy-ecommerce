@@ -16,10 +16,8 @@ export class ProductDetailsService {
   showWritePopup = signal(false)
 
   productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
-    () => ({
-      url:`${environment.baseUrl}products/${this.slug()}`,
-    }),
-    {defaultValue: initProductDetails}
+    () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}`,
+    { defaultValue: initProductDetails }
   )
   reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
     () => ({
@@ -32,7 +30,7 @@ export class ProductDetailsService {
     {defaultValue: initReviewPagination}
   )
   avgReview = computed(() =>
-      this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
+    this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
 
 }

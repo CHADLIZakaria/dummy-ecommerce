@@ -4,12 +4,14 @@
             title="Disover Our"
             subtitle="Categories"
         />
-        <div class="flex gap-1">
-            <span (click)="updateCarouselCategory('prev')" class="w-5 h-5 flex items-center justify-center cursor-pointer bg-main-color rounded-full p-1">
-                <i class="fa-solid fa-chevron-left"></i>
+        <div class="flex">
+            <span 
+                (click)="updateCarouselCategory('prev')" 
+                class="w-5 h-5 cursor-pointer">
+                <i class="fa-solid fa-chevron-left text-main-color rounded-sm border border-r-0 rounded-r-none border-main-color flex items-start justify-center p-1"></i>
             </span>
-            <span (click)="updateCarouselCategory('next')" class="w-5 h-5 flex items-center justify-center cursor-pointer bg-main-color rounded-full p-1">
-                <i class="fa-solid fa-chevron-right"></i>
+            <span (click)="updateCarouselCategory('next')" class="w-5 h-5 cursor-pointer">
+                <i class="fa-solid fa-chevron-right text-main-color rounded-sm border rounded-l-none border-main-color flex items-start justify-center p-1"></i>
             </span>
         </div>
     </div>
@@ -17,7 +19,7 @@
         <div class="flex gap-5">
             @for(item of rangeLoading; track item) {
                 <div class="animate-pulse delay-1000 duration-1000 w-1/6 border bg-slate-200 rounded-md cursor-pointer py-2 px-1 flex flex-col gap-2 items-center time ">
-                    <p class="w-20 h-20 rounded-full bg-slate-700 "></p>
+                    <p class="w-20 h-20 rounded-full bg-slate-700"></p>
                     <p class="h-2 w-20 rounded bg-slate-700"></p>
                 </div>
             }
@@ -30,7 +32,7 @@
                 <div
                     @slideAnimation
                     class="w-1/6 border bg-slate-200 rounded-md cursor-pointer py-2 px-1 flex flex-col gap-2 items-center time ">
-                    <img [src]="'http://localhost:8080/file/category/'+category.imagePath" class="w-20 h-20 rounded-full hover:scale-105 duration-500 " />
+                    <img [src]="'http://localhost:8080/file/category/'+category.imagePath" class="w-20 h-20 rounded-full hover:scale-105 duration-500" />
                     <p>{{category.title}}</p>
                 </div>
                 }

@@ -1,8 +1,9 @@
 @if(productDetailsResource.isLoading()) {
-
+  <div class="mt-10">
+    <ecom-loading size="sm" />
+  </div>
 }
-@if(productDetailsResource.value()) {
-  @let product = productDetailsResource.value().data;
+@else {
   <div class="absolute top-0 left-0 w-full h-full z-10">
     <svg height="600px" width="100%">
       <rect x="0" y="0" width="1500" height="600" fill="#bde0fe"></rect>
@@ -12,6 +13,7 @@
   </svg>
 </div>
 <div class="mx-10">
+  @let product = productDetailsResource.value().data;
   <div class="pt-5 relative">
       <div class="flex h-full justify-between overflow-hidden">
           <!-- Product Images -->

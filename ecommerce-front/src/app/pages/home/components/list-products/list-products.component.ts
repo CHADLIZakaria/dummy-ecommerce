@@ -95,7 +95,6 @@ export class ListProductsComponent {
 
   updateFavoriteInList(event: { idProduct: number, isFavorite: boolean }) {
     const { idProduct, isFavorite } = event;
-    console.log("fa")
     this.products().forEach(product => {
       if (product.id === idProduct) {
         product.favorite = isFavorite;

@@ -9,59 +9,86 @@
       <ecom-title
         title="Discover Our"
         subtitle="Products" />
+     
       <div
           ecomDropdown
           #dropdownSortReview="ecomDropdown"
-          class="relative">
+          class="relative">          
           <button
           (click)="dropdownSortReview.toggleDropdown()"
           type="button"
           class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
-              <i class="fa-solid fa-arrow-up-z-a -ms-0.5 me-2 h-4 w-4"></i>
+              <i  class="fa-solid fa-arrow-up-z-a -ms-0.5 me-2 h-4 w-4"></i>             
               Sort
               <i class="fa-solid fa-chevron-down"></i>
           </button>
+          @let sortColumn = this.homeService.productFilter().sort.split(",")[0];
+          @let sortDirection = this.homeService.productFilter().sort.split(",")[1];     
           <div
-            class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
-            <ul class="p-2 text-left text-sm font-medium text-gray-500">
+            class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow">
+            <ul class="p-2 text-left text-sm font-medium text-gray-500 flex flex-col gap-1">
                 <li>
                   <a
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'name' && sortDirection === 'asc'}"
                     (click)="onChangeSort('name', 'asc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
                     Alphabetically, A-Z
+                    @if(sortColumn === 'name' && sortDirection === 'asc') {
+                      <i class="fa-solid fa-check"></i>
+                    }               
                   </a>
                 <li>
-                  <a
+                  <a 
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'name' && sortDirection === 'desc'}"                    
                     (click)="onChangeSort('name', 'desc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-                    Alphabetically, Z-A
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                     Alphabetically, Z-A
+                    @if(sortColumn === 'name' && sortDirection === 'desc') {
+                      <i class="fa-solid fa-check"></i>
+                    }
                   </a>
                 <li>
                   <a
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'price' && sortDirection === 'asc'}"
                     (click)="onChangeSort('price', 'asc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
                     Price, Low to High
+                    @if(sortColumn === 'price' && sortDirection === 'asc') {
+                      <i class="fa-solid fa-check"></i>
+                    } 
                   </a>
                 </li>
                 <li>
                   <a
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'price' && sortDirection === 'desc'}"
                     (click)="onChangeSort('price', 'desc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
                     Price, High to Low
+                    @if(sortColumn === 'price' && sortDirection === 'desc') {
+                      <i class="fa-solid fa-check"></i>
+                    } 
                   </a>
                 </li>
                 <li>
                   <a
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'avgReview' && sortDirection === 'asc'}"
                     (click)="onChangeSort('avgReview', 'asc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
                     Rating, Low to High
+                    @if(sortColumn === 'avgReview' && sortDirection === 'asc') {
+                      <i class="fa-solid fa-check"></i>
+                    }
                   </a>
                 </li>
                 <li>
                   <a
+                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'avgReview' && sortDirection === 'desc'}"
                     (click)="onChangeSort('avgReview', 'desc')"
-                    class="cursor-pointer group inline-flex w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    class="cursor-pointer flex gap-1 justify-between group w-full items-center rounded-md px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 hover:text-main-color">
                     Rating, High to Low
+                    @if(sortColumn === 'avgReview' && sortDirection === 'desc') {
+                      <i class="fa-solid fa-check"></i>
+                    } 
                   </a>
                 </li>
             </ul>

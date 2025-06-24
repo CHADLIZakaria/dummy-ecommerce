@@ -7,10 +7,11 @@ import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
 import { UserService } from '../../shared/services/user.service';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, CommonModule, AlertComponent],
+  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
