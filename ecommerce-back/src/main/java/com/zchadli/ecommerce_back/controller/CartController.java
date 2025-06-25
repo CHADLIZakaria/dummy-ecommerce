@@ -1,6 +1,5 @@
 package com.zchadli.ecommerce_back.controller;
 
-import com.zchadli.ecommerce_back.model.CartItem;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.request.CartItemRequest;
 import com.zchadli.ecommerce_back.response.CartItemResponse;
@@ -39,9 +38,9 @@ public class CartController {
     }
 
     @DeleteMapping("/remove/{itemId}")
-    public ResponseEntity<?> removeItem(@PathVariable Long itemId, @AuthenticationPrincipal User user) {
+    public EcommerceResponse<Void> removeItem(@PathVariable Long itemId, @AuthenticationPrincipal User user) {
         cartService.removeItem(itemId);
-        return ResponseEntity.ok().build();
+        return new EcommerceResponse<>(200, "Item removed", null);
     }
 
     @DeleteMapping("/clear")

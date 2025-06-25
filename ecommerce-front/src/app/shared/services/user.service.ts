@@ -44,6 +44,18 @@ export class UserService {
       ));
   }
 
+  removeCartItem(itemId: number): Observable<EcomResponse<void>> {
+    return this.http.delete<EcomResponse<void>>(`${environment.baseUrl}cart/remove/${itemId}`)
+    .pipe(tap(
+      response => {
+        if(response.status===200) {
+          const newCart = this.cartSignal().filter(cartItem => cartItem.id !== itemId)
+          this.cartSignal.set(newCart)
+        }
+      }
+    ));
+  }
+
   updateCarts(cartItem: CartItem) {
     const currentCart = this.cartSignal();
     const existingIndex = currentCart.findIndex(item => item.id === cartItem.id);

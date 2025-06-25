@@ -1,5 +1,6 @@
 package com.zchadli.ecommerce_back.service.impl;
 
+import com.zchadli.ecommerce_back.exception.cart.CartBadRequestException;
 import com.zchadli.ecommerce_back.mapper.CartMapper;
 import com.zchadli.ecommerce_back.model.CartItem;
 import com.zchadli.ecommerce_back.model.User;
@@ -45,8 +46,7 @@ public class CartServiceImpl implements CartService {
             throw new RuntimeException("Unauthorized access to cart item");
         }
         if (newQuantity <= 0) {
-            cartItemRepository.delete(cartItem);
-            return null;
+            throw new CartBadRequestException();
         }
         cartItem.setQuantity(newQuantity);
         CartItem saved = cartItemRepository.save(cartItem);
@@ -54,8 +54,7 @@ public class CartServiceImpl implements CartService {
     }
 
     public void removeItem(Long itemId) {
-        CartItem item = cartItemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
+        CartItem item = cartItemRepository.findById(itemId).orElseThrow(() ->  new RuntimeException("Item not found"));
         cartItemRepository.delete(item);
     }
 

@@ -1,15 +1,15 @@
-import { Component, computed, effect, inject, OnInit, ViewChild } from '@angular/core';
-import { LoginService } from '../../pages/login/services/login.service';
-import { Router, RouterLink } from '@angular/router';
-import { NavbarService } from './services/navbar.service';
 import { CommonModule } from '@angular/common';
+import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { LoginService } from '../../pages/login/services/login.service';
+import { LoadingComponent } from "../components/loading/loading.component";
 import { DropdownDirective } from '../directives/dropdown.directive';
 import { UserService } from '../services/user.service';
-import { CartItem } from '../../pages/home/models/home.model';
+import { NavbarService } from './services/navbar.service';
 
 @Component({
   selector: 'ecom-navbar',
-  imports: [RouterLink, CommonModule, DropdownDirective],
+  imports: [RouterLink, CommonModule, DropdownDirective, LoadingComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -29,5 +29,10 @@ export class NavbarComponent {
   onLogout() {
     this.dropdownUser.closeDropdown()
     this.loginService.logout()
+  }
+
+  removeCartItem(idCartItem: number) {
+    this.userService.removeCartItem(idCartItem).subscribe()
+
   }
 }

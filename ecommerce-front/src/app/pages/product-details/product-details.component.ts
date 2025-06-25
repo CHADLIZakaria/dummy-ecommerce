@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EcomHelper } from '../../shared/helper/ecomHelper';
-import { ImageService } from '../../shared/services/image.service';
-import { ReviewsComponent } from "./reviews/reviews.component";
-import { ProductDetailsService } from './services/product-details.service';
-import { UserService } from '../../shared/services/user.service';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { EcomHelper } from '../../shared/helper/ecomHelper';
+import { ProductDetails } from '../../shared/model/ecom.model';
+import { ImageService } from '../../shared/services/image.service';
+import { UserService } from '../../shared/services/user.service';
+import { CartItem } from '../home/models/home.model';
+import { ReviewsComponent } from "./reviews/reviews.component";
+import { ProductDetailsService } from './services/product-details.service';
 
 @Component({
   selector: 'ecom-product-details',
@@ -30,9 +32,11 @@ export class ProductDetailsComponent {
       this.productDetailsService.slug.set(slug)
     }
   }
+  
   changeCurrentImage(index: number) {
     this.currentImage = index
   }
+
    toggleFavorite(idProduct: number) {
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
@@ -42,5 +46,19 @@ export class ProductDetailsComponent {
         }
       }
     )
+  }
+
+  onAddToCart(product: ProductDetails) {
+    const cartItem: CartItem = {
+      productImage: product.coverImage,
+      productName: product.name,
+      price: product.price,
+      quantity: 1
+    }
+    this.userService.addCart(cartItem).subscribe(data => {
+      if(data.status===200) {
+        this.alert = {type: 'cart', show: true, message: data.message}
+      }
+    })
   }
 }

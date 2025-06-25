@@ -2,6 +2,7 @@ package com.zchadli.ecommerce_back.exception;
 
 import com.zchadli.ecommerce_back.exception.base.AlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.base.BadCredentialsException;
+import com.zchadli.ecommerce_back.exception.base.BadRequestException;
 import com.zchadli.ecommerce_back.exception.base.NotFoundException;
 import com.zchadli.ecommerce_back.exception.uploadedfile.FileUploadException;
 import com.zchadli.ecommerce_back.response.EcommerceResponse;
@@ -34,6 +35,10 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(BadCredentialsException.class)
     public EcommerceResponse<Object> handleFailedFileUpload(BadCredentialsException ex) {
+        return new EcommerceResponse<>(ex.getStatusCode(), ex.getMessage(), null);
+    }
+    @ExceptionHandler(BadRequestException.class)
+    public EcommerceResponse<Object> badRequestException(BadRequestException ex) {
         return new EcommerceResponse<>(ex.getStatusCode(), ex.getMessage(), null);
     }
     @ExceptionHandler(Exception.class)

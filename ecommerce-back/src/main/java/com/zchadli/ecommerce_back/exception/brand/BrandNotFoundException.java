@@ -1,4 +1,4 @@
-package com.zchadli.ecommerce_back.exception.brand.category;
+package com.zchadli.ecommerce_back.exception.brand;
 
 import com.zchadli.ecommerce_back.exception.base.NotFoundException;
 

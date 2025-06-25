@@ -1,6 +1,6 @@
 package com.zchadli.ecommerce_back.service.impl;
 
-import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
+import com.zchadli.ecommerce_back.exception.brand.BrandNotFoundException;
 import com.zchadli.ecommerce_back.exception.category.CategoryNotFoundException;
 import com.zchadli.ecommerce_back.exception.product.ProductAlreadyExistsException;
 import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;

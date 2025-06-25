@@ -1,7 +1,7 @@
 package com.zchadli.ecommerce_back.service.impl;
 
-import com.zchadli.ecommerce_back.exception.brand.category.BrandAlreadyExistsException;
-import com.zchadli.ecommerce_back.exception.brand.category.BrandNotFoundException;
+import com.zchadli.ecommerce_back.exception.brand.BrandAlreadyExistsException;
+import com.zchadli.ecommerce_back.exception.brand.BrandNotFoundException;
 import com.zchadli.ecommerce_back.mapper.BrandMapper;
 import com.zchadli.ecommerce_back.model.Brand;
 import com.zchadli.ecommerce_back.repository.BrandDao;

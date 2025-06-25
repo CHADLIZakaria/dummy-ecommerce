@@ -30,6 +30,7 @@
                 </button>
                 <div class="dropdown-menu border-gray-200 shadow-xs bg-gray-50 absolute top-full left-0 border-y w-full  hidden">
                     @if(categoriesResource.isLoading()) {
+                        <ecom-loading size="sm" />
                     }
                     @else {
                         <ul class="bg-main-500 grid grid-rows-4 grid-cols-5 px-4 py-1 mx-auto">
@@ -59,10 +60,9 @@
                     <a
                         [routerLink]="['/cart']"
                         class="relative inline-flex items-center p-3 text-sm font-medium text-center border rounded-lg focus:ring-4 focus:outline-none focus:main-color">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                      
+                        <i class="fa-solid fa-basket-shopping"></i>                      
                         <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold z-20 text-main-color bg-white border rounded-full -top-3 -end-3">
-                        {{getNumberItems()}}
+                            {{getNumberItems()}}
                         </div>
                     </a>
                     <div class="hidden group-hover:block absolute top-full right-0 shadow-md w-max z-50">
@@ -78,20 +78,22 @@
                                     <div
                                         [ngClass]="first ? 'rounded-md': ''" 
                                         class="border border-b-0 rounded-b-none flex justify-between items-center px-2 py-1">
-                                    <div class="flex gap-2">
-                                        <img
-                                        [src]="'http://localhost:8080/file/product/' + cartItem.productImage"
-                                        class="w-10 h-10"
-                                        [alt]="'cartItem' + cartItem.productName"
-                                        />
-                                        <div class="flex flex-col">
-                                            <span class="text-xs">{{ cartItem.productName }}</span>
-                                            <span>${{ cartItem.price }} * {{cartItem.quantity}} </span>
+                                        <div class="flex gap-2">
+                                            <img
+                                            [src]="'http://localhost:8080/file/product/' + cartItem.productImage"
+                                            class="w-10 h-10"
+                                            [alt]="'cartItem' + cartItem.productName"
+                                            />
+                                            <div class="flex flex-col">
+                                                <span class="text-xs">{{ cartItem.productName }}</span>
+                                                <span>${{ cartItem.price }} * {{cartItem.quantity}} </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button class="ml-3">
-                                        <i class="fa-solid fa-circle-xmark text-main-color text-lg"></i>
-                                    </button>
+                                        <button
+                                            (click)="removeCartItem(cartItem.id!)"
+                                            class="ml-3">
+                                            <i class="fa-solid fa-circle-xmark text-red-600 text-lg"></i>
+                                        </button>
                                     </div>
                                 }
                                 <div class="border rounded-b-md border-t flex justify-between px-2 py-1">
