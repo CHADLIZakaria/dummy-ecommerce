@@ -67,4 +67,12 @@
         </div>
     </div>
 </div>
-<ecom-timed-alert />
+<div class="absolute right-3 bottom-1">
+    @if(alert.show) {
+        <ecom-timed-alert
+            @fadeInOut
+            (close)="alert.show = false"
+            [message]="alert.message"
+        />
+    }
+</div>

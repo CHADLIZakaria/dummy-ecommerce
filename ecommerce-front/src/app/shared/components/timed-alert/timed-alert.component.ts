@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FadeInOut } from '../../animations/animations';
 
 @Component({
@@ -9,5 +9,10 @@ import { FadeInOut } from '../../animations/animations';
   animations: [FadeInOut(200, 300, true)]
 })
 export class TimedAlertComponent {
-  errorMessage = 'this error message'
+  message = input.required<string>()
+  close = output<void>();
+
+  onClose() {
+    this.close.emit()
+  }
 }
