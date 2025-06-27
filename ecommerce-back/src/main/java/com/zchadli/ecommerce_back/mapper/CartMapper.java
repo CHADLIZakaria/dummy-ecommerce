@@ -12,6 +12,8 @@ import java.util.List;
 public interface CartMapper {
     @Mapping(source = "userId", target = "user.id")
     CartItem toCartItem(CartItemRequest cartItemRequest, Long userId);
+
     CartItemResponse toCartItemResponse(CartItem cartItem);
+
     List<CartItemResponse> toCartItemsResponse(List<CartItem> cartItems);
 }

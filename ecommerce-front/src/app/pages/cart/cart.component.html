@@ -7,7 +7,7 @@
             @for(cartItem of cartItems(); track cartItem) {
                 <div class="border flex items-center gap-5 px-1 py-1 bg-white rounded-md shadow-md relative">
                     <div class="p-3 bg-slate-200 rounded-md">
-                        <img class="h-32 w-32" [src]="'http://localhost:8080/file/product/'+cartItem.productImage" [alt]="cartItem.productName" />
+                        <img class="h-32 w-32" [src]="cartItem.productImage" [alt]="cartItem.productName" />
                     </div>
                     <div class="flex flex-1 items-center gap-3">
                         <p class="font-semibold text-lg flex-1">{{cartItem.productName}}</p>                   

@@ -9,15 +9,19 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { ImagePathMapper.class })
 public interface CategoryMapper extends EcommerceMapper {
-    @Mapping(source = "file.fileName", target = "imagePath")
+    @Mapping(source = "category", target = "imagePath", qualifiedByName = "mapImagePathWithFolder")
     CategoryResponse toCategoryResponse(Category category);
+
     @Mapping(source = "file.fileName", target = "imagePath")
     @Mapping(source = "products", target = "productCounts", qualifiedByName = "mapProductCount")
     CategoryFilterResponse toCategoryFilterResponse(Category category);
 
     List<CategoryFilterResponse> toCategoriesFilterResponse(List<Category> category);
+
     Category toCategory(CategorySaveRequest categorySaveRequest);
+
     List<CategoryResponse> toCategoriesResponse(List<Category> categories);
+
 }

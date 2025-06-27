@@ -19,7 +19,6 @@ export class NavbarComponent {
   categoriesResource = inject(NavbarService).categoriesResource
   userService = inject(UserService)
   router = inject(Router)
-  showCategories = false;
   cartItems = computed(() => this.userService.cart());
   user = this.loginService.user
   getNumberItems = computed(() =>

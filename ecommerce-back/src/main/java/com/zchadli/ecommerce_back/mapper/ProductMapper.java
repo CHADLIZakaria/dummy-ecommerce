@@ -15,9 +15,9 @@ import org.mapstruct.Named;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { ImagePathMapper.class })
 public interface ProductMapper extends  EcommerceMapper {
-    @Mapping(source = "product.coverImage", target = "coverImage", qualifiedByName = "mapUploadedFileToFileName")
+    @Mapping(source = "product", target = "coverImage", qualifiedByName = "mapImagePathWithFolder")
     @Mapping(source = "product.reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
     @Mapping(source = "product.reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
     @Mapping(target = "favorite", ignore = true)

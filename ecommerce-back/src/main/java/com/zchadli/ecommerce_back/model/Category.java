@@ -10,7 +10,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-public class Category {
+public class Category implements ImageStorable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,4 +20,14 @@ public class Category {
     private UploadedFile file;
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+    @Override
+    public String getImageFolder() {
+        return "category";
+    }
+
+    @Override
+    public String getImageFileName() {
+        return file != null ? file.getFileName() : null;
+    }
 }

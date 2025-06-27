@@ -5,8 +5,8 @@ import com.zchadli.ecommerce_back.response.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { ImagePathMapper.class })
 public interface UserMapper {
-    @Mapping(source = "file.fileName", target = "filePath")
+    @Mapping(source = "user", target = "filePath", qualifiedByName = "mapImagePathWithFolder")
     UserResponse toUserResponse(User user);
 }

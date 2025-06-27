@@ -11,7 +11,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-public class Product {
+public class Product implements ImageStorable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,5 +39,15 @@ public class Product {
         if(name != null && (slug == null || slug.isEmpty())) {
             this.slug = SlugUtils.toSlug(name);
         }
+    }
+
+    @Override
+    public String getImageFolder() {
+        return "product";
+    }
+
+    @Override
+    public String getImageFileName() {
+        return coverImage.getFileName();
     }
 }

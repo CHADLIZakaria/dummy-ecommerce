@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class User implements UserDetails {
+public class User implements UserDetails, ImageStorable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,5 +58,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getImageFolder() {
+        return "user";
+    }
+
+    @Override
+    public String getImageFileName() {
+        return file.getFileName();
     }
 }
