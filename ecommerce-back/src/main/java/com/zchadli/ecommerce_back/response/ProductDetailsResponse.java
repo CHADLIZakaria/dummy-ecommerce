@@ -12,6 +12,5 @@ public record ProductDetailsResponse(
         String brand,
         String sku,
         List<String> images,
-        String coverImage,
         boolean isFavorite) {
 }

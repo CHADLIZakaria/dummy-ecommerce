@@ -44,8 +44,9 @@ public interface ProductMapper extends  EcommerceMapper {
     }
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);
+
+    @Mapping(source = "product.images", target = "images", qualifiedByName = "mapImageListWithPath")
     @Mapping(source = "product.category.title", target = "category")
-    @Mapping(source = "product.coverImage.fileName", target = "coverImage")
     @Mapping(source = "product.brand.name", target = "brand")
     ProductDetailsResponse toProductDetailsResponse(Product product, boolean isFavorite);
 
@@ -57,4 +58,5 @@ public interface ProductMapper extends  EcommerceMapper {
     default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
+
 }

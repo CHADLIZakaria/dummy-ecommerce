@@ -21,9 +21,10 @@ public class CartServiceImpl implements CartService {
     private final CartItemDao cartItemRepository;
     private final UserDao userRepository;
     private final CartMapper cartMapper;
+    private static final String PRODUCT_FOLDER_IMAGES = "product";
 
     public List<CartItemResponse> getCartItems(User user) {
-        return cartMapper.toCartItemsResponse(cartItemRepository.findByUser(user));
+        return cartMapper.toCartItemsResponse(cartItemRepository.findByUser(user), PRODUCT_FOLDER_IMAGES);
     }
 
     public CartItemResponse addItemToCart(User user, CartItemRequest cartItemRequest) {
@@ -31,11 +32,11 @@ public class CartServiceImpl implements CartService {
         if (existingItem.isPresent()) {
             CartItem currentItem = existingItem.get();
             currentItem.setQuantity(currentItem.getQuantity() + cartItemRequest.quantity());
-            return cartMapper.toCartItemResponse(cartItemRepository.save(currentItem));
+            return cartMapper.toCartItemResponse(cartItemRepository.save(currentItem), PRODUCT_FOLDER_IMAGES);
         }
         else {
             CartItem newCartItem = cartMapper.toCartItem(cartItemRequest, user.getId());
-            return cartMapper.toCartItemResponse(cartItemRepository.save(newCartItem));
+            return cartMapper.toCartItemResponse(cartItemRepository.save(newCartItem), PRODUCT_FOLDER_IMAGES);
         }
     }
 
@@ -50,7 +51,7 @@ public class CartServiceImpl implements CartService {
         }
         cartItem.setQuantity(newQuantity);
         CartItem saved = cartItemRepository.save(cartItem);
-        return cartMapper.toCartItemResponse(saved);
+        return cartMapper.toCartItemResponse(saved, PRODUCT_FOLDER_IMAGES);
     }
 
     public void removeItem(Long itemId) {

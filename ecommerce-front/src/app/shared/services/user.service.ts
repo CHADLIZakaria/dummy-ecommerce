@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { CartItem } from '../../pages/home/models/home.model';
 import { EcomResponse, FavoriteRespone } from '../model/ecom.model';
+import { extractFileName } from '../helper/ecomHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,11 @@ export class UserService {
   }
 
   addCart(cartItem: CartItem): Observable<EcomResponse<CartItem>> {
-    return this.http.post<EcomResponse<CartItem>>(`${environment.baseUrl}cart/add`, cartItem)
+    const sanitizedItem: CartItem = {
+      ...cartItem,
+      productImage: extractFileName(cartItem.productImage)
+    };
+    return this.http.post<EcomResponse<CartItem>>(`${environment.baseUrl}cart/add`, sanitizedItem)
       .pipe(tap(
         response => {
           if(response.status===200) {
@@ -74,14 +79,6 @@ export class UserService {
   }
 
   toggleFavorite(idProduct: number): Observable<EcomResponse<FavoriteRespone>> {
-    return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {}).pipe(
-      tap(
-        data => {
-          if(data.status===200) {
-            console.log(data)
-          }
-        }
-      )
-    )
+    return this.http.post<EcomResponse<FavoriteRespone>>(`${environment.baseUrl}products/toggle/favorites/${idProduct}`, {})
   }
 }
