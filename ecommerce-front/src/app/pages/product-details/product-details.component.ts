@@ -10,10 +10,11 @@ import { UserService } from '../../shared/services/user.service';
 import { CartItem } from '../home/models/home.model';
 import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
+import { TitleComponent } from "../../shared/components/title/title.component";
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent],
+  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })

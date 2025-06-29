@@ -5,7 +5,7 @@
     @else {
         <div class="px-4 2xl:px-0">
             <div class="flex items-center gap-2">
-                <h2 class="text-2xl font-semibold text-gray-900">Reviews</h2>
+                <ecom-title subtitle="Reviews" />
                 <div class="mt-2 flex items-center gap-2 sm:mt-0">
                     <div class="flex items-center gap-0.5">
                     @for(currentStar of numberStar; track currentStar) {
@@ -66,32 +66,32 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div          
-                    class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow">
+                    class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow">
                         <ul class="p-2 text-left text-sm font-medium text-gray-500">
                             <li>
                                 <a
                                 (click)="onChangeSort('id', 'desc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-                                Most Recent
+                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                    Date, Newest First
                                 </a>
                             <li>
                                 <a 
                                 (click)="onChangeSort('id', 'asc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-                                Oldest First
+                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                    Date, Oldest First
                                 </a>
                             <li>
                             <a 
                                 (click)="onChangeSort('rating', 'desc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-                                Highest Rating
+                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                Rating, High To Low
                             </a>
                             </li>
                             <li>
                             <a 
                                 (click)="onChangeSort('rating', 'asc')"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-                                Lowest Rating
+                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                Rating, Low To High
                                 </a>
                             </li>
                         </ul>
