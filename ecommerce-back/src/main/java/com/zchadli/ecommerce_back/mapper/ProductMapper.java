@@ -48,6 +48,7 @@ public interface ProductMapper extends  EcommerceMapper {
     @Mapping(source = "product.images", target = "images", qualifiedByName = "mapImageListWithPath")
     @Mapping(source = "product.category.title", target = "category")
     @Mapping(source = "product.brand.name", target = "brand")
+    @Mapping(source = "product", target = "coverImage", qualifiedByName = "mapImagePathWithFolder")
     ProductDetailsResponse toProductDetailsResponse(Product product, boolean isFavorite);
 
     List<ProductResponse> toProductsResponse(List<Product> products);

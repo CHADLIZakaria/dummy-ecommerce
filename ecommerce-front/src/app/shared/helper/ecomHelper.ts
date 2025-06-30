@@ -23,6 +23,7 @@ export function debouncedSignal<T>(
 }
 
 export function extractFileName(url: string): string {
+    console.log(url)
   if (!url) return '';
   return url.substring(url.lastIndexOf('/') + 1);
 }

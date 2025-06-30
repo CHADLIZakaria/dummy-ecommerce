@@ -21,7 +21,7 @@ export class HomeServices {
   //productFilterDebounced = debouncedSignal(this.productFilter, 300, initProductFilter)
 
   getCategories(): Observable<EcomResponse<EcomPagination<Category[]>>> {
-    return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${environment.baseUrl}categories?size=30`)
+    return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${environment.baseUrl}categories?size=0`)
   }
 
   categoriesWithNumberProductResource = httpResource<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(

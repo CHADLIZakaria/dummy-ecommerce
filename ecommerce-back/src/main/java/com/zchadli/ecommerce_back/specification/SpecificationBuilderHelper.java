@@ -25,13 +25,13 @@ public class SpecificationBuilderHelper {
                     .flatMap(value -> Arrays.stream(value.split(",")))
                     .map(String::trim)
                     .filter(v -> !v.isEmpty())
-                    .collect(Collectors.toList());
+                    .toList();
             if(!nonEmptyValues.isEmpty()) {
                 filtersParam.put(key, nonEmptyValues);
             }
         }
         filtersParam.forEach((param, values) -> {
-            if(param.contains("__") && values.size() > 0) {
+            if(param.contains("__") && !values.isEmpty()) {
                 String[] parts = param.split("__");
                 String key = parts[0];
                 String opKey = parts[1];
@@ -59,13 +59,12 @@ public class SpecificationBuilderHelper {
         }
         int page = parseIntParam(parameterMap, "page", 0);
         int size = parseIntParam(parameterMap, "size", 10);
-        if(orders.isEmpty()) {
-            return PageRequest.of(page, size);
+        if(size == 0) {
+            return Pageable.unpaged();
         }
-        else {
-            return PageRequest.of(page, size, Sort.by(orders));
-        }
+        return orders.isEmpty() ? PageRequest.of(page, size): PageRequest.of(page, size, Sort.by(orders));
     }
+
     private static int parseIntParam(Map<String, String[]> parameterMap, String key, int defaultValue) {
         String[] values = parameterMap.get(key);
         if(values != null && values.length > 0) {

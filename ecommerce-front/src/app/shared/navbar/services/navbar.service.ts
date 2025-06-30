@@ -11,7 +11,7 @@ export class NavbarService {
 
   categoriesResource = resource<EcomResponse<EcomPagination<Category[]>>, {}>({
     loader: async () => {
-      const categories = await fetch(`${environment.baseUrl}categories?size=30`)
+      const categories = await fetch(`${environment.baseUrl}categories?size=0`)
       return categories.json()
     },
     defaultValue: initCategoryPagination
