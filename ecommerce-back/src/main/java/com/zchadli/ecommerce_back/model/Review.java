@@ -8,7 +8,7 @@ import lombok.Setter;
 @Table
 @Getter
 @Setter
-public class Review {
+public class Review extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

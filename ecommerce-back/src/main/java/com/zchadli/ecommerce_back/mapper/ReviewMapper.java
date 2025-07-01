@@ -12,6 +12,7 @@ import java.util.List;
 public interface ReviewMapper {
     @Mapping(source = "idProduct", target = "product.id")
     @Mapping(source = "idUser", target = "user.id")
+    @Mapping(source = "createdAt",target = "createdAt")
     Review toReview(ReviewSaveRequest reviewSaveRequest);
     @Mapping(source = "product.id", target = "idProduct")
     @Mapping(source = "user.username", target = "username")

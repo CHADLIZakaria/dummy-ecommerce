@@ -1,6 +1,6 @@
 package com.zchadli.dummy_ecommerce_data.dummyJson.mapper;
 
-import com.zchadli.dummy_ecommerce_data.dummyJson.DummyProduct;
+import com.zchadli.dummy_ecommerce_data.dummyJson.model.DummyProduct;
 import com.zchadli.dummy_ecommerce_data.dummyJson.DummyReview;
 import com.zchadli.dummy_ecommerce_data.dummyJson.model.DummyUser;
 import com.zchadli.dummy_ecommerce_data.ecommerce.model.Category;
@@ -22,6 +22,7 @@ public interface DummyJsonMapper {
     @Mapping(source = "idCategory", target = "idCategory")
     @Mapping(source = "idBrand", target = "idBrand")
     Product toProduct(DummyProduct product, Long idCategory, Long idBrand);
+    @Mapping(source = "review.date", target = "createdAt")
     ReviewRequest toReview(DummyReview review, Long idProduct);
 
     User toUser(DummyUser dummyUser);

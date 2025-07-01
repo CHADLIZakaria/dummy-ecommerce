@@ -10,4 +10,5 @@ public class ReviewRequest {
     Integer rating;
     String comment;
     Long idUser;
+    String createdAt;
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-public class Category implements ImageStorable {
+public class Category extends AbstractEntity implements ImageStorable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
