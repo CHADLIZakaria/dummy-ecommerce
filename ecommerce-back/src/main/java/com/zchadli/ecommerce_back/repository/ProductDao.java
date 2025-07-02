@@ -1,5 +1,6 @@
 package com.zchadli.ecommerce_back.repository;
 
+import com.zchadli.ecommerce_back.model.Category;
 import com.zchadli.ecommerce_back.model.Product;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificati
    boolean existsByName(String name);
     Optional<Product> findBySlug(String slug);
     List<Product> findByIdIn(Set<Long> ids, Sort sort);
+    List<Product> findByCategoryAndSlugNot(Category category, String slug);
 }

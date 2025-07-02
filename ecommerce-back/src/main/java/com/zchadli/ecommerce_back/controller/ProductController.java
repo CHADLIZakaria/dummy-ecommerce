@@ -18,6 +18,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Tag(name = "Products", description = "Product management APIs")
 @RestController
 @RequestMapping("/products")
@@ -52,5 +54,10 @@ public class ProductController {
     @PostMapping("/toggle/favorites/{productId}")
     public EcommerceResponse<FavoriteResponse> toggleFavorite(@PathVariable Long productId, @AuthenticationPrincipal User user) {
        return new EcommerceResponse<>(200, "Favorite toggled", favoriteService.toggleFavorite(user, productId));
+    }
+
+    @GetMapping("/{slug}/similar")
+    public EcommerceResponse<List<ProductResponse>> getSimilarProducts(@PathVariable String slug) {
+        return new EcommerceResponse<>(200, "Products retrieved successfully", productService.getSimilarProducts(slug));
     }
 }

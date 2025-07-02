@@ -8,6 +8,7 @@ import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.response.RangePriceResponse;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
@@ -15,4 +16,5 @@ public interface ProductService {
     PageResponse<ProductResponse> findAll(User user, Map<String, String[]> productSearchRequest);
     ProductDetailsResponse findBySlug(User user, String slug);
     RangePriceResponse findRangePrice(User user, Map<String, String[]> productSearchRequest);
+    List<ProductResponse> getSimilarProducts(String slug);
 }

@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { EcomPagination, EcomResponse, initProductDetails, initReviewPagination, Product, ProductDetails, Review } from '../../../shared/model/ecom.model';
+import { EcomPagination, EcomResponse, initProductDetails, initProducts, initReviewPagination, Product, ProductDetails, Review } from '../../../shared/model/ecom.model';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { url } from 'inspector';
 import { environment } from '../../../../environments/environment.development';
@@ -32,5 +32,11 @@ export class ProductDetailsService {
   avgReview = computed(() =>
     this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
+
+  productsSimularResource = httpResource<EcomResponse<Product[]>>(
+    () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}/similar`,
+    { defaultValue: initProducts }
+  )
+  
 
 }

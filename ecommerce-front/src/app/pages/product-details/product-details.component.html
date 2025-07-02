@@ -117,17 +117,21 @@
       />
     }
     <!-- Simular Products -->
-    <div class="pt-5 relative z-20 w-96">
+    <div class="pt-5 relative z-20">
       <ecom-title 
         title="Simular"
         subtitle="Products"
       />
-      <div class="border rounded-sm bg-slate-200 shadow-md px-1 my-4 flex ">
-        <img class="w-32 h-32" src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250602T114511.png" />
-        <div class="flex flex-col py-3">
-          <p class="text-sm">Essence Mascara Lash Princess</p>
-          <p class="text-main-color">$ 9.99</p>
-        </div>
+      <div class="grid grid-cols-3">
+        @for(productSimular of productDetailsService.productsSimularResource.value().data; track productSimular) {
+          <div class=" border rounded-sm bg-slate-200 shadow-md px-1 my-4 flex ">
+            <img class="w-32 h-32" [src]="productSimular.coverImage" />
+            <div class="flex flex-col py-3">
+              <p class="text-sm">{{productSimular.name}}</p>
+              <p class="text-main-color">$ {{productSimular.price}}</p>
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>

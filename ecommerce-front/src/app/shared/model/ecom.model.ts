@@ -49,6 +49,7 @@ export type Review = {
     comment: string;
     username: string;
     userImage: string;
+    createdAt: string;
 }
 export type UserAuth = {
     username: string;
@@ -86,6 +87,7 @@ export const initReviewPagination: EcomResponse<EcomPagination<Review[]>> = {
         data: []
     }
 }
+
 export const initCategoryPagination: EcomResponse<EcomPagination<Category[]>> = {
     message: '',
     status: 0,
@@ -95,4 +97,10 @@ export const initCategoryPagination: EcomResponse<EcomPagination<Category[]>> = 
         page: 0,
         data: []
     }
+}
+
+export const initProducts: EcomResponse<Product[]> = {
+    message: '',
+    status: 0,
+    data: []
 }

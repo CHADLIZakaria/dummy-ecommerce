@@ -94,4 +94,10 @@ public class ProductServiceImpl implements ProductService {
         Double minPrice = products.stream().map(ProductPrice::price).min(Double::compare).orElse(0d);
         return new RangePriceResponse(minPrice, maxPrice);
     }
+
+    @Override
+    public List<ProductResponse> getSimilarProducts(String  slug) {
+        Product current = productDao.findBySlug(slug).orElseThrow(() -> new ProductNotFoundException(slug));
+        return productMapper.toProductsResponse(productDao.findByCategoryAndSlugNot(current.getCategory(), slug));
+    }
 }
