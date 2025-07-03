@@ -9,5 +9,6 @@ public record ProductSaveRequest(
         Double price,
         Long idBrand,
         String sku,
-        Long idCategory) {
+        Long idCategory,
+        int quantity) {
 }

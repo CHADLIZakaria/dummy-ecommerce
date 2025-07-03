@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { EcomHelper } from '../../shared/helper/ecomHelper';
@@ -14,7 +14,7 @@ import { TitleComponent } from "../../shared/components/title/title.component";
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent],
+  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent, RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
@@ -26,6 +26,24 @@ export class ProductDetailsComponent {
   imageService = inject(ImageService)
   currentImage: number = 0
   alert = {show: false, message: '', type: ''};
+
+  currentIndex = 0;
+  visibleCount = 4;
+  get visibleProducts() {
+    return this.productDetailsService.productsSimularResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
+  }
+
+  next() {
+    if (this.currentIndex + this.visibleCount < this.productDetailsService.productsSimularResource.value().data.length) {
+      this.currentIndex++;
+    }
+  }
+
+  prev() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
+  }
 
   constructor(private route: ActivatedRoute) {
     const slug = this.route.snapshot.paramMap.get('slug');

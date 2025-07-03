@@ -21,6 +21,7 @@ public interface DummyJsonMapper {
     @Mapping(source = "product.title", target = "name")
     @Mapping(source = "idCategory", target = "idCategory")
     @Mapping(source = "idBrand", target = "idBrand")
+    @Mapping(source = "product.stock", target = "quantity")
     Product toProduct(DummyProduct product, Long idCategory, Long idBrand);
     @Mapping(source = "review.date", target = "createdAt")
     ReviewRequest toReview(DummyReview review, Long idProduct);

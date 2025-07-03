@@ -118,7 +118,8 @@
             <div class="group/cart relative">
               <div class="h-56 w-full bg-slate-300 relative rounded-lg border border-slate-200 shadow-sm">
                 <a [routerLink]="['/products', product.slug]" class="flex h-full">
-                  <img class="mx-auto h-full object-top group-hover/cart:scale-105" [src]="product.coverImage" alt="" />
+                  <img class="mx-auto h-full object-top group-hover/cart:scale-105" [src]="product.coverImage" [alt]="product.slug" />
+                  <span class="absolute left-0 bg-red-600 text-white px-1 rounded-br-md">Not In Stock</span>
                 </a>
                 <div class="absolute right-0 top-0 w-8 mt-1 mr-1 flex flex-col gap-1 items-center">
                   <button

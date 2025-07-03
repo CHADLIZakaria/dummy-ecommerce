@@ -13,5 +13,6 @@ public record ProductDetailsResponse(
         String sku,
         List<String> images,
         String coverImage,
-        boolean isFavorite) {
+        boolean isFavorite,
+        int quantity) {
 }
