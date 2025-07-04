@@ -29,6 +29,7 @@ export type Product = {
     avgReview: number;
     reviewsCounts: number;
     favorite: boolean;
+    quantity: number;
 }
 export type ProductDetails = {
     id: number;

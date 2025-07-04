@@ -18,5 +18,6 @@ public class ProductResponse {
     Double reviewsCounts;
     String coverImage;
     boolean isFavorite;
+    int quantity;
 }
 

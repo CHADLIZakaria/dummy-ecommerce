@@ -1,10 +1,13 @@
 package com.zchadli.ecommerce_back.service.impl;
 
 import com.zchadli.ecommerce_back.exception.cart.CartBadRequestException;
+import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;
 import com.zchadli.ecommerce_back.mapper.CartMapper;
 import com.zchadli.ecommerce_back.model.CartItem;
+import com.zchadli.ecommerce_back.model.Product;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.repository.CartItemDao;
+import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.repository.UserDao;
 import com.zchadli.ecommerce_back.request.CartItemRequest;
 import com.zchadli.ecommerce_back.response.CartItemResponse;
@@ -21,6 +24,7 @@ public class CartServiceImpl implements CartService {
     private final CartItemDao cartItemRepository;
     private final UserDao userRepository;
     private final CartMapper cartMapper;
+    private final ProductDao productDao;
     private static final String PRODUCT_FOLDER_IMAGES = "product";
 
     public List<CartItemResponse> getCartItems(User user) {
@@ -49,6 +53,13 @@ public class CartServiceImpl implements CartService {
         if (newQuantity <= 0) {
             throw new CartBadRequestException();
         }
+        Product product = productDao.findByName(cartItem.getProductName()).orElseThrow(() -> new ProductNotFoundException(cartItem.getProductName()));
+        int difference = newQuantity - cartItem.getQuantity();
+        if (difference > 0 && product.getQuantity() < difference) {
+            throw new CartBadRequestException();
+        }
+        product.setQuantity(product.getQuantity() - difference);
+        productDao.save(product);
         cartItem.setQuantity(newQuantity);
         CartItem saved = cartItemRepository.save(cartItem);
         return cartMapper.toCartItemResponse(saved, PRODUCT_FOLDER_IMAGES);
