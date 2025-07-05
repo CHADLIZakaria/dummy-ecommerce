@@ -31,6 +31,8 @@ export class ListProductsComponent {
   currentProduct: string = ''
   products = signal<Product[]>([])
   alert = {show: false, message: '', type: ''}
+  isGrid = true;
+
   @ViewChild('dropdownSortReview') dropdownSortReview!: DropdownDirective;
 
   constructor() {
