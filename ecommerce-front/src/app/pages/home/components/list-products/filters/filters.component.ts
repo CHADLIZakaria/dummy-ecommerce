@@ -4,16 +4,18 @@ import { FilterCategoryComponent } from "./filter-category/filter-category.compo
 import { FilterKeywordComponent } from "./filter-keyword/filter-keyword.component";
 import { FilterPriceComponent } from "./filter-price/filter-price.component";
 import { TitleComponent } from '../../../../../shared/components/title/title.component';
+import { FilterAvailabilityComponent } from "./filter-availability/filter-availability.component";
 
 @Component({
   selector: 'ecom-filters',
   imports: [
-    TitleComponent, 
+    TitleComponent,
     FilterCategoryComponent,
     FilterPriceComponent,
     FilterKeywordComponent,
-    FilterBrandComponent
-  ],
+    FilterBrandComponent,
+    FilterAvailabilityComponent
+],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss'
 })

@@ -23,7 +23,25 @@ export function debouncedSignal<T>(
 }
 
 export function extractFileName(url: string): string {
-    console.log(url)
   if (!url) return '';
   return url.substring(url.lastIndexOf('/') + 1);
+}
+
+function cleanParams<T extends Record<string, any>>(params: T): Record<string, string | number | boolean> {
+  const cleaned: Record<string, string | number | boolean> = {};
+
+  for (const key in params) {
+    const value = params[key];
+
+    if (
+      value !== null &&
+      value !== undefined &&
+      value !== '' &&
+      !(Array.isArray(value) && value.length === 0)
+    ) {
+      cleaned[key] = value;
+    }
+  }
+
+  return cleaned;
 }

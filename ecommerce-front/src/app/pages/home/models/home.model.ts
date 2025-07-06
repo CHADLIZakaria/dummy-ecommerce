@@ -9,6 +9,7 @@ export type ProductFilter = {
     maxPrice: number;
     categories: Category[];
     brands: Brand[];
+    quantity?: number | null;
 }
 export type CategoryWithProduct = {
     id: number;
@@ -36,7 +37,8 @@ export const initProductFilter: ProductFilter = {
     categories: [],
     brands: [],
     page: 0,
-    sort: 'id, desc'
+    sort: 'id, desc',
+    quantity: null
 }
 export const initBrandWithProduct: EcomResponse<EcomPagination<BrandWithProduct[]>> = {
     message: '',

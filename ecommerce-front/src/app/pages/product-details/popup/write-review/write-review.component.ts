@@ -19,15 +19,17 @@ export class WriteReviewComponent {
     rating: [1],
     messsage: ['']
   })
+
   onChangeRating(value: number)  {
     this.formWriteReview.patchValue({
       rating: value
     })
   }
+
   onSaveReview() {
-    console.log(this.formWriteReview.value)
     this.onClosePopup()
   }
+  
   onClosePopup() {
     this.productDetailsService.showWritePopup.set(false)
   }

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Category, EcomPagination, EcomResponse, FavoriteRespone, Product } from '../../../shared/model/ecom.model';
-import { HttpClient, httpResource } from '@angular/common/http';
+import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BrandWithProduct, CartItem, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
 import { environment } from '../../../../environments/environment.development';
@@ -11,6 +11,8 @@ import { debouncedSignal } from '../../../shared/helper/ecomHelper';
 })
 export class HomeServices {
   private http = inject(HttpClient);
+  // false for all (available and not available)
+  isAvailable = signal<boolean>(false);
   brandKeyword = signal<string>('')
   brandsWithProductSize = signal<number>(10)
 
@@ -32,7 +34,7 @@ export class HomeServices {
         'keyword': this.categoryKeyword(),
       }
     }),
-    {defaultValue: initCategoryWithProduct}
+    { defaultValue: initCategoryWithProduct }
   )
 
   brandsWithNumberProductsResource = httpResource<EcomResponse<EcomPagination<BrandWithProduct[]>>>(
@@ -43,7 +45,7 @@ export class HomeServices {
         'keyword': this.brandKeyword()
       }
     }),
-    {defaultValue: initBrandWithProduct}
+    { defaultValue: initBrandWithProduct }
   )
 
   rangePriceResource = httpResource<EcomResponse<{minPrice: number, maxPrice: number}>>(
@@ -56,23 +58,31 @@ export class HomeServices {
         'category.id__in': this.productFilter().categories.map(category => category.id).join(",")
       }
     }),
-    {defaultValue: initRangePrice}
+    { defaultValue: initRangePrice }
   )
 
   productsResource = httpResource<EcomResponse<EcomPagination<Product[]>>>(
-    () => ({
-      url: `${environment.baseUrl}products`,
-      params: {
-        'page': this.productFilter().page,
-        'name__like': this.productFilter().keyword,
-        'brand.id__in': this.productFilter().brands.map(brand => brand.id).join(','),
-        'category.id__in': this.productFilter().categories.map(category => category.id).join(','),
-        'price__gte': this.productFilter().minPrice,
-        'price__lte': this.productFilter().maxPrice,
-        'sort': this.productFilter().sort
-      }
-    }),
-    {defaultValue: initProduct}
-  )
+    () => {
+      const filter = this.productFilter();
+      const rawParams: Record<string, any> = {
+        'page': filter.page,
+        'name__like': filter.keyword,
+        'brand.id__in': filter.brands.map(brand => brand.id).join(','),
+        'category.id__in': filter.categories.map(category => category.id).join(','),
+        'price__gte': filter.minPrice,
+        'price__lte': filter.maxPrice,
+        'sort': filter.sort,
+        'quantity__gte': filter.quantity,
+      };
+      const params = Object.fromEntries(
+        Object.entries(rawParams).filter(([_, v]) => v !== null && v !== undefined)
+      );
+      return {
+        url: `${environment.baseUrl}products`,
+        params,
+      };
+    },
+    { defaultValue: initProduct }
+  );
 
 }
