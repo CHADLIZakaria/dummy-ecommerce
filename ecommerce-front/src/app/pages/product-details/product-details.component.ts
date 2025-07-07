@@ -34,6 +34,7 @@ export class ProductDetailsComponent {
   }
 
   next() {
+    console.log("next")
     if (this.currentIndex + this.visibleCount < this.productDetailsService.productsSimularResource.value().data.length) {
       this.currentIndex++;
     }
@@ -46,17 +47,19 @@ export class ProductDetailsComponent {
   }
 
   constructor(private route: ActivatedRoute) {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if(slug) {
-      this.productDetailsService.slug.set(slug)
-    }
+    this.route.paramMap.subscribe(params =>{
+      const slug = params.get('slug');
+      if(slug) {
+        this.productDetailsService.slug.set(slug)
+      }
+    })
   }
   
   changeCurrentImage(index: number) {
     this.currentImage = index
   }
 
-   toggleFavorite(idProduct: number) {
+  toggleFavorite(idProduct: number) {
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
         if(data.status===200) {

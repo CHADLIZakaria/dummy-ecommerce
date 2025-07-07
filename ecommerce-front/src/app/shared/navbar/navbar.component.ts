@@ -16,11 +16,14 @@ import { NavbarService } from './services/navbar.service';
 export class NavbarComponent {
   @ViewChild('dropdownUser') dropdownUser!: DropdownDirective;  
   loginService = inject(LoginService)
-  categoriesResource = inject(NavbarService).categoriesResource
+  navbarService = inject(NavbarService)
+  categoriesResource = this.navbarService.categoriesResource
+  searchProductResource = this.navbarService.searchProductResource
   userService = inject(UserService)
   router = inject(Router)
   cartItems = computed(() => this.userService.cart());
   user = this.loginService.user
+
   getNumberItems = computed(() =>
     this.cartItems().reduce((acc, item) => acc + item.quantity, 0)
   );
@@ -32,6 +35,12 @@ export class NavbarComponent {
 
   removeCartItem(idCartItem: number) {
     this.userService.removeCartItem(idCartItem).subscribe()
+  }
+
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    this.navbarService.keyword.set(value)
 
   }
 }

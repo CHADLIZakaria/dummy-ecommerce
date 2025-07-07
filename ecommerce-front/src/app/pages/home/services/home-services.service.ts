@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Category, EcomPagination, EcomResponse, FavoriteRespone, Product } from '../../../shared/model/ecom.model';
+import { Category, EcomPagination, EcomResponse, FavoriteRespone, initProduct, Product } from '../../../shared/model/ecom.model';
 import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BrandWithProduct, CartItem, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
+import { BrandWithProduct, CartItem, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
 import { environment } from '../../../../environments/environment.development';
 import { debouncedSignal } from '../../../shared/helper/ecomHelper';
 

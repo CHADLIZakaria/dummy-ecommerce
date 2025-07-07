@@ -142,11 +142,21 @@
         title="Simular"
         subtitle="Products"
       />
-      <div class="overflow-x-auto whitespace-nowrap py-4">
+      <div class="overflow-x-auto whitespace-nowrap py-4 relative">
+        <button
+          (click)="prev()" 
+          class="absolute left-0 top-1/2 -translate-y-1/2 bg-main-color  text-white">
+          <i class="fa-solid fa-chevron-left p-1"></i>
+        </button>
+        <button
+          (click)="next()"  
+          class="absolute right-0 top-1/2 -translate-y-1/2 bg-main-color text-white">
+          <i class="fa-solid fa-chevron-right p-1"></i>
+        </button>
         <div class="grid grid-cols-4 gap-4 px-2">
           @for (productSimular of visibleProducts; track productSimular) {
-            <div class="w-full flex-none border rounded-sm bg-slate-200 shadow-md px-2 py-2">
-              <img class="w-full h-32 object-cover rounded" [src]="productSimular.coverImage" />
+            <div class="w-full border rounded-sm bg-slate-200 shadow-md px-2 py-2">
+              <img class="h-32 object-cover mx-auto" [src]="productSimular.coverImage" />
               <div class="mt-2">
                 <p 
                   [routerLink]="['/products',  productSimular.slug]" 

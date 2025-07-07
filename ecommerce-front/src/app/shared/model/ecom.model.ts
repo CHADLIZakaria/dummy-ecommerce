@@ -107,3 +107,14 @@ export const initProducts: EcomResponse<Product[]> = {
     status: 0,
     data: []
 }
+
+export const initProduct: EcomResponse<EcomPagination<Product[]>> = {
+    message: '',
+    status: 0,
+    data: {
+        totalElements: 0,
+        size: 0,
+        page: 0,
+        data: []
+    }
+}

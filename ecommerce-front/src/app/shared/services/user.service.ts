@@ -28,7 +28,6 @@ export class UserService {
       ...cartItem,
       productImage: extractFileName(cartItem.productImage)
     };
-    console.log(sanitizedItem)
     return this.http.post<EcomResponse<CartItem>>(`${environment.baseUrl}cart/add`, sanitizedItem)
       .pipe(tap(
         response => {
