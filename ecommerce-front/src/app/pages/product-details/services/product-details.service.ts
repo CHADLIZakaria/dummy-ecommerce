@@ -3,6 +3,8 @@ import { EcomPagination, EcomResponse, initProductDetails, initProducts, initRev
 import { HttpClient, httpResource } from '@angular/common/http';
 import { url } from 'inspector';
 import { environment } from '../../../../environments/environment.development';
+import { ReviewSave } from '../product-details.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class ProductDetailsService {
     'order': 'desc'
   })
   showWritePopup = signal(false)
+  http = inject(HttpClient)
 
   productDetailsResource = httpResource<EcomResponse<ProductDetails>>(
     () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}`,
@@ -37,6 +40,10 @@ export class ProductDetailsService {
     () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}/similar`,
     { defaultValue: initProducts }
   )
+
+  addReview(review: ReviewSave): Observable<EcomResponse<Review>> {
+    return this.http.post<EcomResponse<Review>>(`${environment.baseUrl}reviews`, {review})
+  }
   
 
 }

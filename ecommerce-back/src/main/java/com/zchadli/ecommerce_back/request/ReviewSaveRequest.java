@@ -3,9 +3,9 @@ package com.zchadli.ecommerce_back.request;
 import java.time.LocalDateTime;
 
 public record ReviewSaveRequest(
-        Long idProduct,
+        String slugProduct,
         Integer rating,
         String comment,
-        Long idUser,
+        String username,
         LocalDateTime createdAt) {
 }

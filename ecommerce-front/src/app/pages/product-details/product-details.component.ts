@@ -34,7 +34,6 @@ export class ProductDetailsComponent {
   }
 
   next() {
-    console.log("next")
     if (this.currentIndex + this.visibleCount < this.productDetailsService.productsSimularResource.value().data.length) {
       this.currentIndex++;
     }

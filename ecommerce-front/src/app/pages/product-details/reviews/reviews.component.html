@@ -75,22 +75,22 @@
                                 </a>
                             <li>
                                 <a 
-                                (click)="onChangeSort('id', 'asc')"
-                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
-                                    Date, Oldest First
+                                    (click)="onChangeSort('id', 'asc')"
+                                    class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        Date, Oldest First
                                 </a>
                             <li>
-                            <a 
-                                (click)="onChangeSort('rating', 'desc')"
-                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
-                                Rating, High To Low
-                            </a>
+                                <a 
+                                    (click)="onChangeSort('rating', 'desc')"
+                                    class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                    Rating, High To Low
+                                </a>
                             </li>
                             <li>
-                            <a 
-                                (click)="onChangeSort('rating', 'asc')"
-                                class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
-                                Rating, Low To High
+                                <a 
+                                    (click)="onChangeSort('rating', 'asc')"
+                                    class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                    Rating, Low To High
                                 </a>
                             </li>
                         </ul>
@@ -143,5 +143,7 @@
     }
 </section>
 @if(productDetailsService.showWritePopup()) {
-    <ecom-write-review />
+    <ecom-write-review 
+        idProduct=""
+    />
 }

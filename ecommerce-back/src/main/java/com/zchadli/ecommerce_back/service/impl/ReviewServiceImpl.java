@@ -27,13 +27,15 @@ public class ReviewServiceImpl implements ReviewService {
     private final ProductDao productDao;
     private final UserDao userDao;
     private final ReviewMapper reviewMapper;
+
     @Override
     public ReviewResponse save(ReviewSaveRequest reviewSaveRequest) {
-        productDao.findById(reviewSaveRequest.idProduct()).orElseThrow(() -> new ProductNotFoundException(reviewSaveRequest.idProduct()));
-        userDao.findById(reviewSaveRequest.idUser()).orElseThrow(() -> new UserNotFoundException(reviewSaveRequest.idUser().toString()));
+        productDao.findBySlug(reviewSaveRequest.slugProduct()).orElseThrow(() -> new ProductNotFoundException(reviewSaveRequest.slugProduct()));
+        userDao.findByUsername(reviewSaveRequest.username()).orElseThrow(() -> new UserNotFoundException(reviewSaveRequest.username()));
         Review review = reviewMapper.toReview(reviewSaveRequest);
         return reviewMapper.toReviewResponse(reviewDao.save(review));
     }
+
     @Override
     public PageResponse<ReviewResponse> findReviews(Map<String, String[]> reviewSearchRequest) {
         Specification<Review> specification = SpecificationBuilderHelper.buildSpecificationFromParams(reviewSearchRequest);

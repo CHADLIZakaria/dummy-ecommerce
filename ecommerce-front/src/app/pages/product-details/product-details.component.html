@@ -141,18 +141,23 @@
       <ecom-title 
         title="Simular"
         subtitle="Products"
-      />
+      />     
       <div class="overflow-x-auto whitespace-nowrap py-4 relative">
-        <button
-          (click)="prev()" 
-          class="absolute left-0 top-1/2 -translate-y-1/2 bg-main-color  text-white">
-          <i class="fa-solid fa-chevron-left p-1"></i>
-        </button>
-        <button
-          (click)="next()"  
-          class="absolute right-0 top-1/2 -translate-y-1/2 bg-main-color text-white">
-          <i class="fa-solid fa-chevron-right p-1"></i>
-        </button>
+        @let productSimularSize = productDetailsService.productsSimularResource.value().data.length;
+        @if(productSimularSize > visibleCount) {
+          <button
+            [ngClass]="currentIndex === 0 ? 'bg-gray-300' : 'bg-main-color'"
+            (click)="prev()" 
+            class="absolute left-0 top-1/2 -translate-y-1/2  text-white">
+            <i class="fa-solid fa-chevron-left p-1"></i>
+          </button>
+          <button
+            [ngClass]="productSimularSize === currentIndex + visibleCount ? 'bg-gray-300' : 'bg-main-color'"
+            (click)="next()"  
+            class="absolute right-0 top-1/2 -translate-y-1/2 bg-main-color text-white">
+            <i class="fa-solid fa-chevron-right p-1"></i>
+          </button>
+        }
         <div class="grid grid-cols-4 gap-4 px-2">
           @for (productSimular of visibleProducts; track productSimular) {
             <div class="w-full border rounded-sm bg-slate-200 shadow-md px-2 py-2">
