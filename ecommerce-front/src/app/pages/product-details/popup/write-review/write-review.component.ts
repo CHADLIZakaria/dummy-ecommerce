@@ -38,8 +38,7 @@ export class WriteReviewComponent {
       slugProduct: this.productDetailsService.slug()
     }).
     subscribe(data => {
-      console.log(data)
-      //this.onClosePopup()
+      this.onClosePopup()
     })
   }
   
