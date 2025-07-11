@@ -3,7 +3,9 @@ package com.zchadli.ecommerce_back.service.impl;
 import com.zchadli.ecommerce_back.exception.product.ProductNotFoundException;
 import com.zchadli.ecommerce_back.exception.user.UserNotFoundException;
 import com.zchadli.ecommerce_back.mapper.ReviewMapper;
+import com.zchadli.ecommerce_back.model.Product;
 import com.zchadli.ecommerce_back.model.Review;
+import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.repository.ReviewDao;
 import com.zchadli.ecommerce_back.repository.UserDao;
@@ -30,9 +32,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewResponse save(ReviewSaveRequest reviewSaveRequest) {
-        productDao.findBySlug(reviewSaveRequest.slugProduct()).orElseThrow(() -> new ProductNotFoundException(reviewSaveRequest.slugProduct()));
-        userDao.findByUsername(reviewSaveRequest.username()).orElseThrow(() -> new UserNotFoundException(reviewSaveRequest.username()));
+        Product product = productDao.findBySlug(reviewSaveRequest.slugProduct()).orElseThrow(() -> new ProductNotFoundException(reviewSaveRequest.slugProduct()));
+        User user = userDao.findByUsername(reviewSaveRequest.username()).orElseThrow(() -> new UserNotFoundException(reviewSaveRequest.username()));
         Review review = reviewMapper.toReview(reviewSaveRequest);
+        review.setProduct(product);
+        review.setUser(user);
         return reviewMapper.toReviewResponse(reviewDao.save(review));
     }
 

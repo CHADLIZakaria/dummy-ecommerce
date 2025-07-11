@@ -30,6 +30,7 @@ export class WriteReviewComponent {
   }
 
   onSaveReview() {
+    console.log("slug " +this.loginService.user()?.username!)
     this.productDetailsService
     .addReview({
       comment: this.formWriteReview.value.messsage!,
@@ -38,7 +39,7 @@ export class WriteReviewComponent {
       slugProduct: this.productDetailsService.slug()
     }).
     subscribe(data => {
-      this.onClosePopup()
+      //this.onClosePopup()
     })
   }
   

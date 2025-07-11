@@ -10,8 +10,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = { ImagePathMapper.class })
 public interface ReviewMapper {
-    @Mapping(source = "idProduct", target = "product.id")
-    @Mapping(source = "idUser", target = "user.id")
+    @Mapping(source = "slugProduct", target = "product.slug")
+    @Mapping(source = "username", target = "user.username")
     @Mapping(source = "createdAt",target = "createdAt")
     Review toReview(ReviewSaveRequest reviewSaveRequest);
     @Mapping(source = "product.id", target = "idProduct")
