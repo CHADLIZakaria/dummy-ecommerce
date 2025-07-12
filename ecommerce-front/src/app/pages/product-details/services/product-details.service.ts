@@ -4,7 +4,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { url } from 'inspector';
 import { environment } from '../../../../environments/environment.development';
 import { ReviewSave } from '../product-details.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,8 @@ export class ProductDetailsService {
       url: `${environment.baseUrl}reviews`,
       params: {
         'product.slug__eq': this.slug(),
-        'sort': this.sort().column+','+this.sort().order
+        'sort': this.sort().column+','+this.sort().order,
+        'size': 3
       }
     }),
     {defaultValue: initReviewPagination}
@@ -42,7 +43,15 @@ export class ProductDetailsService {
   )
 
   addReview(review: ReviewSave): Observable<EcomResponse<Review>> {
-    return this.http.post<EcomResponse<Review>>(`${environment.baseUrl}reviews`, {review})
+    return this.http.post<EcomResponse<Review>>(`${environment.baseUrl}reviews`, review).pipe(
+      tap(
+        data => {
+          if(data.status === 201) {
+            this.reviewsResource.reload()
+          }
+        }
+      )
+    )
   }
   
 
