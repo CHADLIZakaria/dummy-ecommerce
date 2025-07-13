@@ -12,8 +12,9 @@ import { Observable, tap } from 'rxjs';
 export class ProductDetailsService {
   slug = signal<string>('')
   sort = signal({
-    'column': 'id',
-    'order': 'desc'
+    column: 'id',
+    order: 'desc',
+    page : 0
   })
   showWritePopup = signal(false)
   http = inject(HttpClient)
@@ -28,7 +29,8 @@ export class ProductDetailsService {
       params: {
         'product.slug__eq': this.slug(),
         'sort': this.sort().column+','+this.sort().order,
-        'size': 3
+        'size': 6,
+        page: this.sort().page
       }
     }),
     {defaultValue: initReviewPagination}

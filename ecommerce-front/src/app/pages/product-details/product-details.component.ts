@@ -11,12 +11,24 @@ import { CartItem } from '../home/models/home.model';
 import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
 import { TitleComponent } from "../../shared/components/title/title.component";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'ecom-product-details',
   imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent, RouterLink],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss'
+  styleUrl: './product-details.component.scss',
+   animations: [
+    trigger('slideAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ transform: 'translateX(-100%)', opacity: 0 })),
+      ]),
+    ])
+  ]
 })
 export class ProductDetailsComponent {
   productDetailsService = inject(ProductDetailsService);
