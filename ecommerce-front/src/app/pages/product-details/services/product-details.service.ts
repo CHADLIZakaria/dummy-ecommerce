@@ -36,7 +36,7 @@ export class ProductDetailsService {
     {defaultValue: initReviewPagination}
   )
   avgReview = computed(() =>
-    this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
+   this.reviewsResource.value().data.data.length === 0 ? 0: this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
 
   productsSimularResource = httpResource<EcomResponse<Product[]>>(

@@ -19,7 +19,6 @@ export class CartComponent {
   isLoading = false;
   alert = {show: false, message: ''}
 
-
   getTotalPrice() {
     return this.cartItems().reduce((acc, cart) => (cart.price * cart.quantity)+acc, 0)
   }
