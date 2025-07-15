@@ -14,7 +14,8 @@ export class ProductDetailsService {
   sort = signal({
     column: 'id',
     order: 'desc',
-    page : 0
+    page : 0,
+    size: 3
   })
   showWritePopup = signal(false)
   http = inject(HttpClient)
@@ -29,7 +30,7 @@ export class ProductDetailsService {
       params: {
         'product.slug__eq': this.slug(),
         'sort': this.sort().column+','+this.sort().order,
-        'size': 6,
+        'size': this.sort().size,
         page: this.sort().page
       }
     }),

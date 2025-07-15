@@ -20,10 +20,14 @@ export class ReviewsComponent {
   reviewResource = this.productDetailsService.reviewsResource
   reviews = computed(() => this.reviewResource.value().data.data);
   numberStar = EcomHelper.range(5)
-  arrayPagination = EcomHelper.range(Math.ceil((this.reviewResource.value().data.totalElements/this.reviewResource.value().data.size)))
+  arrayPagination = computed(() => 
+    EcomHelper.range(Math.ceil((this.reviewResource.value().data.totalElements/this.reviewResource.value().data.size)))
+  )
+  
 
   onChangeSort(column: string, order: string) {
     this.productDetailsService.sort.set({
+      ...this.productDetailsService.sort(),
       column,
       order,
       page: 0
@@ -37,6 +41,11 @@ export class ReviewsComponent {
     })
   }
 
-  
+  onChangeSize(size: number) {
+    this.productDetailsService.sort.set({
+      ...this.productDetailsService.sort(),
+      size
+    })
+  }  
 
 }

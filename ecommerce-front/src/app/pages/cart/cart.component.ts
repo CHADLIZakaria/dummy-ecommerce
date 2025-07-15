@@ -5,10 +5,11 @@ import { TimedAlertComponent } from "../../shared/components/timed-alert/timed-a
 import { TitleComponent } from "../../shared/components/title/title.component";
 import { UserService } from '../../shared/services/user.service';
 import { CartItem } from '../home/models/home.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'ecom-cart',
-  imports: [TitleComponent, CommonModule, TimedAlertComponent],
+  imports: [TitleComponent, CommonModule, TimedAlertComponent, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   animations: [FadeInOut(200, 300, true)]
