@@ -52,6 +52,8 @@
             </div>
             @if(reviews().length > 0) {
                 <!--Sort -->
+                @let sortColumn = this.productDetailsService.sort().column;
+                @let sortDirection = this.productDetailsService.sort().order;
                 <div class="flex justify-between">
                     <p class="flex items-center gap-2">
                         <i class="fa-solid fa-fire text-main-color"></i>
@@ -71,31 +73,47 @@
                         </button>
                         <div          
                         class="hidden dropdown-menu absolute right-0 top-[110%] z-50 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow">
-                            <ul class="p-2 text-left text-sm font-medium text-gray-500">
+                            <ul class="p-2 text-left text-sm font-medium text-gray-500 flex flex-col gap-1">
                                 <li>
                                     <a
+                                    [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'id' && sortDirection === 'desc'}"    
                                     (click)="onChangeSort('id', 'desc')"
-                                    class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                    class="group cursor-pointer inline-flex justify-between w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         Date, Newest First
+                                        @if(sortColumn === 'id' && sortDirection === 'desc') {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 <li>
-                                    <a 
+                                    <a
+                                        [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'id' && sortDirection === 'asc'}"    
                                         (click)="onChangeSort('id', 'asc')"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group cursor-pointer inline-flex justify-between w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                             Date, Oldest First
+                                            @if(sortColumn === 'id' && sortDirection === 'asc') {
+                                               <i class="fa-solid fa-check"></i>
+                                            }
                                     </a>
                                 <li>
-                                    <a 
+                                    <a
+                                        [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'rating' && sortDirection === 'desc'}"    
                                         (click)="onChangeSort('rating', 'desc')"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group cursor-pointer inline-flex justify-between w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         Rating, High To Low
+                                        @if(sortColumn === 'rating' && sortDirection === 'desc') {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
+                                    <a
+                                        [ngClass]="{'bg-gray-100 text-main-color' : sortColumn === 'rating' && sortDirection === 'asc'}"    
                                         (click)="onChangeSort('rating', 'asc')"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group cursor-pointer inline-flex justify-between w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         Rating, Low To High
+                                        @if(sortColumn === 'rating' && sortDirection === 'asc') {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 </li>
                             </ul>

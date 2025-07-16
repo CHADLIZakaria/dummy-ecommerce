@@ -23,7 +23,6 @@ export class ReviewsComponent {
   arrayPagination = computed(() => 
     EcomHelper.range(Math.ceil((this.reviewResource.value().data.totalElements/this.reviewResource.value().data.size)))
   )
-  
 
   onChangeSort(column: string, order: string) {
     this.productDetailsService.sort.set({
