@@ -11,12 +11,6 @@ import { Observable, tap } from 'rxjs';
 })
 export class ProductDetailsService {
   slug = signal<string>('')
-  sort = signal({
-    column: 'id',
-    order: 'desc',
-    page : 0,
-    size: 3
-  })
   showWritePopup = signal(false)
   http = inject(HttpClient)
 
@@ -24,18 +18,18 @@ export class ProductDetailsService {
     () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}`,
     { defaultValue: initProductDetails }
   )
+  
   reviewsResource = httpResource<EcomResponse<EcomPagination<Review[]>>>(
     () => ({
       url: `${environment.baseUrl}reviews`,
       params: {
         'product.slug__eq': this.slug(),
-        'sort': this.sort().column+','+this.sort().order,
-        'size': this.sort().size,
-        page: this.sort().page
+        'size': 0,
       }
     }),
     {defaultValue: initReviewPagination}
   )
+
   avgReview = computed(() =>
    this.reviewsResource.value().data.data.length === 0 ? 0: this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )

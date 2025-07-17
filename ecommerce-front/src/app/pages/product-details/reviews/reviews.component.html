@@ -20,7 +20,7 @@
                     <p class="text-sm font-medium leading-none text-gray-500">
                         ({{productDetailsService.avgReview() | number: '1.0-2'}})
                     </p>
-                    <a class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline">{{reviews().length}} reviews </a>
+                    <a class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline">{{productDetailsService.reviewsResource.value().data.totalElements}} reviews </a>
                 </div>
             </div>
             <div class="my-6 gap-8 sm:flex sm:items-start md:my-8">
@@ -40,10 +40,10 @@
                         <p class="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900">{{star+1}}</p>
                         <i class="fa-solid fa-star text-yellow-600"></i>
                         <div class="h-1.5 w-80 rounded-full bg-slate-200">
-                            <div class="h-1.5 rounded-full bg-yellow-600" [style.width.%]="reviews() | starPercentage:star+1"></div>
+                            <div class="h-1.5 rounded-full bg-yellow-600" [style.width.%]="productDetailsService.reviewsResource.value().data.data | starPercentage:star+1"></div>
                         </div>
-                        <a href="#" class="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline sm:w-auto sm:text-left">
-                            {{reviews() | starCount: star+1}} 
+                        <a class="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline sm:w-auto sm:text-left">
+                            {{productDetailsService.reviewsResource.value().data.data | starCount: star+1}} 
                             <span class="hidden sm:inline">reviews</span>
                         </a>
                     </div>
@@ -52,9 +52,9 @@
             </div>
             @if(reviews().length > 0) {
                 <!--Sort -->
-                @let sortColumn = this.productDetailsService.sort().column;
-                @let sortDirection = this.productDetailsService.sort().order;
                 <div class="flex justify-between">
+                    @let sortColumn = this.reviewsService.sort().column;
+                    @let sortDirection = this.reviewsService.sort().order;
                     <p class="flex items-center gap-2">
                         <i class="fa-solid fa-fire text-main-color"></i>
                         {{reviewResource.value().data.totalElements}} reviews
@@ -133,41 +133,47 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ml-6">
-                            <p class="flex items-baseline">
-                                <span class="text-gray-600 font-bold">{{review.username}}</span>
-                            </p>
-                            <div class="flex gap-1 items-center mt-1">
-                                @for(star of numberStar; track star) {
-                                    @if(review.rating>star) {
-                                        <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
-                                    }
-                                    @else {
-                                        <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
-                                    }                      
-                                }
+                        <div class="flex-1 ml-6">
+                            <div class="flex justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-gray-600 font-bold">{{review.username}}</span>
+                                    <div class="flex gap-1 items-center mt-1">
+                                        @for(star of numberStar; track star) {
+                                            @if(review.rating>star) {
+                                                <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+                                            }
+                                            @else {
+                                                <i class="w-4 h-4 fa-solid fa-star text-gray-400"></i>
+                                            }                      
+                                        }
+                                    </div>
+                                </div>
+                                <p class="ml-auto text-gray-700">
+                                    {{review.createdAt | date : 'yyyy/MM/dd hh:mm:ss'}}
+                                </p>
                             </div>
                             <div class="mt-3">
                                 <span class="font-bold">{{review.comment}}</span>
                             </div>
-                            <p class="ml-auto text-gray-700">{{review.createdAt | date : 'yyyy/MM/dd hh:mm:ss'}}</p>
                         </div>
                     </div>
                 }
                 </div>
-                <ul class="flex justify-center items-center h-10 text-base mt-3">
-                    <div class="flex gap-1">
-                        @for(paginate of arrayPagination(); track paginate) {
-                            <li>
-                                <span
-                                    (click)="onChangePage(paginate)"
-                                    [ngClass]="paginate === reviewResource.value().data.page ? 'bg-main-color':'bg-gray-400'"
-                                    class="w-8 h-1  block  rounded cursor-pointer"></span>                            
-                            </li>
-                        }
-                    </div>
-                </ul>
-                <div class="text-right flex items-center justify-end gap-2 relative">
+                @if(arrayPagination().length > 1) {
+                    <ul class="flex justify-center items-center h-10 text-base mt-2">
+                        <div class="flex gap-1">
+                            @for(paginate of arrayPagination(); track paginate) {
+                                <li>
+                                    <span
+                                        (click)="onChangePage(paginate)"
+                                        [ngClass]="paginate === reviewResource.value().data.page ? 'bg-main-color':'bg-gray-400'"
+                                        class="w-8 h-1  block  rounded cursor-pointer"></span>                            
+                                </li>
+                            }
+                        </div>
+                    </ul>
+                }
+                <div class="text-right flex items-center justify-end gap-2 relative mt-2">
                     Show 
                     <div
                         ecomDropdown
@@ -185,28 +191,44 @@
                             <ul class="p-2 text-left text-sm font-medium text-gray-500">
                                 <li>
                                     <a
+                                        [ngClass]="{'bg-gray-100 text-main-color' : reviewsService.sort().size===3}"
                                         (click)="onChangeSize(3)"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group justify-between cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         3
+                                        @if(reviewsService.sort().size===3) {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 <li>
                                     <a 
+                                        [ngClass]="{'bg-gray-100 text-main-color' : reviewsService.sort().size===6}"
                                         (click)="onChangeSize(6)"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group justify-between cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         6
+                                        @if(reviewsService.sort().size===6) {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 <li>
-                                    <a                                         
+                                    <a   
+                                        [ngClass]="{'bg-gray-100 text-main-color' : reviewsService.sort().size===9}"
                                         (click)="onChangeSize(9)"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group justify-between cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         9
+                                        @if(reviewsService.sort().size===9) {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 </li>
                                 <li>
                                     <a 
+                                        [ngClass]="{'bg-gray-100 text-main-color' : reviewsService.sort().size===12}"
                                         (click)="onChangeSize(12)"
-                                        class="group cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
+                                        class="group justify-between cursor-pointer inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-main-color">
                                         12
+                                        @if(reviewsService.sort().size===12) {
+                                            <i class="fa-solid fa-check"></i>
+                                        }
                                     </a>
                                 </li>
                             </ul>

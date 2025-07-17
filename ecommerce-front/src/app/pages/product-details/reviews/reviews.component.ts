@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { TitleComponent } from "../../../shared/components/title/title.component";
 import { DropdownDirective } from '../../../shared/directives/dropdown.directive';
 import { EcomHelper } from '../../../shared/helper/ecomHelper';
 import { StarCountPipe } from "../../../shared/pipes/star-count.pipe";
 import { StarPercentagePipe } from "../../../shared/pipes/star-percentage.pipe";
-import { ProductDetailsService } from '../services/product-details.service';
 import { WriteReviewComponent } from "../popup/write-review/write-review.component";
-import { TitleComponent } from "../../../shared/components/title/title.component";
+import { ReviewsService } from './services/reviews.service';
+import { ProductDetailsService } from '../services/product-details.service';
 
 @Component({
   selector: 'ecom-reviews',
@@ -16,8 +17,9 @@ import { TitleComponent } from "../../../shared/components/title/title.component
   styleUrl: './reviews.component.scss'
 })
 export class ReviewsComponent {
+  reviewsService = inject(ReviewsService)
   productDetailsService = inject(ProductDetailsService)
-  reviewResource = this.productDetailsService.reviewsResource
+  reviewResource = this.reviewsService.reviewsResource
   reviews = computed(() => this.reviewResource.value().data.data);
   numberStar = EcomHelper.range(5)
   arrayPagination = computed(() => 
@@ -25,8 +27,8 @@ export class ReviewsComponent {
   )
 
   onChangeSort(column: string, order: string) {
-    this.productDetailsService.sort.set({
-      ...this.productDetailsService.sort(),
+    this.reviewsService.sort.set({
+      ...this.reviewsService.sort(),
       column,
       order,
       page: 0
@@ -34,15 +36,15 @@ export class ReviewsComponent {
   }
 
   onChangePage(page: number) {
-    this.productDetailsService.sort.set({
-      ...this.productDetailsService.sort(),
+    this.reviewsService.sort.set({
+      ...this.reviewsService.sort(),
       page
     })
   }
 
   onChangeSize(size: number) {
-    this.productDetailsService.sort.set({
-      ...this.productDetailsService.sort(),
+    this.reviewsService.sort.set({
+      ...this.reviewsService.sort(),
       size
     })
   }  

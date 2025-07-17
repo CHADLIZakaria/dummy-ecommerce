@@ -1,11 +1,11 @@
-import { Component, inject, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NoScrollDirective } from '../../../../shared/directives/no-scroll.directive';
 import { EcomHelper } from '../../../../shared/helper/ecomHelper';
-import { ProductDetailsService } from '../../services/product-details.service';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../../../shared/services/user.service';
 import { LoginService } from '../../../login/services/login.service';
+import { ReviewsService } from '../../reviews/services/reviews.service';
+import { ProductDetailsService } from '../../services/product-details.service';
 
 @Component({
   selector: 'ecom-write-review',
@@ -17,6 +17,7 @@ export class WriteReviewComponent {
   numberStar = EcomHelper.range(5)
   loginService = inject(LoginService)
   productDetailsService = inject(ProductDetailsService)
+  reviewsService = inject(ReviewsService)
   formBuilder = inject(FormBuilder)
   formWriteReview = this.formBuilder.group({
     rating: [1],
@@ -39,6 +40,10 @@ export class WriteReviewComponent {
     }).
     subscribe(data => {
       if(data.status === 201) {
+        this.reviewsService.sort.set({
+          ...this.reviewsService.sort(),
+          page: 0
+        })
         this.onClosePopup()
       }
     })
