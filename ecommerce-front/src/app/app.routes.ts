@@ -6,6 +6,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { CategoriesComponent } from './admin/pages/categories/categories.component';
 import { FavoriteUserProductsComponent } from './pages/favorite-user-products/favorite-user-products.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CompareProductsComponent } from './pages/compare-products/compare-products.component';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,10 @@ export const routes: Routes = [
     {
         path: 'products/:slug',
         component: ProductDetailsComponent
+    },
+    {
+        path: 'compare',
+        component: CompareProductsComponent
     },
     {
         path: 'login',
