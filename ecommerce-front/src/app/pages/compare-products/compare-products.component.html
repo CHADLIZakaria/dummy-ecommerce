@@ -1,32 +1,52 @@
 <div class="w-2/3 mx-auto">
-    <div class="flex  divide-gray-200">
-        <div class="divide-y divide-main-color flex flex-col gap-7">
+    <div class="flex gap-10">
+        <!-- Labels -->
+        <div class="flex flex-col gap-7 text-gray-600 font-medium">
             <div class="h-32"></div>
-            <p class="">Product Name</p>
-            <p class="">Brand</p> 
-            <p class="">Category</p>
-            <p class="">Price</p>
-            <p class="">Number of Reviews</p>
+            <p>Product Name</p>
+            <p>Brand</p> 
+            <p>Category</p>
+            <p>SKU</p>
+            <p>Price</p>
+            <p>Quantity</p>
+            <p>Number of Reviews</p>
+            <p>Rating</p>
         </div>
-        <div class="divide-y divide-main-color flex flex-col gap-7">
+
+        <!-- Products -->
+        <div class="flex flex-col gap-7">
             <div class="h-32 flex justify-center">
                 <img 
-                    class="h-full mx-auto object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg " 
-                    src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250703T210019.png"/>
-            
+                    class="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
+                    src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250703T210019.png"
+                    />
             </div>
             <p>Essence Mascara Lash Princess</p>
             <p>Essence</p> 
-            <p>beauty</p>
-            <p>$ 9.99</p>
+            <p>Beauty</p>
+            <p>BEA-ESS-ESS-001</p>
+            <p>$9.99</p>
+            <p>97</p>
             <p>10</p>
+            <p>
+                4.7
+                <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+            </p>
         </div>
-
-        <div class="divide-y divide-main-color flex flex-col gap-7">
-            <div class="h-32 flex justify-center items-center">
-               <i class="fa-solid fa-plus text-8xl bg-main-color rounded-full px-2 text-white"></i>
+        <!-- Add Product -->
+        <div class="flex flex-col gap-7">
+            <div class="cursor-pointer h-32 flex justify-center items-center">
+                <i class="fa-solid fa-plus text-3xl bg-main-color text-white rounded-full w-16 aspect-square flex items-center justify-center"></i>
             </div>
+            <p class="text-center text-gray-400 italic">Add Product</p>
+            <p></p> 
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
         </div>
     </div>
-    
 </div>
+<ecom-search-products></ecom-search-products>

@@ -1,0 +1,30 @@
+<div
+    ecomNoScroll
+    class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-[#000000]/80">
+    <div class="bg-white rounded-lg shadow-sm px-5 py-2 relative w-full max-w-2xl max-h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <button
+            class="absolute right-3 text-gray-400 bg-transparent hover:bg-main-color hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+            <i class="fa-solid fa-xmark text-xl"></i>
+       </button>
+        <p class="text-lg text-main-color">Search</p>
+        <form
+            class="mt-3 flex flex-col gap-3">
+            <div class="relative">
+                <input type="text" class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md">
+                <button type="button" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm me-1"><i class="fa-solid fa-magnifying-glass text-lg"></i></button>
+            </div>
+            <button type="submit" class="bg-main-color w-fit self-end text-white px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">
+                Add
+            </button>
+        </form>
+        <div class="flex gap-3">
+             <div class="border rounded shadow-sm w-40 px-1">
+                <img 
+                    class="h-32 w-32 object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
+                    src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250703T210019.png" />
+                <p>Essence Mascara Lash Princess</p>
+                <p class="text-main-color">$ 9.99</p>
+            </div>
+        </div>
+    </div>
+</div>
