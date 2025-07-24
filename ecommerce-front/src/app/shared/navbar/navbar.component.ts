@@ -41,6 +41,5 @@ export class NavbarComponent {
     const input = event.target as HTMLInputElement;
     const value = input.value;
     this.navbarService.keyword.set(value)
-
   }
 }

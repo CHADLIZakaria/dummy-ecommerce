@@ -7,21 +7,25 @@
             <i class="fa-solid fa-xmark text-xl"></i>
        </button>
         <p class="text-lg text-main-color">Search</p>
-        <form
+        <div
             class="mt-3 flex flex-col gap-3">
             <div class="relative">
-                <input type="text" class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md">
+                <input
+                    (change)="onSearch($event)"
+                    type="text" 
+                    class="w-full border border-gray-200 px-2 py-1 placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md">
                 <button type="button" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm me-1"><i class="fa-solid fa-magnifying-glass text-lg"></i></button>
             </div>
-        </form>
-        <div class="flex gap-3 mt-3">
-             <div class="border rounded shadow-sm w-40 px-1 flex flex-col items-center">
-                <img 
-                    class="h-32 w-32 object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
-                    src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250703T210019.png" />
-                <p>Essence Mascara Lash Princess</p>
-                <p class="text-main-color w-full">$ 9.99</p>
-            </div>
         </div>
+        <div class="flex flex-wrap gap-3 mt-3">
+            @for(product of products(); track product.id) {
+                <div class="w-1/3 border rounded shadow-sm px-1 flex flex-col items-center">
+                    <img 
+                        class="h-32 w-32 object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
+                        [src]="product.coverImage" />
+                    <p class="w-full">{{product.name}}</p>
+                    <p class="text-main-color w-full mt-auto">$ {{product.price}}</p>
+                </div>
+            }
     </div>
 </div>
