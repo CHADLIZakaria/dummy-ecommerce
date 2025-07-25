@@ -10,10 +10,14 @@ export class CompareProductsService {
 
   constructor() { }
 
-  keyword = signal('')
+  search = signal({
+    keyword: '',
+    page: 0
+
+  })
 
   searchProductResource = httpResource<EcomResponse<EcomPagination<Product[]>>>(
-    () => this.keyword()  === '' ? undefined : `${environment.baseUrl}products?name__like=${this.keyword()}&size=6`,
+    () => this.search().keyword  === '' ? undefined : `${environment.baseUrl}products?name__like=${this.search().keyword}&size=6&page=${this.search().page}`,
     { defaultValue: initProduct }
   ) 
 }
