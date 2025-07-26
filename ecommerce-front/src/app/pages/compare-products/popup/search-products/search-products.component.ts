@@ -34,4 +34,8 @@ export class SearchProductsComponent {
     })
   }
 
+  onClose() {
+    this.compareProductsService.showSearchPopup.set(false)
+  }
+
 }

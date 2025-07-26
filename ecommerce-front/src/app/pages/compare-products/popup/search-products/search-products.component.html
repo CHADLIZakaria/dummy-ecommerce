@@ -3,6 +3,7 @@
     class="overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 max-h-full bg-[#000000]/80">
     <div class="bg-white rounded-lg shadow-sm px-5 py-2 relative w-full max-w-2xl max-h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <button
+            (click)="onClose()"
             class="absolute right-3 text-gray-400 bg-transparent hover:bg-main-color hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
             <i class="fa-solid fa-xmark text-xl"></i>
        </button>
@@ -36,12 +37,16 @@
                         <i class="fa-solid fa-chevron-left"></i>
                     </a>
                 </li>
-                @for(paginate of productsPagiation(); track paginate) {
+                @for(paginate of productsPagiation(); track paginate; let first = $first; let last = $last) {
                     <li class="cursor-pointer">
                         <a
                             (click)="onChangePage(paginate)"
-                            [ngClass]="paginate === compareProductsResource.value().data.page ? 'bg-main-color': 'bg-white text-gray-500'"
-                            class="flex items-center justify-center px-4 h-10 leading-tight border border-gray-300 hover:bg-main-color hover:text-black">
+                            [ngClass]="[
+                                paginate === compareProductsResource.value().data.page ? 'bg-main-color' : 'bg-white text-gray-500',
+                                first ? 'border-l' : '',
+                                !last ? 'border-r' : ''
+                            ]"
+                            class="flex items-center justify-center px-4 h-10 leading-tight border-t border-b border-gray-300 hover:bg-main-color hover:text-black">
                             {{paginate+1}}
                         </a>
                     </li>

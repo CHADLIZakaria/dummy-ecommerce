@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SearchProductsComponent } from "./popup/search-products/search-products.component";
+import { CompareProductsService } from './popup/search-products/services/compare-products.service';
 
 @Component({
   selector: 'ecom-compare-products',
@@ -8,5 +9,6 @@ import { SearchProductsComponent } from "./popup/search-products/search-products
   styleUrl: './compare-products.component.scss'
 })
 export class CompareProductsComponent {
+  compareProductsService = inject(CompareProductsService)
 
 }

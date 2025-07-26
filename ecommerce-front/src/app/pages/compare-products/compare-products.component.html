@@ -35,7 +35,9 @@
         </div>
         <!-- Add Product -->
         <div class="flex flex-col gap-7">
-            <div class="cursor-pointer h-32 flex justify-center items-center">
+            <div
+                (click)="compareProductsService.showSearchPopup.set(true)"
+                class="cursor-pointer h-32 flex justify-center items-center">
                 <i class="fa-solid fa-plus text-3xl bg-main-color text-white rounded-full w-16 aspect-square flex items-center justify-center"></i>
             </div>
             <p class="text-center text-gray-400 italic">Add Product</p>
@@ -49,4 +51,6 @@
         </div>
     </div>
 </div>
-<ecom-search-products></ecom-search-products>
+@if(compareProductsService.showSearchPopup()) {
+    <ecom-search-products></ecom-search-products>
+}

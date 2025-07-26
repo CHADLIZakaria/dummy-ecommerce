@@ -7,14 +7,15 @@ import { environment } from '../../../../../../environments/environment.developm
   providedIn: 'root'
 })
 export class CompareProductsService {
-
-  constructor() { }
-
+  
   search = signal({
     keyword: '',
     page: 0
-
   })
+  showSearchPopup = signal(false)
+
+  constructor() { }
+
 
   searchProductResource = httpResource<EcomResponse<EcomPagination<Product[]>>>(
     () => this.search().keyword  === '' ? undefined : `${environment.baseUrl}products?name__like=${this.search().keyword}&size=6&page=${this.search().page}`,
