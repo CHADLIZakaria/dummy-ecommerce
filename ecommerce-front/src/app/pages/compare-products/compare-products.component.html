@@ -12,27 +12,28 @@
             <p>Number of Reviews</p>
             <p>Rating</p>
         </div>
-
         <!-- Products -->
-        <div class="flex flex-col gap-7">
-            <div class="h-32 flex justify-center">
-                <img 
-                    class="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
-                    src="http://localhost:8080/file/product/Essence-Mascara-Lash-Princess1_20250703T210019.png"
+        @for(product of products; track product.slug) {
+            <div class="flex flex-col gap-7">
+                <div class="h-32 flex justify-center">
+                    <img 
+                        class="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
+                        [src]="product.coverImage"
                     />
+                </div>
+                <p>{{product.name}}</p>
+                <p>Brand</p> 
+                <p>Category</p>
+                <p>SKU</p>
+                <p>$ {{product.price}}</p>
+                <p>{{product.quantity}}</p>
+                <p>{{product.reviewsCounts}}</p>
+                <p>
+                    {{product.avgReview | number: '1.0-2'}}
+                    <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
+                </p>
             </div>
-            <p>Essence Mascara Lash Princess</p>
-            <p>Essence</p> 
-            <p>Beauty</p>
-            <p>BEA-ESS-ESS-001</p>
-            <p>$9.99</p>
-            <p>97</p>
-            <p>10</p>
-            <p>
-                4.7
-                <i class="w-4 h-4 fa-solid fa-star text-yellow-600"></i>
-            </p>
-        </div>
+        }
         <!-- Add Product -->
         <div class="flex flex-col gap-7">
             <div

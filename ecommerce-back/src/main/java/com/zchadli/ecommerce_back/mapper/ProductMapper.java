@@ -40,7 +40,7 @@ public interface ProductMapper extends  EcommerceMapper {
 
     @Named("mapAvgReviews")
     default Double mapAvgReviews(List<Review> reviews) {
-        return (reviews != null && reviews.size() != 0) ? reviews.stream().map(Review::getRating).reduce(0, Integer::sum)/(double)reviews.size() : 0d;
+        return (reviews != null && !reviews.isEmpty()) ? reviews.stream().map(Review::getRating).reduce(0, Integer::sum)/(double)reviews.size() : 0d;
     }
     @Mapping(source = "idCategory", target = "category.id")
     Product toProduct(ProductSaveRequest productSaveRequest);

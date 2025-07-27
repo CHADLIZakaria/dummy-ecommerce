@@ -6,8 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table
@@ -31,6 +30,13 @@ public class User implements UserDetails, ImageStorable {
     private UploadedFile file;
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
+    @ManyToMany
+    @JoinTable(
+        name = "user_product_compare",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> compareProducts = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

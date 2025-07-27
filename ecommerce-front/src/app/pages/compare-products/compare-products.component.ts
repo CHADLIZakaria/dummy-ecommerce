@@ -1,14 +1,33 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject, OnInit } from '@angular/core';
 import { SearchProductsComponent } from "./popup/search-products/search-products.component";
-import { CompareProductsService } from './popup/search-products/services/compare-products.service';
+import { CompareProductsService } from './services/compare-products.service';
+import { LoginService } from '../login/services/login.service';
+import { Product } from '../../shared/model/ecom.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ecom-compare-products',
-  imports: [SearchProductsComponent],
+  imports: [SearchProductsComponent, CommonModule],
   templateUrl: './compare-products.component.html',
   styleUrl: './compare-products.component.scss'
 })
-export class CompareProductsComponent {
+export class CompareProductsComponent  {
   compareProductsService = inject(CompareProductsService)
+  loginService = inject(LoginService)
+  products: Product[] = []
+  
+  constructor() {
+    effect(() => {
+      const user = this.loginService.user();
+      if (user?.username) {
+        console.log('Username:', user.username);
+        this.compareProductsService.getProducts(user.username).subscribe(
+          data => {
+            this.products = data
+          }
+        );
+      }
+    });
+  }
 
 }
