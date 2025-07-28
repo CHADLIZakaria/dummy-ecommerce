@@ -5,13 +5,12 @@ import com.zchadli.ecommerce_back.model.Product;
 import com.zchadli.ecommerce_back.model.User;
 import com.zchadli.ecommerce_back.repository.ProductDao;
 import com.zchadli.ecommerce_back.repository.UserDao;
-import com.zchadli.ecommerce_back.response.ProductResponse;
+import com.zchadli.ecommerce_back.response.ProductCompareResponse;
 import com.zchadli.ecommerce_back.service.CompareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +29,10 @@ public class CompareServiceImpl implements CompareService {
         userRepository.save(user);
     }
 
-    public List<ProductResponse> getCompareProducts(String username) {
+    public List<ProductCompareResponse> getCompareProducts(String username) {
         return userRepository.findByUsername(username)
                 .map(User::getCompareProducts)
-                .map(productMapper::toProductsResponse)
+                .map(productMapper::toProductsCompareResponse)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 

@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { EcomPagination, EcomResponse, initProduct, Product } from '../../../shared/model/ecom.model';
 import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { CompareProduct } from '../compare-products.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,8 @@ export class CompareProductsService {
     return this.http.post(`${environment.baseUrl}compare/${username}/add/${productSlug}`, {})
   }
 
-  getProducts(username: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${environment.baseUrl}compare/${username}`)
+  getProducts(username: string): Observable<CompareProduct[]> {
+    return this.http.get<CompareProduct[]>(`${environment.baseUrl}compare/${username}`)
   }
 
 }

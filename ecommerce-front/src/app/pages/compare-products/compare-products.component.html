@@ -1,12 +1,12 @@
-<div class="w-2/3 mx-auto">
+<div class="w-2/3 mx-auto mt-5">
     <div class="flex gap-10">
         <!-- Labels -->
         <div class="flex flex-col gap-7 text-gray-600 font-medium">
             <div class="h-32"></div>
             <p>Product Name</p>
+            <p>SKU</p>
             <p>Brand</p> 
             <p>Category</p>
-            <p>SKU</p>
             <p>Price</p>
             <p>Quantity</p>
             <p>Number of Reviews</p>
@@ -15,17 +15,20 @@
         <!-- Products -->
         @for(product of products; track product.slug) {
             <div class="flex flex-col gap-7">
-                <div class="h-32 flex justify-center">
+                <div class="h-32 flex justify-center relative border rounded-md bg-white">
                     <img 
                         class="h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
                         [src]="product.coverImage"
                     />
+                    <span class="cursor-pointer absolute right-0 top-0 -translate-y-1/2 text-white text-md bg-red-700 rounded-full px-1.5">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
                 </div>
                 <p>{{product.name}}</p>
-                <p>Brand</p> 
-                <p>Category</p>
-                <p>SKU</p>
-                <p>$ {{product.price}}</p>
+                <p>{{product.sku}}</p>
+                <p>{{product.brand}}</p> 
+                <p>{{product.category}}</p>
+                <p class="text-main-color">$ {{product.price}}</p>
                 <p>{{product.quantity}}</p>
                 <p>{{product.reviewsCounts}}</p>
                 <p>
@@ -34,22 +37,24 @@
                 </p>
             </div>
         }
-        <!-- Add Product -->
-        <div class="flex flex-col gap-7">
-            <div
-                (click)="compareProductsService.showSearchPopup.set(true)"
-                class="cursor-pointer h-32 flex justify-center items-center">
-                <i class="fa-solid fa-plus text-3xl bg-main-color text-white rounded-full w-16 aspect-square flex items-center justify-center"></i>
+        @if(products.length < 3 ) {
+            <!-- Add Product -->
+            <div class="flex flex-col gap-7">
+                <div
+                    (click)="compareProductsService.showSearchPopup.set(true)"
+                    class="cursor-pointer h-32 flex justify-center items-center">
+                    <i class="fa-solid fa-plus text-3xl bg-main-color text-white rounded-full w-16 aspect-square flex items-center justify-center"></i>
+                </div>
+                <p class="text-center text-gray-400 italic">Add Product</p>
+                <p></p> 
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
             </div>
-            <p class="text-center text-gray-400 italic">Add Product</p>
-            <p></p> 
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-        </div>
+        }
     </div>
 </div>
 @if(compareProductsService.showSearchPopup()) {

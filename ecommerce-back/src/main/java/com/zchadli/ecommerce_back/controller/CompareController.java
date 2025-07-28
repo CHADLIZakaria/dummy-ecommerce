@@ -1,5 +1,6 @@
 package com.zchadli.ecommerce_back.controller;
 
+import com.zchadli.ecommerce_back.response.ProductCompareResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.service.CompareService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class CompareController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<ProductResponse>> getCompareProducts(@PathVariable String username) {
+    public ResponseEntity<List<ProductCompareResponse>> getCompareProducts(@PathVariable String username) {
         return ResponseEntity.ok(compareService.getCompareProducts(username));
     }
 

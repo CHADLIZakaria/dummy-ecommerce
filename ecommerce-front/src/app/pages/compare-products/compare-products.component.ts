@@ -4,6 +4,7 @@ import { CompareProductsService } from './services/compare-products.service';
 import { LoginService } from '../login/services/login.service';
 import { Product } from '../../shared/model/ecom.model';
 import { CommonModule } from '@angular/common';
+import { CompareProduct } from './compare-products.model';
 
 @Component({
   selector: 'ecom-compare-products',
@@ -14,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export class CompareProductsComponent  {
   compareProductsService = inject(CompareProductsService)
   loginService = inject(LoginService)
-  products: Product[] = []
+  products: CompareProduct[] = []
   
   constructor() {
     effect(() => {

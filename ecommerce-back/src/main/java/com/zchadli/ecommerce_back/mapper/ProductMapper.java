@@ -5,6 +5,7 @@ import com.zchadli.ecommerce_back.model.Review;
 import com.zchadli.ecommerce_back.model.UploadedFile;
 import com.zchadli.ecommerce_back.request.ProductPrice;
 import com.zchadli.ecommerce_back.request.ProductSaveRequest;
+import com.zchadli.ecommerce_back.response.ProductCompareResponse;
 import com.zchadli.ecommerce_back.response.ProductDetailsResponse;
 import com.zchadli.ecommerce_back.response.ProductResponse;
 import org.mapstruct.Context;
@@ -51,6 +52,14 @@ public interface ProductMapper extends  EcommerceMapper {
     @Mapping(source = "product", target = "coverImage", qualifiedByName = "mapImagePathWithFolder")
     ProductDetailsResponse toProductDetailsResponse(Product product, boolean isFavorite);
 
+    @Mapping(source = "product.category.title", target = "category")
+    @Mapping(source = "product.brand.name", target = "brand")
+    @Mapping(source = "product", target = "coverImage", qualifiedByName = "mapImagePathWithFolder")
+    @Mapping(source = "product.reviews", target = "reviewsCounts", qualifiedByName = "mapReviewsCount")
+    @Mapping(source = "product.reviews", target = "avgReview", qualifiedByName = "mapAvgReviews")
+    ProductCompareResponse toProductCompareResponse(Product product);
+    List<ProductCompareResponse> toProductsCompareResponse(List<Product> products);
+
     List<ProductResponse> toProductsResponse(List<Product> products);
     @Named("isProductFavorite")
     static boolean isProductFavorite(Product product, @Context Set<Long> favoriteProductIds) {
@@ -59,5 +68,4 @@ public interface ProductMapper extends  EcommerceMapper {
     default List<String> mapUploadedFilesToStrings(List<UploadedFile> uploadedFiles) {
         return uploadedFiles.stream().map(UploadedFile::getFileName).toList();
     }
-
 }
