@@ -18,47 +18,72 @@
                 <button type="button" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm me-1"><i class="fa-solid fa-magnifying-glass text-lg"></i></button>
             </div>
         </div>
-        <div class="grid grid-cols-3 mt-3 space-x-3 space-y-2">
-            @for(product of products(); track product.id) {
-                <div
-                    (click)="onAddProduct(product.slug)"
-                    class="border rounded shadow-sm px-1 flex flex-col items-center">
-                    <img 
-                        class="h-32 w-32 object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
-                        [src]="product.coverImage" />
-                    <p class="w-full">{{product.name}}</p>
-                    <p class="text-main-color w-full mt-auto">$ {{product.price}}</p>
-                </div>
-            }            
-        </div>
-        <nav class="flex justify-center mt-3">
-            <ul class="flex items-center h-10 text-base">
-                <li>
-                    <a 
-                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </a>
-                </li>
-                @for(paginate of productsPagiation(); track paginate; let first = $first; let last = $last) {
-                    <li class="cursor-pointer">
-                        <a
-                            (click)="onChangePage(paginate)"
-                            [ngClass]="[
-                                paginate === compareProductsResource.value().data.page ? 'bg-main-color' : 'bg-white text-gray-500',
-                                first ? 'border-l' : '',
-                                !last ? 'border-r' : ''
-                            ]"
-                            class="flex items-center justify-center px-4 h-10 leading-tight border-t border-b border-gray-300 hover:bg-main-color hover:text-black">
-                            {{paginate+1}}
+        @if(products().length > 0) {
+            <div class="grid grid-cols-3 mt-3 space-x-3 space-y-2">
+                @for(product of products(); track product.id) {
+                    @let productCompare = isProductCompare(product.slug); 
+                    <div
+                        (click)="onAddProduct(product.slug)"
+                        [ngClass]="[
+                            productCompare ? 'border-main-color':''
+                        ]"
+                        class="relative border rounded shadow-sm px-1 flex flex-col items-center">
+                        <img 
+                            class="h-32 w-32 object-cover transition-transform duration-300 ease-in-out hover:scale-110 rounded-lg" 
+                            [src]="product.coverImage" />
+                        <p class="w-full">{{product.name}}</p>
+                        <p class="text-main-color w-full mt-auto">$ {{product.price}}</p>
+                        @if(productCompare) {
+                            <i class="absolute bg-main-color rounded-full p-1 right-0 top-0 translate-x-1/2 -translate-y-1/2 fa-solid fa-check text-white"></i>
+                        }
+                    </div>
+                }            
+            </div>
+            <nav class="flex justify-center mt-3">
+                <ul class="flex items-center h-10 text-base">
+                     <li>
+                        <a  
+                            (click)="first()"         
+                            class="cursor-pointer flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                           <i class="fa-solid fa-angles-left"></i>
                         </a>
                     </li>
-                }
-                <li>
-                    <a
-                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                     <li class="cursor-pointer">
+                        <a
+                             (click)="prev()"
+                            class="bg-white text-gray-500 flex items-center justify-center px-4 h-10 leading-tight border-t border-b border-gray-300 hover:bg-gray-100 hover:text-black">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                    @for(paginate of productsPagination(); track paginate; let first = $first; let last = $last) {
+                        <li class="cursor-pointer">
+                            <a
+                                (click)="onChangePage(paginate)"
+                                [ngClass]="[
+                                    paginate === searchProductResource.value().data.page ? 'bg-main-color' : 'bg-white text-gray-500',
+                                    first ? 'border-l' : '',
+                                    !last ? 'border-r' : ''
+                                ]"
+                                class="flex items-center justify-center px-4 h-10 leading-tight border-t border-b border-gray-300 hover:bg-main-color hover:text-black">
+                                {{paginate+1}}
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a
+                            (click)="next()" 
+                            class="cursor-pointer flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300  border-r-0 hover:bg-gray-100 hover:text-gray-700">
+                           <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                     <li>
+                        <a
+                            (click)="last()" 
+                            class="cursor-pointer flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
 </div>

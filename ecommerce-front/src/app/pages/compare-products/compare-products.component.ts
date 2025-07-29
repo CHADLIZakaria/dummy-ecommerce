@@ -15,20 +15,19 @@ import { CompareProduct } from './compare-products.model';
 export class CompareProductsComponent  {
   compareProductsService = inject(CompareProductsService)
   loginService = inject(LoginService)
-  products: CompareProduct[] = []
+  products = computed(()=> this.compareProductsService.compareProducts())
   
   constructor() {
     effect(() => {
       const user = this.loginService.user();
       if (user?.username) {
-        console.log('Username:', user.username);
-        this.compareProductsService.getProducts(user.username).subscribe(
-          data => {
-            this.products = data
-          }
-        );
+        this.compareProductsService.getProducts(user.username).subscribe();
       }
     });
   }
 
+  onDelete(productSlug: string) {
+    const user = this.loginService.user();
+    this.compareProductsService.removeCompareProduct(user?.username!, productSlug).subscribe()
+  }
 }

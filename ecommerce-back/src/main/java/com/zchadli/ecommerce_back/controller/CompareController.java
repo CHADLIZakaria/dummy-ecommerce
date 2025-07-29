@@ -1,10 +1,9 @@
 package com.zchadli.ecommerce_back.controller;
 
+import com.zchadli.ecommerce_back.response.EcommerceResponse;
 import com.zchadli.ecommerce_back.response.ProductCompareResponse;
-import com.zchadli.ecommerce_back.response.ProductResponse;
 import com.zchadli.ecommerce_back.service.CompareService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,27 +12,37 @@ import java.util.List;
 @RequestMapping("/compare")
 @RequiredArgsConstructor
 public class CompareController {
-
     private final CompareService compareService;
 
     @PostMapping("/{username}/add/{productSlug}")
-    public ResponseEntity<String> addProductToCompare(
+    public EcommerceResponse<ProductCompareResponse> addProductToCompare(
         @PathVariable String username,
         @PathVariable String productSlug) {
-        compareService.addProductToCompare(username, productSlug);
-        return ResponseEntity.ok("Product added to comparison list.");
+        return new EcommerceResponse<>(
+            201,
+            "Product added to comparison list.",
+            compareService.addProductToCompare(username, productSlug)
+        );
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<ProductCompareResponse>> getCompareProducts(@PathVariable String username) {
-        return ResponseEntity.ok(compareService.getCompareProducts(username));
+    public EcommerceResponse<List<ProductCompareResponse>> getCompareProducts(@PathVariable String username) {
+        return new EcommerceResponse<>(
+            200,
+            "Compare Products retrieved successfully",
+            compareService.getCompareProducts(username)
+        );
     }
 
     @DeleteMapping("/{username}/remove/{productSlug}")
-    public ResponseEntity<String> removeProductFromCompare(
+    public EcommerceResponse<String> removeProductFromCompare(
             @PathVariable String username,
             @PathVariable String productSlug) {
         compareService.removeProductFromCompare(username, productSlug);
-        return ResponseEntity.ok("Product removed from comparison list.");
+        return new EcommerceResponse<>(
+            200,
+            "Product removed from comparison list.",
+            null
+        );
     }
 }
