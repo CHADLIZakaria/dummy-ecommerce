@@ -71,7 +71,9 @@
               </p>
                 <div class="flex items-center gap-3 mb-2">
                   <div class="my-4">
-                    <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">${{product.price}}</span>
+                    <span class="px-2 py-1 text-2xl text-main-color rounded border border-main-color font-bold mr-2">
+                      $ {{product.price}}
+                    </span>
                   </div>
                   <div class="flex gap-1 items-center">
                     @for(currentStar of numberStar; track currentStar) {

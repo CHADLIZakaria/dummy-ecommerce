@@ -5,7 +5,6 @@ import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { EcomHelper } from '../../shared/helper/ecomHelper';
 import { ProductDetails } from '../../shared/model/ecom.model';
-import { ImageService } from '../../shared/services/image.service';
 import { UserService } from '../../shared/services/user.service';
 import { CartItem } from '../home/models/home.model';
 import { ReviewsComponent } from "./reviews/reviews.component";
@@ -35,12 +34,11 @@ export class ProductDetailsComponent {
   productDetailsResource = this.productDetailsService.productDetailsResource
   userService = inject(UserService)
   numberStar = EcomHelper.range(5)
-  imageService = inject(ImageService)
   currentImage: number = 0
   alert = {show: false, message: '', type: ''};
-
   currentIndex = 0;
   visibleCount = 4;
+
   get visibleProducts() {
     return this.productDetailsService.productsSimularResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
   }
