@@ -1,10 +1,8 @@
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, effect, inject } from '@angular/core';
+import { LoginService } from '../login/services/login.service';
 import { SearchProductsComponent } from "./popup/search-products/search-products.component";
 import { CompareProductsService } from './services/compare-products.service';
-import { LoginService } from '../login/services/login.service';
-import { Product } from '../../shared/model/ecom.model';
-import { CommonModule } from '@angular/common';
-import { CompareProduct } from './compare-products.model';
 
 @Component({
   selector: 'ecom-compare-products',

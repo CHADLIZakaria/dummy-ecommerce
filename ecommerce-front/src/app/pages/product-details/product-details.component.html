@@ -93,17 +93,21 @@
                   {{product.description}}
                 </p>
                 <div class="flex space-x-2">
-                    <div class="flex items-center border-gray-100">
-                      <input value="1" class="w-8 border h-full bg-white text-center text-xs outline-none rounded-l-md" type="number"  min="1" />
+                    <form [formGroup]="quantityForm" class="flex items-center border-gray-100">
+                      <input formControlName="quantity" class="w-8 border h-full bg-white text-center text-xs outline-none rounded-l-md" type="number"  min="1" />
                       <div class="flex flex-col">
-                        <span class="cursor-pointer border border-x-0 border-t-0 rounded-tr bg-gray-100 px-3 duration-100 hover:bg-main-color hover:text-blue-50">
+                        <span
+                          (click)="onIncrementQuantity()"
+                          class="cursor-pointer border border-x-0 border-t-0 rounded-tr bg-gray-100 px-3 duration-100 hover:bg-main-color hover:text-blue-50">
                           +
                         </span>
-                        <span class="cursor-pointer border border-x-0 border-t-0  rounded-br bg-gray-100 px-3 duration-100 hover:bg-main-color hover:text-blue-50">
+                        <span 
+                          (click)="onDecrementQuantity()"
+                          class="cursor-pointer border border-x-0 border-t-0  rounded-br bg-gray-100 px-3 duration-100 hover:bg-main-color hover:text-blue-50">
                           -
                         </span>
                       </div>
-                    </div>
+                    </form>
                     <button
                         (click)="onAddToCart(product)"
                         class="bg-main-color flex gap-2 items-center text-gray-900 px-6 py-2 rounded-md hover:bg-second-color focus:outline-none focus:ring-2 focus:ring-second-color focus:ring-offset-2">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
@@ -11,10 +11,11 @@ import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
 import { TitleComponent } from "../../shared/components/title/title.component";
 import { animate, style, transition, trigger } from '@angular/animations';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent, RouterLink],
+  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
    animations: [
@@ -31,13 +32,17 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class ProductDetailsComponent {
   productDetailsService = inject(ProductDetailsService);
-  productDetailsResource = this.productDetailsService.productDetailsResource
   userService = inject(UserService)
+  formBuilder = inject(FormBuilder)
+  productDetailsResource = this.productDetailsService.productDetailsResource
   numberStar = EcomHelper.range(5)
   currentImage: number = 0
   alert = {show: false, message: '', type: ''};
   currentIndex = 0;
   visibleCount = 4;
+  quantityForm = this.formBuilder.group({
+    quantity: [1]
+  })
 
   get visibleProducts() {
     return this.productDetailsService.productsSimularResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
@@ -79,6 +84,17 @@ export class ProductDetailsComponent {
     )
   }
 
+onIncrementQuantity() {
+  const current = this.quantityForm.get('quantity')?.value || 1;
+  this.quantityForm.get('quantity')?.setValue(current + 1);
+}
+
+onDecrementQuantity() {
+  const current = this.quantityForm.get('quantity')?.value || 1;
+  if (current > 1) {
+    this.quantityForm.get('quantity')?.setValue(current - 1);
+  }
+}
   onAddToCart(product: ProductDetails) {
     const cartItem: CartItem = {
       productImage: product.coverImage,
