@@ -54,6 +54,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDao.findByTitle(title).orElseThrow(() -> new CategoryNotFoundException(title));
         return categoryMapper.toCategoryResponse(category);
     }
+
+    @Override
+    public CategoryResponse findBySlug(String slug) {
+        Category category = categoryDao.findBySlug(slug).orElseThrow(() -> new CategoryNotFoundException(slug));
+        return categoryMapper.toCategoryResponse(category);
+    }
+
     @Override
     public PageResponse<CategoryFilterResponse> findAllWithNumberProducts(CategorySearchRequest categorySearchRequest) {
         Page<Category> categoryPage = findPageCategory(categorySearchRequest);

@@ -40,7 +40,7 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
             String coverImageDestination = FileHelper.convertToImageName(product.title(), 0);
             FileHelper.downloadImage(product.thumbnail(), PATH_PRODUCT + coverImageDestination);
             //Get category
-            Category category = ecommerceClient.getCategoryByTitle(product.category()).data();
+            Category category = ecommerceClient.getCategoryBySlug(product.category()).data();
             //Save Brand
             EcommerceResponse<BrandResponse> brandResponse = ecommerceClient.saveBrand(new BrandRequest(product.brand()));
             if(brandResponse.status()==409) {
@@ -93,7 +93,7 @@ public class SyncEcommerceDummyJson implements SyncEcommerce {
         categoryResponses.forEach(this::saveCategory);
     }
     private void saveCategory(Category categoryResponse) {
-        File file = new File("uploads/categories/" + categoryResponse.getTitle() + ".jpg");
+        File file = new File("uploads/categories/" + categoryResponse.getSlug() + ".jpg");
         if (!file.exists()) {
             throw new RuntimeException("File does not exist: " + file.getAbsolutePath());
         }

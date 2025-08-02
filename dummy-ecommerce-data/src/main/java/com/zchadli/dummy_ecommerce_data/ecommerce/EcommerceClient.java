@@ -13,9 +13,9 @@ public interface EcommerceClient {
             @RequestPart(name="file") MultipartFile file,
             @RequestPart(name = "category") Category category);
 
-    @GetMapping(value = "/categories/title/{title}")
-    EcommerceResponse<Category> getCategoryByTitle(
-            @PathVariable(name="title") String title);
+    @GetMapping(value = "/categories/slug/{slug}")
+    EcommerceResponse<Category> getCategoryBySlug(
+            @PathVariable(name="slug") String slug);
     @PostMapping("/brands")
     EcommerceResponse<BrandResponse> saveBrand(@RequestBody() BrandRequest brand);
     @GetMapping("/brands/name/{name}")

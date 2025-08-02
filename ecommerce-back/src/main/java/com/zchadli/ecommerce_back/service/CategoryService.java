@@ -13,6 +13,7 @@ public interface CategoryService {
     CategoryResponse save(CategorySaveRequest categorySaveRequest, MultipartFile file);
     CategoryResponse findById(Long id);
     CategoryResponse findByTitle(String title);
+    CategoryResponse findBySlug(String slug);
     PageResponse<CategoryResponse> findAll(Map<String, String[]> categorySearchRequest);
     PageResponse<CategoryFilterResponse> findAllWithNumberProducts(CategorySearchRequest categorySearchRequest);
     void deleteById(Long id);

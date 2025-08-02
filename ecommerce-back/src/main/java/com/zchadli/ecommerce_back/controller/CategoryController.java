@@ -60,6 +60,13 @@ public class CategoryController {
             @PathVariable("title") String title) {
         return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findByTitle(title));
     }
+    @Operation(summary = "Get category by Slug")
+    @GetMapping("/slug/{slug}")
+    public EcommerceResponse<CategoryResponse> findBySlug(
+            @Parameter(description = "Category Slug")
+            @PathVariable("slug") String slug) {
+        return new EcommerceResponse<>(200, "Category retrieved successfully", categoryService.findBySlug(slug));
+    }
     @Operation(summary = "Search all categories with optional filters")
     @GetMapping("/search-with-products")
     public EcommerceResponse<PageResponse<CategoryFilterResponse>> searchCategoriesWithProducts(CategorySearchRequest categorySearchRequest) {

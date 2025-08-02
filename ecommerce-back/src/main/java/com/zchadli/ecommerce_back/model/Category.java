@@ -15,6 +15,7 @@ public class Category extends AbstractEntity implements ImageStorable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String slug;
     @OneToOne
     @JoinColumn(name = "file_id")
     private UploadedFile file;

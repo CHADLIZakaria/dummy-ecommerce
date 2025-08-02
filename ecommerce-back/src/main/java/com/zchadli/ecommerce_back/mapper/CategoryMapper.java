@@ -13,15 +13,12 @@ import java.util.List;
 public interface CategoryMapper extends EcommerceMapper {
     @Mapping(source = "category", target = "imagePath", qualifiedByName = "mapImagePathWithFolder")
     CategoryResponse toCategoryResponse(Category category);
+    List<CategoryResponse> toCategoriesResponse(List<Category> categories);
 
     @Mapping(source = "file.fileName", target = "imagePath")
     @Mapping(source = "products", target = "productCounts", qualifiedByName = "mapProductCount")
     CategoryFilterResponse toCategoryFilterResponse(Category category);
-
     List<CategoryFilterResponse> toCategoriesFilterResponse(List<Category> category);
 
     Category toCategory(CategorySaveRequest categorySaveRequest);
-
-    List<CategoryResponse> toCategoriesResponse(List<Category> categories);
-
 }

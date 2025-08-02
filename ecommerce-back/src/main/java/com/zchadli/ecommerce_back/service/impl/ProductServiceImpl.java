@@ -61,7 +61,6 @@ public class ProductServiceImpl implements ProductService {
         //Upload Cover Image
         UploadedFile uploadedFile = uploadedFileService.uploadFile(PATH, coverImage);
         product.setCoverImage(uploadedFile);
-        uploadedFile.setProduct(product);
         return productMapper.toProductResponse(productDao.save(product));
     }
     @Override

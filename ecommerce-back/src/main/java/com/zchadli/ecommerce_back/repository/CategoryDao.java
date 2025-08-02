@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface CategoryDao extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
    boolean existsByTitle(String title);
    Optional<Category> findByTitle(String title);
+   Optional<Category> findBySlug(String slug);
 }
