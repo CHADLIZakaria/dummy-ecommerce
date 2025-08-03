@@ -1,21 +1,22 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { TitleComponent } from "../../shared/components/title/title.component";
 import { EcomHelper } from '../../shared/helper/ecomHelper';
 import { ProductDetails } from '../../shared/model/ecom.model';
 import { UserService } from '../../shared/services/user.service';
 import { CartItem } from '../home/models/home.model';
 import { ReviewsComponent } from "./reviews/reviews.component";
 import { ProductDetailsService } from './services/product-details.service';
-import { TitleComponent } from "../../shared/components/title/title.component";
-import { animate, style, transition, trigger } from '@angular/animations';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ProductDetailsInfoComponent } from './components/product-details-info/product-details-info.component';
 
 @Component({
   selector: 'ecom-product-details',
-  imports: [ReviewsComponent, CommonModule, AlertComponent, LoadingComponent, TitleComponent, RouterLink, ReactiveFormsModule],
+  imports: [ReviewsComponent, CommonModule, AlertComponent, ProductDetailsInfoComponent, LoadingComponent, TitleComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
    animations: [
@@ -36,16 +37,36 @@ export class ProductDetailsComponent {
   formBuilder = inject(FormBuilder)
   productDetailsResource = this.productDetailsService.productDetailsResource
   numberStar = EcomHelper.range(5)
-  currentImage: number = 0
   alert = {show: false, message: '', type: ''};
   currentIndex = 0;
   visibleCount = 4;
   quantityForm = this.formBuilder.group({
     quantity: [1]
   })
+  currentImage = 0;
+
+  get visibleImages() {
+    return this.productDetailsService.productDetailsResource.value().data.images.slice(this.currentImage, this.currentImage + 3);
+  }
 
   get visibleProducts() {
     return this.productDetailsService.productsSimularResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
+  }
+
+  incrementImageWindow() {
+    if (this.currentImage + 3 < this.productDetailsService.productDetailsResource.value().data.images.length) {
+      this.currentImage++;
+    }
+  }
+
+  decrementImageWindow() {
+    if (this.currentImage > 0) {
+      this.currentImage--;
+    }
+  }
+
+  changeCurrentImage(index: number) {
+    this.currentImage = this.currentImage + index;
   }
 
   next() {
@@ -69,10 +90,6 @@ export class ProductDetailsComponent {
     })
   }
   
-  changeCurrentImage(index: number) {
-    this.currentImage = index
-  }
-
   toggleFavorite(idProduct: number) {
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
@@ -84,17 +101,18 @@ export class ProductDetailsComponent {
     )
   }
 
-onIncrementQuantity() {
-  const current = this.quantityForm.get('quantity')?.value || 1;
-  this.quantityForm.get('quantity')?.setValue(current + 1);
-}
-
-onDecrementQuantity() {
-  const current = this.quantityForm.get('quantity')?.value || 1;
-  if (current > 1) {
-    this.quantityForm.get('quantity')?.setValue(current - 1);
+  onIncrementQuantity() {
+    const current = this.quantityForm.get('quantity')?.value || 1;
+    this.quantityForm.get('quantity')?.setValue(current + 1);
   }
-}
+
+  onDecrementQuantity() {
+    const current = this.quantityForm.get('quantity')?.value || 1;
+    if (current > 1) {
+      this.quantityForm.get('quantity')?.setValue(current - 1);
+    }
+  }
+  
   onAddToCart(product: ProductDetails) {
     const cartItem: CartItem = {
       productImage: product.coverImage,

@@ -13,6 +13,7 @@ import { AlertComponent } from "../../../../shared/components/alert/alert.compon
 import { CartItem } from '../../models/home.model';
 import { UserService } from '../../../../shared/services/user.service';
 import { FiltersComponent } from './filters/filters.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'ecom-list-products',
