@@ -11,9 +11,13 @@
          </div>
          <div class="relative h-full z-10">
             <div class="flex h-full mx-auto items-center justify-between overflow-hidden">
-                <div class="flex-1 text-5xl text-center">Dummy E-Shop</div>
+                <div class="flex-1 text-5xl text-center">{{title()}}</div>
                 <figure class="flex-1 md:h-full md:w-48">
-                    <img class="h-full w-full" src="./assets/images/bg-landing.png" alt="bg-landing"/>
+                    @if(image !== null) {
+                        <img
+                            [ngClass]="imageClass() !== null ? imageClass(): ''"
+                            class="h-full w-full" [src]="image()" alt="bg-landing"/>
+                    }
                 </figure>
             </div>
             <div class="absolute top-0 left-0 w-full h-full -z-10">

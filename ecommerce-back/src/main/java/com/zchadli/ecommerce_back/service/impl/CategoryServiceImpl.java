@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = SpecificationBuilderHelper.buildPageableFromParams(categorySearchRequest);
         Page<Category> categoryPage = categoryDao.findAll(specification, pageable);
         return new PageResponse<>(
-                categoryMapper.toCategoriesResponse(categoryPage.getContent()),
+            categoryMapper.toCategoriesResponse(categoryPage.getContent()),
             categoryPage.getTotalElements(),
             categoryPage.getSize(),
             categoryPage.getNumber()

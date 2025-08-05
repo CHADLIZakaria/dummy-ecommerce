@@ -12,6 +12,7 @@ export type EcomPagination<T> = {
 export type Category = {
     id: number;
     title: string;
+    slug: string;
     imagePath: string;
 }
 export type Brand = {
@@ -99,6 +100,17 @@ export const initCategoryPagination: EcomResponse<EcomPagination<Category[]>> = 
         size: 0,
         page: 0,
         data: []
+    }
+}
+
+export const initCategory: EcomResponse<Category> = {
+    message: '',
+    status: 0,
+    data: {
+        id: 0,
+        slug: '',
+        imagePath: '',
+        title: ''
     }
 }
 

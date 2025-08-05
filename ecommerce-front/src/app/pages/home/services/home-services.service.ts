@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Category, EcomPagination, EcomResponse, FavoriteRespone, initProduct, Product } from '../../../shared/model/ecom.model';
+import { Category, EcomPagination, EcomResponse, FavoriteRespone, initCategoryPagination, initProduct, Product } from '../../../shared/model/ecom.model';
 import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BrandWithProduct, CartItem, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
@@ -22,9 +22,17 @@ export class HomeServices {
   productFilter = signal<ProductFilter>(initProductFilter)
   //productFilterDebounced = debouncedSignal(this.productFilter, 300, initProductFilter)
 
-  getCategories(): Observable<EcomResponse<EcomPagination<Category[]>>> {
-    return this.http.get<EcomResponse<EcomPagination<Category[]>>>(`${environment.baseUrl}categories?size=0`)
-  }
+  categoriesResource = httpResource<EcomResponse<EcomPagination<Category[]>>>(
+    () => ({
+      url: `${environment.baseUrl}categories`,
+      params: {
+        'size': 0,
+        'keyword': this.categoryKeyword(),
+      }
+    }),
+    { defaultValue: initCategoryPagination }
+  )
+
 
   categoriesWithNumberProductResource = httpResource<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(
     () => ({
@@ -52,10 +60,11 @@ export class HomeServices {
     () =>({
       url: `${environment.baseUrl}products/getRangePrice`,
       params: {
-        'size': this.productFilter().size * (this.productFilter().page+1),
         'name__like': this.productFilter().keyword,
         'brand.id__in': this.productFilter().brands.map(brand => brand.id).join(","),
-        'category.id__in': this.productFilter().categories.map(category => category.id).join(",")
+        'category.id__in': this.productFilter().categories.map(category => category.id).join(","),
+        'quantity__gte': this.productFilter().quantity || 0,
+        'size': 0,
       }
     }),
     { defaultValue: initRangePrice }
