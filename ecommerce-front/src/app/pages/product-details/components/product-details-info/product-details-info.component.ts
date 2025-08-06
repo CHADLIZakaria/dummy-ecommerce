@@ -1,16 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ProductDetailsService } from '../../services/product-details.service';
+import { RouterLink } from '@angular/router';
 import { EcomHelper } from '../../../../shared/helper/ecomHelper';
-import { UserService } from '../../../../shared/services/user.service';
 import { ProductDetails } from '../../../../shared/model/ecom.model';
+import { UserService } from '../../../../shared/services/user.service';
 import { CartItem } from '../../../home/models/home.model';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ProductDetailsService } from '../../services/product-details.service';
 
 @Component({
   selector: 'ecom-product-details-info',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './product-details-info.component.html',
   styleUrl: './product-details-info.component.scss'
 })

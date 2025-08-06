@@ -9,6 +9,7 @@ public record ProductDetailsResponse(
         String description,
         Double price,
         String category,
+        String categorySlug,
         String brand,
         String sku,
         List<String> images,

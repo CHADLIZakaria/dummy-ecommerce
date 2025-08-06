@@ -4,6 +4,7 @@ import { LoadingComponent } from '../../../../../../shared/components/loading/lo
 import { dropDownAnimation } from '../../../../../../shared/animations/animations';
 import { HomeServices } from '../../../../services/home-services.service';
 import { Category } from '../../../../../../shared/model/ecom.model';
+import { CategoryWithProduct } from '../../../../models/home.model';
 
 
 @Component({
@@ -16,18 +17,18 @@ import { Category } from '../../../../../../shared/model/ecom.model';
 export class FilterCategoryComponent {
   homeService = inject(HomeServices)
   categories = this.homeService.categoriesWithNumberProductResource
-  categoriesSelected: Category[]= this.homeService.productFilter().categories
+  categoriesSelected: CategoryWithProduct[]= this.homeService.productFilter().categories
 
   onSearchCategories(value: string): void {
-    this.homeService.brandKeyword.set(value)
+    this.homeService.categoryKeyword.set(value)
   }
 
-  onChangeSelectedCategory(brand: Category): void {
-    if(this.categoriesSelected.includes(brand)) {
-      this.categoriesSelected.splice(this.categoriesSelected.indexOf(brand), 1)
+  onChangeSelectedCategory(category: CategoryWithProduct): void {
+    if(this.categoriesSelected.includes(category)) {
+      this.categoriesSelected.splice(this.categoriesSelected.indexOf(category), 1)
     }
     else {
-      this.categoriesSelected.push(brand)
+      this.categoriesSelected.push(category)
     }
     this.homeService.productFilter.set({
       ...this.homeService.productFilter(), 

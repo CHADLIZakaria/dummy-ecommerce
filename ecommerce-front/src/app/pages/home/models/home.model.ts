@@ -7,7 +7,7 @@ export type ProductFilter = {
     keyword: string;
     minPrice: number;
     maxPrice: number;
-    categories: Category[];
+    categories: CategoryWithProduct[];
     brands: Brand[];
     quantity?: number | null;
 }

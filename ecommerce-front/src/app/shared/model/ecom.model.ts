@@ -36,6 +36,7 @@ export type ProductDetails = {
     id: number;
     name: string;
     slug: string;
+    categorySlug: string;
     sku: string;
     description: string;
     price: number;
@@ -77,7 +78,8 @@ export const initProductDetails: EcomResponse<ProductDetails> = {
         coverImage: '',
         images: [],
         isFavorite: false,
-        quantity: 0
+        quantity: 0,
+        categorySlug: ''
     }
 }
 
