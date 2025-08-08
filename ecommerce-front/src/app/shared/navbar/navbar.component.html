@@ -60,7 +60,7 @@
                             @for(category of categoriesResource.value().data.data; track category.id) {
                                 <li>
                                     <a (click)="dropdownCategory.closeDropdown()"
-                                        [routerLink]="['favorites']"
+                                        [routerLink]="['categories', category.slug]"
                                     class="flex items-center p-3 gap-1 rounded-lg hover:bg-main-color cursor-pointer">
                                         <img class="w-10 h-10" [src]="category.imagePath" />
                                         <div class="font-semibold">{{category.title}}</div>
