@@ -1,0 +1,77 @@
+<div class="relative mt-5 mb-3" 
+  ecomDropdown
+  #dropdownBrand="ecomDropdown">
+  <div class="flex justify-between items-center">
+    <p>Brand</p> 
+    @if(brandsSelected.length>0) {
+      <button 
+        (click)="resetBrandSelected()"
+        class="text-sm text-gray-400">
+        Reset
+      </button>
+    }
+  </div>
+  <ul class="flex flex-wrap">
+    @for(brand of brandsSelected; track brand.id) {
+      <li 
+        class="w-auto mt-1 inline-flex justify-between items-center pl-1 me-2 text-xs font-medium bg-main-color">
+        {{brand.name}}
+        <button
+          (click)="onChangeSelectedBrand(brand)"
+          type="button"
+          class="inline-flex bg-second-color items-center p-1 ms-2 text-xs rounded-xs">
+          <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
+      </li>
+    }
+  </ul>
+  <button
+    (click)="dropdownBrand.toggleDropdown()"
+    class="border border-gray-200 px-2 py-1 placeholder:text-main-color placeholder:text-xs focus:outline-2 focus:outline-main-color border-1 shadow-md rounded-md my-1 w-full flex justify-between items-center">
+    <span>Choose Your Brand</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </button>
+  <div
+    [@dropDownAnimation]="dropdownBrand.isOpen ? 'open': 'closed'" 
+    class="hidden dropdown-menu absolute w-full left-0 top-[105%] bg-white z-30 border rounded-sm px-2">
+    <div class="bg-white rounded-md my-2 flex items-center relative">
+      <input 
+        #searchBrand
+        class="w-full border pr-6 shadow-md rounded-md focus:outline-2 focus:outline-main-color" 
+        type="text" 
+        placeholder="Search..." 
+        (input)="onSearchBrands(searchBrand.value)" />
+      <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2 bg-white absolute right-0 top-1/2 -translate-y-1/2"></i>
+    </div>
+    @if(brands.isLoading()) {
+      <ecom-loading 
+        size="xs"
+      />
+    }
+    @else {
+    <ul class="h-40 overflow-y-scroll">
+        @for(brand of brands.value().data.data; track brand.id) {
+          <li class="flex items-center gap-1">
+            <input 
+              [id]="brand.id+'_'+brand.name" 
+              type="checkbox"
+              [value]="brand"
+              [checked]="isBrandSelected(brand.id)"
+              (change)="onChangeSelectedBrand(brand)"
+            />
+            <label [for]="brand.id+'_'+brand.name">{{brand.name}} ({{brand.productCounts}})</label>
+          </li>
+        }
+      </ul>
+      @if(brands.value().data.totalElements !== brands.value().data.data.length) {
+        <a 
+        (click)="showMore()" 
+        class="text-main-color cursor-pointer">
+        Show more
+      </a>
+      }
+    }
+  </div>
+</div>
