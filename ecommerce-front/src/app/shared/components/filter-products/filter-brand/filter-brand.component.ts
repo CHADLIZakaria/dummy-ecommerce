@@ -3,15 +3,17 @@ import { HomeServices } from '../../../../pages/home/services/home-services.serv
 import { Brand } from '../../../model/ecom.model';
 import { DropdownDirective } from '../../../directives/dropdown.directive';
 import { LoadingComponent } from '../../loading/loading.component';
+import { dropDownAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'ecom-filter-brand',
   imports: [DropdownDirective, LoadingComponent],
   templateUrl: './filter-brand.component.html',
-  styleUrl: './filter-brand.component.scss'
+  styleUrl: './filter-brand.component.scss',
+  animations: [dropDownAnimation]
 })
 export class FilterBrandComponent {
-    homeService = inject(HomeServices)
+  homeService = inject(HomeServices)
   brands = this.homeService.brandsWithNumberProductsResource
   brandsSelected: Brand[]= this.homeService.productFilter().brands
 

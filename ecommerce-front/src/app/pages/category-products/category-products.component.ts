@@ -3,8 +3,8 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilterProductsComponent } from '../../shared/components/filter-products/filter-products.component';
 import { LandingComponent } from '../home/components/landing/landing.component';
-import { ListProductsComponent } from '../home/components/list-products/list-products.component';
 import { CategoryProductsService } from './services/category-products.service';
+import { ListProductsComponent } from '../../shared/components/list-products/list-products.component';
 
 @Component({
   selector: 'ecom-category-products',
@@ -13,15 +13,19 @@ import { CategoryProductsService } from './services/category-products.service';
   styleUrl: './category-products.component.scss'
 })
 export class CategoryProductsComponent {
-  categoryResource = inject(CategoryProductsService)
+  categoryService = inject(CategoryProductsService)
   route = inject(ActivatedRoute)
-  category = computed(() => this.categoryResource.categoryResource.value().data);
+  category = computed(() => this.categoryService.categoryResource.value().data);
+  products = computed(() =>  this.categoryService.productsResource.value().data.data);
+  isLoading =  computed(() =>  this.categoryService.productsResource.isLoading());
+  totalElements =  computed(() =>  this.categoryService.productsResource.value().data.totalElements);
+  
   
   constructor() {
     this.route.paramMap.subscribe(params =>{
       const slug = params.get('slug');
       if(slug) {
-        this.categoryResource.slug.set(slug)
+        this.categoryService.slug.set(slug)
       }
     })
   }

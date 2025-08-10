@@ -1,0 +1,55 @@
+<div>
+  <p>Price</p>
+
+  @if (homeService.rangePriceResource.isLoading()) {
+  }
+  @else {
+    @if (formPrice) {
+      <form class="relative h-4 my-2" [formGroup]="formPrice">
+        <input 
+          type="range"
+          class="absolute w-full left-0 top-0 appearance-none bg-transparent" 
+          formControlName="minPrice"
+          [min]="homeService.rangePriceResource.value().data.minPrice"
+          [max]="homeService.rangePriceResource.value().data.maxPrice"
+        />
+        <input
+          type="range"
+          class="absolute w-full left-0 top-0 appearance-none bg-transparent" 
+          formControlName="maxPrice"
+          [min]="homeService.rangePriceResource.value().data.minPrice"
+          [max]="homeService.rangePriceResource.value().data.maxPrice"
+        />
+        <div class="relative w-full h-2 rounded-md bg-zinc-400">
+          @let min = formPrice.get('minPrice')?.value;
+          @let max = formPrice.get('maxPrice')?.value;
+          @let minPercent = (min * 100) / homeService.rangePriceResource.value().data.maxPrice;
+          @let maxPercent = 100 - (max * 100) / homeService.rangePriceResource.value().data.maxPrice;
+          <div 
+            class="absolute h-2 top-0 rounded-md bg-main-color"
+            [style.left]="minPercent + '%'" 
+            [style.right]="maxPercent + '%'">
+          </div>
+        </div>
+      </form>
+      <div class="flex justify-between gap-2 mt-4" [formGroup]="formPrice">
+        <div class="flex flex-col">
+          <label>Min Price</label>
+          <input 
+            type="number"
+            formControlName="minPrice"
+            class="border px-2 w-32 outline-main-color"
+          />
+        </div>
+        <div class="flex flex-col">
+          <label>Max Price</label>
+          <input 
+            type="number"
+            formControlName="maxPrice"
+            class="border px-2 w-32 outline-main-color"
+          />
+        </div>
+      </div>
+    }
+  }
+</div>

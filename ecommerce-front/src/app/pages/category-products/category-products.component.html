@@ -3,8 +3,18 @@
     [image]="category().imagePath"
     imageClass="rounded-full w-100 h-100 px-10 py-8"    
 />
-<div class="relative z-20">
-    <ecom-filter-products 
-        keyword='zakaria'
+<div class="my-5 flex gap-3 ">
+    <div class="w-64 z-20  sticky h-full">
+         <ecom-filter-products 
+            keyword=''
+        />
+    </div>
+    
+    <ecom-list-products 
+        [products]="products()"
+        [isLoading]="isLoading()"
+        [totalElements]="totalElements()"
     />
+    
 </div>
+

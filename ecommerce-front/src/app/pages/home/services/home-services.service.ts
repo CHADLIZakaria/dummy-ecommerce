@@ -1,16 +1,13 @@
+import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Category, EcomPagination, EcomResponse, FavoriteRespone, initCategoryPagination, initProduct, Product } from '../../../shared/model/ecom.model';
-import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { BrandWithProduct, CartItem, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
 import { environment } from '../../../../environments/environment.development';
-import { debouncedSignal } from '../../../shared/helper/ecomHelper';
+import { Category, EcomPagination, EcomResponse, initCategoryPagination, initProduct, Product } from '../../../shared/model/ecom.model';
+import { BrandWithProduct, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../models/home.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeServices {
-  private http = inject(HttpClient);
   // false for all (available and not available)
   isAvailable = signal<boolean>(false);
   brandKeyword = signal<string>('')
