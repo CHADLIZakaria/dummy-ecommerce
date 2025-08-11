@@ -3,7 +3,7 @@
   #dropdownBrand="ecomDropdown">
   <div class="flex justify-between items-center">
     <p>Brand</p> 
-    @if(brandsSelected.length>0) {
+    @if(brandsSelected().length>0) {
       <button 
         (click)="resetBrandSelected()"
         class="text-sm text-gray-400">
@@ -12,7 +12,7 @@
     }
   </div>
   <ul class="flex flex-wrap">
-    @for(brand of brandsSelected; track brand.id) {
+    @for(brand of brandsSelected(); track brand) {
       <li 
         class="w-auto mt-1 inline-flex justify-between items-center pl-1 me-2 text-xs font-medium bg-main-color">
         {{brand.name}}
@@ -44,15 +44,9 @@
         placeholder="Search..." 
         (input)="onSearchBrands(searchBrand.value)" />
       <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2 bg-white absolute right-0 top-1/2 -translate-y-1/2"></i>
-    </div>
-    @if(brands.isLoading()) {
-      <ecom-loading 
-        size="xs"
-      />
-    }
-    @else {
+    </div>    
     <ul class="h-40 overflow-y-scroll">
-        @for(brand of brands.value().data.data; track brand.id) {
+        @for(brand of brands(); track brand) {
           <li class="flex items-center gap-1">
             <input 
               [id]="brand.id+'_'+brand.name" 
@@ -65,13 +59,12 @@
           </li>
         }
       </ul>
-      @if(brands.value().data.totalElements !== brands.value().data.data.length) {
-        <a 
-        (click)="showMore()" 
-        class="text-main-color cursor-pointer">
-        Show more
-      </a>
+      @if(totalBrandsElements() !== brands().length) {
+        <a
+          (click)="loadMore()" 
+          class="text-main-color cursor-pointer">
+          Show more
+        </a>
       }
-    }
   </div>
 </div>

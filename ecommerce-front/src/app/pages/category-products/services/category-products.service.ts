@@ -29,7 +29,7 @@ export class CategoryProductsService {
       url:`${environment.baseUrl}brands/search-with-products`,
       params: {
         'size': this.brandsWithProductSize(),
-        'keyword': this.brandKeyword()
+        'name__like': this.brandKeyword()
       }
     }),
     { defaultValue: initBrandWithProduct }

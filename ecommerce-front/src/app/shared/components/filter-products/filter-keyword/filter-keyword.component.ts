@@ -1,5 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
-import { HomeServices } from '../../../../pages/home/services/home-services.service';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'ecom-filter-keyword',

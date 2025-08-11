@@ -30,8 +30,6 @@ export class ProductDetailsInfoComponent {
 get visibleImages() {
   const images = this.productDetailsService.productDetailsResource.value().data.images;
   const total = images.length;
-  console.log(total)
-  console.log(this.currentIndex)
   if (this.currentIndex+3 >= total) {
     this.currentIndex = Math.max(total - 3, 0);
   }

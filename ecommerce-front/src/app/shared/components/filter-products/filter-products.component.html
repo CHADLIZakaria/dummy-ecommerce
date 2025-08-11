@@ -2,10 +2,33 @@
     <ecom-title 
       subtitle="Filter"
     />
-    <ecom-filter-keyword 
-      [keyword]="keyword()" />
-    <ecom-filter-availability />
-    <ecom-filter-brand />
-    <ecom-filter-category />
-    <ecom-filter-price />
+  {{filters() | json}}
+    @if(filtersComponent().includes('keyword')) {
+      <ecom-filter-keyword 
+        [keyword]="filters().keyword"
+        (onChangeKeyword)="onChangeKeyword($event)"
+      />
+    }
+    @if(filtersComponent().includes('availability')) {
+      <ecom-filter-availability 
+        [availability]="filters().quantity"
+        (onChangeAvailabilty)="onChangeAvailabilty($event)"
+      />
+    }
+    @if(filtersComponent().includes('brand')) {
+      <ecom-filter-brand
+        [brands]="brands()"
+        [totalBrandsElements]="totalBrandsElements()"
+        [brandsSelected]="brandsSelected()"
+        (onLoadMore)="onLoadMoreBrands()"
+        (onChangeBrands)="onChangeBrands($event)"
+        (searchBrands)="onSearchBrands($event)"
+      />
+    }
+    @if(filtersComponent().includes('category')) {
+      <ecom-filter-category />
+    }
+    @if(filtersComponent().includes('price')) {
+      <ecom-filter-price />
+    }
 </div>

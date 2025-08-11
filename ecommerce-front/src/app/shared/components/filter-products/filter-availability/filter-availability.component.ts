@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'ecom-filter-availability',
@@ -7,9 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './filter-availability.component.scss'
 })
 export class FilterAvailabilityComponent {
+  availability = input.required<number | null | undefined>()
+  onChangeAvailabilty = output<boolean>()
 
   onToggleAvailability(event: Event) {
-
+    const checked = (event.target as HTMLInputElement).checked;
+    this.onChangeAvailabilty.emit(checked)
   }
-
 }

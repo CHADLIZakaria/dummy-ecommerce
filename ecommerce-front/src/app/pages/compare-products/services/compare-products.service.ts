@@ -41,8 +41,6 @@ export class CompareProductsService {
   removeCompareProduct(username: string, productSlug: string) {
       return this.http.delete(`${environment.baseUrl}compare/${username}/remove/${productSlug}`).pipe(
         tap(data => {
-          console.log("deleted")
-          console.log(this.compareProducts())
           this.compareProducts.set(this.compareProducts().filter(product => product.slug !== productSlug))
         })
       )
