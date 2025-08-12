@@ -1,4 +1,4 @@
-import { Brand, Category, EcomPagination, EcomResponse, Product } from "../../../shared/model/ecom.model";
+import { Brand, EcomPagination, EcomResponse } from "../../../shared/model/ecom.model";
 
 export type ProductFilter = {
     size: number;

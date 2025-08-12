@@ -5,7 +5,7 @@
 />
 <div class="my-5 flex gap-3 ">
     <div class="w-64 z-20  sticky h-full">
-        @let filters = ["keyword", "availability", "brand",  "price"];
+        @let filters = ["keyword", "availability", "brand", "category", "price"];
         <ecom-filter-products 
             [filtersComponent]="filters"
             [filters]="categoryService.productFilter()"
@@ -14,7 +14,7 @@
             [totalBrandsElements]="totalBrandsElements()"
             (searchBrands)="onSearchBrands($event)"
             (loadMoreBrands)="onLoadMoreBrands()"
-            (onChangeFilters)="onChangeFilters($event)"
+            (onChangeFilters)="onChangeFilters($event)"            
         />
     </div>    
     <ecom-list-products 

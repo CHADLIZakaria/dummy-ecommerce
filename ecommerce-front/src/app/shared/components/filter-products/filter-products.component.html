@@ -17,16 +17,23 @@
     }
     @if(filtersComponent().includes('brand')) {
       <ecom-filter-brand
-        [brands]="brands()"
-        [totalBrandsElements]="totalBrandsElements()"
-        [brandsSelected]="brandsSelected()"
+        [brands]="brands()!"
+        [totalBrandsElements]="totalBrandsElements()!"
+        [brandsSelected]="brandsSelected()!"
         (onLoadMore)="onLoadMoreBrands()"
         (onChangeBrands)="onChangeBrands($event)"
         (searchBrands)="onSearchBrands($event)"
       />
     }
     @if(filtersComponent().includes('category')) {
-      <ecom-filter-category />
+      <ecom-filter-category 
+        [categories]="categories()!"
+        [totalCategoriesElements]="totalCategoriesElements()!"
+        [categoriesSelected]="categoriesSelected()!"
+        (onLoadMore)="onLoadMoreCategories()"
+        (onChangeCategory)="onChangeCategories($event)"
+        (searchCategories)="onSearchCategories($event)"   
+      />
     }
     @if(filtersComponent().includes('price')) {
       <ecom-filter-price />

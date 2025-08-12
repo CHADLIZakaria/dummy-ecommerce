@@ -1,14 +1,12 @@
-import { Component, inject, input, output } from '@angular/core';
-import { HomeServices } from '../../../../pages/home/services/home-services.service';
-import { Brand } from '../../../model/ecom.model';
-import { DropdownDirective } from '../../../directives/dropdown.directive';
-import { LoadingComponent } from '../../loading/loading.component';
-import { dropDownAnimation } from '../../../animations/animations';
+import { Component, input, output } from '@angular/core';
 import { BrandWithProduct } from '../../../../pages/home/models/home.model';
+import { dropDownAnimation } from '../../../animations/animations';
+import { DropdownDirective } from '../../../directives/dropdown.directive';
+import { Brand } from '../../../model/ecom.model';
 
 @Component({
   selector: 'ecom-filter-brand',
-  imports: [DropdownDirective, LoadingComponent],
+  imports: [DropdownDirective],
   templateUrl: './filter-brand.component.html',
   styleUrl: './filter-brand.component.scss',
   animations: [dropDownAnimation]
@@ -26,10 +24,7 @@ export class FilterBrandComponent {
   }  
   
   onChangeSelectedBrand(brand: Brand): void {
-    console.log(brand)
-    console.log(this.brandsSelected())
-    console.log(this.brandsSelected().includes(brand))
-    if(this.brandsSelected().includes(brand)) {
+    if(this.brandsSelected().map(brand => brand.id).includes(brand.id)) {
       this.brandsSelected().splice(this.brandsSelected().indexOf(brand), 1)
     }
     else {
@@ -49,5 +44,4 @@ export class FilterBrandComponent {
   loadMore(): void {
     this.onLoadMore.emit()
   }
-
 }

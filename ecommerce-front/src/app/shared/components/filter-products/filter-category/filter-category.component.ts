@@ -1,54 +1,49 @@
-import { Component, inject } from '@angular/core';
-import { DropdownDirective } from '../../../directives/dropdown.directive';
-import { HomeServices } from '../../../../pages/home/services/home-services.service';
+import { Component, input, output } from '@angular/core';
 import { CategoryWithProduct } from '../../../../pages/home/models/home.model';
-import { LoadingComponent } from '../../loading/loading.component';
 import { dropDownAnimation } from '../../../animations/animations';
+import { DropdownDirective } from '../../../directives/dropdown.directive';
 
 @Component({
   selector: 'ecom-filter-category',
-  imports: [DropdownDirective, LoadingComponent],
+  imports: [DropdownDirective],
   templateUrl: './filter-category.component.html',
   styleUrl: './filter-category.component.scss',
   animations: [dropDownAnimation]
 })
 export class FilterCategoryComponent {
-  homeService = inject(HomeServices)
-  categories = this.homeService.categoriesWithNumberProductResource
-  categoriesSelected: CategoryWithProduct[]= this.homeService.productFilter().categories
+  categories = input.required<CategoryWithProduct[]>()
+  totalCategoriesElements = input.required<number>()  
+  categoriesSelected = input.required<CategoryWithProduct[]>()
+  onLoadMore = output<void>()
+  onChangeCategory = output<CategoryWithProduct[]>()
+  searchCategories = output<string>()
 
-  onSearchCategories(value: string): void {
-    this.homeService.categoryKeyword.set(value)
-  }
-
+  onSearchCategory(value: string): void {
+    this.searchCategories.emit(value)
+  }  
+  
   onChangeSelectedCategory(category: CategoryWithProduct): void {
-    if(this.categoriesSelected.includes(category)) {
-      this.categoriesSelected.splice(this.categoriesSelected.indexOf(category), 1)
+    const selected = [...this.categoriesSelected()];
+    const index = selected.findIndex(element => element.id === category.id);
+
+    if (index !== -1) {
+      selected.splice(index, 1);
+    } else {
+      selected.push(category);
     }
-    else {
-      this.categoriesSelected.push(category)
-    }
-    this.homeService.productFilter.set({
-      ...this.homeService.productFilter(), 
-      categories: this.categoriesSelected,
-      page: 0
-    })
+
+    this.onChangeCategory.emit(selected);
+  }
+  
+  isCategorySelected(idCategory: number): boolean {
+    return this.categoriesSelected().some(brand => brand.id===idCategory)
+  }
+  
+  resetCategorydSelected(): void {
+    this.onChangeCategory.emit([])
   }
 
-  isCategorySelected(idCategory: number): boolean {
-    return this.categoriesSelected.some(category => category.id===idCategory)
-  }
-  
-  resetCategorySelected(): void {
-    this.categoriesSelected = []
-    this.homeService.productFilter.set({
-      ...this.homeService.productFilter(), 
-      categories: [],
-      page: 0
-    })
-  }
-  
-  showMore(): void {
-    this.homeService.categoriesWithProductSize.set(this.homeService.categoriesWithProductSize()+10)
+  loadMore(): void {
+    this.onLoadMore.emit()
   }
 }
