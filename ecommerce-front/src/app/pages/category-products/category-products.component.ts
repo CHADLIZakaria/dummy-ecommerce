@@ -23,7 +23,11 @@ export class CategoryProductsComponent {
   brands = computed(() => this.categoryService.brandsWithNumberProductsResource.value().data.data)
   totalBrandsElements = computed(() => this.categoryService.brandsWithNumberProductsResource.value().data.totalElements)
   brandsSelected = computed(() => this.categoryService.productFilter().brands)
-    
+  
+  categories = computed(() => this.categoryService.categoriesWithNumberProductResource.value().data.data)
+  totalCategoriesElements = computed(() => this.categoryService.categoriesWithNumberProductResource.value().data.totalElements)
+  categoriesSelected = computed(() => this.categoryService.productFilter().categories)
+
   constructor() {
     this.route.paramMap.subscribe(params =>{
       const slug = params.get('slug');
@@ -43,5 +47,13 @@ export class CategoryProductsComponent {
 
   onLoadMoreBrands() {
     this.categoryService.brandsWithProductSize.set(this.categoryService.brandsWithProductSize()+10)
+  }
+
+  onSearchCategories(keyword: string) {
+    this.categoryService.categoryKeyword.set(keyword)
+  }
+
+  onLoadMoreCategories() {
+    this.categoryService.categoriesWithProductSize.set(this.categoryService.brandsWithProductSize()+10)
   }
 }

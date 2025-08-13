@@ -1,27 +1,39 @@
-<ecom-landing 
-    [title]="category().title"
-    [image]="category().imagePath"
-    imageClass="rounded-full w-100 h-100 px-10 py-8"    
-/>
-<div class="my-5 flex gap-3 ">
-    <div class="w-64 z-20  sticky h-full">
-        @let filters = ["keyword", "availability", "brand", "category", "price"];
-        <ecom-filter-products 
-            [filtersComponent]="filters"
-            [filters]="categoryService.productFilter()"
-            [brands]="brands()"
-            [brandsSelected]="brandsSelected()"            
-            [totalBrandsElements]="totalBrandsElements()"
-            (searchBrands)="onSearchBrands($event)"
-            (loadMoreBrands)="onLoadMoreBrands()"
-            (onChangeFilters)="onChangeFilters($event)"            
-        />
-    </div>    
-    <ecom-list-products 
-        [products]="products()"
-        [isLoading]="isLoading()"
-        [totalElements]="totalElements()"        
+@if(isLoading()) {
+
+}
+@else {
+    <ecom-landing 
+        [title]="category().title"
+        [image]="category().imagePath"
+        imageClass="rounded-full w-100 h-100 px-10 py-8"    
     />
+    <div class="my-5 flex gap-3 ">
+        <div class="w-64 z-20  sticky h-full">
+            @let filters = ["keyword", "availability", "brand", "category", "price"];
+            <ecom-filter-products 
+                [filtersComponent]="filters"
+                [filters]="categoryService.productFilter()"
+                (onChangeFilters)="onChangeFilters($event)"            
     
-</div>
+                [brands]="brands()"
+                [brandsSelected]="brandsSelected()"            
+                [totalBrandsElements]="totalBrandsElements()"
+                (searchBrands)="onSearchBrands($event)"
+                (loadMoreBrands)="onLoadMoreBrands()"
+                
+                [categories]="categories()"
+                [categoriesSelected]="categoriesSelected()"            
+                [totalCategoriesElements]="totalCategoriesElements()"
+                (searchCategories)="onSearchCategories($event)"
+                (loadMoreCategories)="onLoadMoreCategories()"
+            />
+        </div>    
+        <ecom-list-products 
+            [products]="products()"
+            [isLoading]="isLoading()"
+            [totalElements]="totalElements()"        
+        />
+        
+    </div>
+}
 

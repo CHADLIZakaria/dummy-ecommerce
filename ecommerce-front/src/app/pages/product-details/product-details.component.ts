@@ -50,7 +50,7 @@ export class ProductDetailsComponent {
   }
 
   get visibleProducts() {
-    return this.productDetailsService.productsSimularResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
+    return this.productDetailsService.productsSimilarResource.value().data.slice(this.currentIndex, this.currentIndex + this.visibleCount);
   }
 
   incrementImageWindow() {
@@ -70,7 +70,7 @@ export class ProductDetailsComponent {
   }
 
   next() {
-    if (this.currentIndex + this.visibleCount < this.productDetailsService.productsSimularResource.value().data.length) {
+    if (this.currentIndex + this.visibleCount < this.productDetailsService.productsSimilarResource.value().data.length) {
       this.currentIndex++;
     }
   }
@@ -89,13 +89,13 @@ export class ProductDetailsComponent {
       }
     })
   }
-  
+
   toggleFavorite(idProduct: number) {
     this.userService.toggleFavorite(idProduct).subscribe(
       data => {
         if(data.status===200) {
           this.alert = {type: 'favorite', show: true, message: data.data.message}
-          this.productDetailsResource.value().data.isFavorite = !this.productDetailsResource.value().data.isFavorite          
+          this.productDetailsResource.value().data.isFavorite = !this.productDetailsResource.value().data.isFavorite
         }
       }
     )
@@ -112,7 +112,7 @@ export class ProductDetailsComponent {
       this.quantityForm.get('quantity')?.setValue(current - 1);
     }
   }
-  
+
   onAddToCart(product: ProductDetails) {
     const cartItem: CartItem = {
       productImage: product.coverImage,

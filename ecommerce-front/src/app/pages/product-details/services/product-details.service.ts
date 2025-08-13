@@ -34,7 +34,7 @@ export class ProductDetailsService {
    this.reviewsResource.value().data.data.length === 0 ? 0: this.reviewsResource.value().data.data.reduce((acc, review)=> review.rating+acc, 0)/this.reviewsResource.value().data.data.length
   )
 
-  productsSimularResource = httpResource<EcomResponse<Product[]>>(
+  productsSimilarResource = httpResource<EcomResponse<Product[]>>(
     () => this.slug()  === '' ? undefined : `${environment.baseUrl}products/${this.slug()}/similar`,
     { defaultValue: initProducts }
   )

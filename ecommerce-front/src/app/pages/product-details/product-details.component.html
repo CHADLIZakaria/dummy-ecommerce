@@ -33,7 +33,7 @@
         subtitle="Products"
       />
       <div class="overflow-x-auto whitespace-nowrap py-4 relative">
-        @let productSimularSize = productDetailsService.productsSimularResource.value().data.length;
+        @let productSimularSize = productDetailsService.productsSimilarResource.value().data.length;
         @if(productSimularSize > visibleCount) {
           <button
             [ngClass]="currentIndex === 0 ? 'bg-gray-300' : 'bg-main-color'"
@@ -49,14 +49,14 @@
           </button>
         }
         <div class="grid grid-cols-4 gap-4 px-2">
-          @for (productSimular of visibleProducts; track productSimular) {
+          @for (productSimilar of visibleProducts; track productSimilar) {
             <div class="w-full border rounded-sm bg-slate-200 shadow-md px-2 py-2">
-              <img class="h-32 object-cover mx-auto" [src]="productSimular.coverImage" />
+              <img class="h-32 object-cover mx-auto" [src]="productSimilar.coverImage" />
               <div class="mt-2">
                 <p
-                  [routerLink]="['/products',  productSimular.slug]"
-                  class="text-sm font-medium truncate hover:underline cursor-pointer">{{ productSimular.name }}</p>
-                <p class="text-main-color font-semibold">$ {{ productSimular.price }}</p>
+                  [routerLink]="['/products',  productSimilar.slug]"
+                  class="text-sm font-medium truncate hover:underline cursor-pointer">{{ productSimilar.name }}</p>
+                <p class="text-main-color font-semibold">$ {{ productSimilar.price }}</p>
               </div>
             </div>
           }

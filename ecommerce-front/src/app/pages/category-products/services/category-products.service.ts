@@ -2,7 +2,7 @@ import { httpResource } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Category, EcomPagination, EcomResponse, initCategory, initProduct, Product } from '../../../shared/model/ecom.model';
-import { BrandWithProduct, initBrandWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../../home/models/home.model';
+import { BrandWithProduct, CategoryWithProduct, initBrandWithProduct, initCategoryWithProduct, initProductFilter, initRangePrice, ProductFilter } from '../../home/models/home.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,9 @@ export class CategoryProductsService {
   isAvailable = signal<boolean>(false);
   brandKeyword = signal<string>('')
   brandsWithProductSize = signal<number>(10)
+  
+  categoryKeyword = signal<string>('')
+  categoriesWithProductSize = signal<number>(10)
 
   //products filter
   productFilter = signal<ProductFilter>(initProductFilter)
@@ -33,6 +36,17 @@ export class CategoryProductsService {
       }
     }),
     { defaultValue: initBrandWithProduct }
+  )
+
+  categoriesWithNumberProductResource = httpResource<EcomResponse<EcomPagination<CategoryWithProduct[]>>>(
+      () => ({
+        url: `${environment.baseUrl}categories/search-with-products`,
+        params: {
+          'size': this.categoriesWithProductSize(),
+          'keyword': this.categoryKeyword(),
+        }
+      }),
+      { defaultValue: initCategoryWithProduct }
   )
 
   rangePriceResource = httpResource<EcomResponse<{minPrice: number, maxPrice: number}>>(
