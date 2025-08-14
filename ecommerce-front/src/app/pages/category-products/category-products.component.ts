@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilterProductsComponent } from '../../shared/components/filter-products/filter-products.component';
+import { ListProductsComponent } from '../../shared/components/list-products/list-products.component';
 import { LandingComponent } from '../home/components/landing/landing.component';
 import { CategoryProductsService } from './services/category-products.service';
-import { ListProductsComponent } from '../../shared/components/list-products/list-products.component';
-import { ProductFilter } from '../home/models/home.model';
 
 @Component({
   selector: 'ecom-category-products',

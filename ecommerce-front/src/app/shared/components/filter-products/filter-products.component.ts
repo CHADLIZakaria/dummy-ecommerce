@@ -74,10 +74,10 @@ export class FilterProductsComponent {
   }
 
   onLoadMoreCategories() {
-    this.loadMoreBrands.emit()
+    this.loadMoreCategories.emit()
   }
 
   onSearchCategories(value: string) {
-    this.searchBrands.emit(value)
+    this.searchCategories.emit(value)
   }
 }
