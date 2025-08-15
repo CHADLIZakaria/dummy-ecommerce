@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { CategoryWithProduct } from '../../../../pages/home/models/home.model';
 import { dropDownAnimation } from '../../../animations/animations';
 import { DropdownDirective } from '../../../directives/dropdown.directive';
+import { Category } from '../../../model/ecom.model';
 
 @Component({
   selector: 'ecom-filter-category',
@@ -13,16 +14,16 @@ import { DropdownDirective } from '../../../directives/dropdown.directive';
 export class FilterCategoryComponent {
   categories = input.required<CategoryWithProduct[]>()
   totalCategoriesElements = input.required<number>()  
-  categoriesSelected = input.required<CategoryWithProduct[]>()
+  categoriesSelected = input.required<Category[]>()
   onLoadMore = output<void>()
-  onChangeCategory = output<CategoryWithProduct[]>()
+  onChangeCategory = output<Category[]>()
   searchCategories = output<string>()
 
   onSearchCategory(value: string): void {
     this.searchCategories.emit(value)
   }  
   
-  onChangeSelectedCategory(category: CategoryWithProduct): void {
+  onChangeSelectedCategory(category: Category): void {
     const selected = [...this.categoriesSelected()];
     const index = selected.findIndex(element => element.id === category.id);
 
@@ -36,7 +37,7 @@ export class FilterCategoryComponent {
   }
   
   isCategorySelected(idCategory: number): boolean {
-    return this.categoriesSelected().some(brand => brand.id===idCategory)
+    return this.categoriesSelected().some(category => category.id===idCategory)
   }
   
   resetCategorydSelected(): void {

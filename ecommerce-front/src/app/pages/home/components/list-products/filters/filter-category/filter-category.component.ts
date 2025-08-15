@@ -17,13 +17,13 @@ import { CategoryWithProduct } from '../../../../models/home.model';
 export class FilterCategoryComponent {
   homeService = inject(HomeServices)
   categories = this.homeService.categoriesWithNumberProductResource
-  categoriesSelected: CategoryWithProduct[]= this.homeService.productFilter().categories
+  categoriesSelected: Category[]= this.homeService.productFilter().categories
 
   onSearchCategories(value: string): void {
     this.homeService.categoryKeyword.set(value)
   }
 
-  onChangeSelectedCategory(category: CategoryWithProduct): void {
+  onChangeSelectedCategory(category: Category): void {
     if(this.categoriesSelected.includes(category)) {
       this.categoriesSelected.splice(this.categoriesSelected.indexOf(category), 1)
     }

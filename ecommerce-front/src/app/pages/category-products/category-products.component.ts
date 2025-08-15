@@ -32,6 +32,11 @@ export class CategoryProductsComponent {
       const slug = params.get('slug');
       if(slug) {
         this.categoryService.slug.set(slug)
+        this.categoryService.productFilter.set({
+          ...this.categoryService.productFilter(),
+          categories: [this.category()],
+
+        })
       }
     })
   }

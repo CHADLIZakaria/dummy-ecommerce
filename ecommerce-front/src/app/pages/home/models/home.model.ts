@@ -1,4 +1,4 @@
-import { Brand, EcomPagination, EcomResponse } from "../../../shared/model/ecom.model";
+import { Brand, Category, EcomPagination, EcomResponse } from "../../../shared/model/ecom.model";
 
 export type ProductFilter = {
     size: number;
@@ -7,7 +7,7 @@ export type ProductFilter = {
     keyword: string;
     minPrice: number;
     maxPrice: number;
-    categories: CategoryWithProduct[];
+    categories: Category[];
     brands: Brand[];
     quantity?: number | null;
 }
